@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Photo Gallery | Good Dog Spa Wigram - Happy Dogs at Play</title>
+    <meta name="description" content="See our happy guests at Good Dog Spa Wigram! Browse photos of dogs enjoying daycare, hydrotherapy sessions, and our purpose-built facility in Christchurch.">
+    <meta name="keywords" content="dog daycare photos, Good Dog Spa gallery, dogs playing Christchurch, hydrotherapy photos, dog spa images">
+    <link rel="canonical" href="https://gooddogspa.sidequest.nz/gallery.html">
+    
+    <meta property="og:title" content="Photo Gallery | Good Dog Spa Wigram">
+    <meta property="og:description" content="See our happy guests enjoying daycare and hydrotherapy at Good Dog Spa!">
+    <meta property="og:url" content="https://gooddogspa.sidequest.nz/gallery.html">
+    
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    
+    <style>
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-fixed);
+            background: var(--color-white);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+            padding: 0 var(--container-padding);
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        
+        .logo img { height: 50px; width: auto; }
+        
+        .nav-desktop { display: none; align-items: center; gap: var(--space-8); }
+        @media (min-width: 1024px) { .nav-desktop { display: flex; } }
+        
+        .nav-list { display: flex; align-items: center; gap: var(--space-6); }
+        
+        .nav-link {
+            position: relative;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            padding: var(--space-2) 0;
+        }
+        
+        .nav-link:hover, .nav-link.active { color: var(--color-blue-primary); }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--color-yellow-primary);
+            border-radius: var(--radius-full);
+            transition: width var(--transition-base);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            gap: 6px;
+            cursor: pointer;
+        }
+        
+        @media (min-width: 1024px) { .mobile-menu-btn { display: none; } }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--color-dark);
+            border-radius: var(--radius-full);
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 350px;
+            height: 100vh;
+            background: var(--color-white);
+            padding: var(--space-20) var(--space-6) var(--space-6);
+            box-shadow: var(--shadow-2xl);
+            transform: translateX(100%);
+            transition: transform var(--transition-base);
+            z-index: var(--z-fixed);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            background: var(--color-gray-100);
+            border-radius: var(--radius-full);
+        }
+        
+        .mobile-nav-list { display: flex; flex-direction: column; gap: var(--space-2); }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: var(--space-4);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            border-radius: var(--radius-lg);
+        }
+        
+        .mobile-nav-link:hover { background: var(--color-blue-light); color: var(--color-blue-primary); }
+        
+        .mobile-menu-cta { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-gray-200); }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            z-index: calc(var(--z-fixed) - 1);
+        }
+        
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        /* Page Hero */
+        .page-hero {
+            padding: calc(var(--header-height) + var(--space-12)) 0 var(--space-12);
+            background: linear-gradient(135deg, var(--color-yellow-light) 0%, var(--color-blue-light) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: '📸';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.08;
+            top: -20%;
+            right: -5%;
+        }
+        
+        .page-hero h1 { margin-bottom: var(--space-4); }
+        .page-hero p { max-width: 600px; margin: 0 auto; color: var(--color-gray-600); font-size: var(--font-size-lg); }
+        
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            justify-content: center;
+            margin-bottom: var(--space-10);
+        }
+        
+        .filter-tab {
+            padding: var(--space-3) var(--space-6);
+            background: var(--color-white);
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--radius-full);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-600);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .filter-tab:hover {
+            border-color: var(--color-blue-primary);
+            color: var(--color-blue-primary);
+        }
+        
+        .filter-tab.active {
+            background: var(--color-blue-primary);
+            border-color: var(--color-blue-primary);
+            color: var(--color-white);
+        }
+        
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-4);
+        }
+        
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-item-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+            display: flex;
+            align-items: flex-end;
+            padding: var(--space-4);
+        }
+        
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-item-overlay span {
+            color: var(--color-white);
+            font-weight: var(--font-weight-bold);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: var(--z-modal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-6);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-2xl);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-white);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xl);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            z-index: 10;
+        }
+        
+        .lightbox-close:hover {
+            background: var(--color-coral);
+            color: var(--color-white);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-white);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xl);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .lightbox-nav:hover {
+            background: var(--color-yellow-primary);
+        }
+        
+        .lightbox-prev { left: var(--space-4); }
+        .lightbox-next { right: var(--space-4); }
+        
+        .lightbox-caption {
+            text-align: center;
+            color: var(--color-white);
+            margin-top: var(--space-4);
+            font-size: var(--font-size-lg);
+        }
+        
+        .lightbox-counter {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--color-dark);
+            color: var(--color-white);
+            padding: var(--space-16) 0 var(--space-8);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-10);
+            margin-bottom: var(--space-10);
+        }
+        
+        .footer-section h4 { color: var(--color-yellow-primary); font-size: var(--font-size-lg); margin-bottom: var(--space-5); }
+        .footer-section p, .footer-section a { color: rgba(255, 255, 255, 0.7); display: block; margin-bottom: var(--space-3); }
+        .footer-section a:hover { color: var(--color-yellow-primary); }
+        .footer-logo { height: 50px; margin-bottom: var(--space-4); filter: brightness(0) invert(1); }
+        
+        .footer-bottom {
+            padding-top: var(--space-8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        .footer-bottom p { color: rgba(255, 255, 255, 0.5); margin-bottom: 0; }
+        .footer-bottom-links { display: flex; gap: var(--space-6); }
+        .footer-bottom-links a { color: rgba(255, 255, 255, 0.5); font-size: var(--font-size-sm); }
+        
+        .wigram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-sm);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa Logo" width="180" height="60">
+            </a>
+            
+            <nav class="nav-desktop">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="daycare.html" class="nav-link">Day Care</a></li>
+                    <li><a href="rehabilitation.html" class="nav-link">Rehab & Hydro</a></li>
+                    <li><a href="gallery.html" class="nav-link active">Gallery</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-primary"><span>🔐</span> Member Login</a>
+                </div>
+            </nav>
+            
+            <button class="mobile-menu-btn" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+    
+    <div class="mobile-menu-overlay"></div>
+    
+    <nav class="mobile-menu">
+        <button class="mobile-menu-close" aria-label="Close menu">✕</button>
+        <ul class="mobile-nav-list">
+            <li><a href="index.html" class="mobile-nav-link">🏠 Home</a></li>
+            <li><a href="services.html" class="mobile-nav-link">🎾 Services</a></li>
+            <li><a href="daycare.html" class="mobile-nav-link">🐕 Day Care</a></li>
+            <li><a href="daycare-prices.html" class="mobile-nav-link">💰 Pricing</a></li>
+            <li><a href="rehabilitation.html" class="mobile-nav-link">💧 Rehab & Hydro</a></li>
+            <li><a href="gallery.html" class="mobile-nav-link">📸 Gallery</a></li>
+            <li><a href="blog.html" class="mobile-nav-link">📝 Blog</a></li>
+            <li><a href="index.html#contact" class="mobile-nav-link">📞 Contact</a></li>
+        </ul>
+        <div class="mobile-menu-cta">
+            <a href="login.html" class="btn btn-primary btn-block"><span>🔐</span> Member Login</a>
+        </div>
+    </nav>
+    
+    <main id="main-content">
+        <!-- Page Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-badge">📸 Our Happy Guests</span>
+                <h1>Photo Gallery</h1>
+                <p>Take a peek at our furry friends enjoying their time at Good Dog Spa! From playtime to hydrotherapy, see the fun in action.</p>
+            </div>
+        </section>
+        
+        <!-- Gallery -->
+        <section class="section">
+            <div class="container">
+                <!-- Filter Tabs -->
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">🐾 All Photos</button>
+                    <button class="filter-tab" data-filter="daycare">🏠 Day Care</button>
+                    <button class="filter-tab" data-filter="facility">🏢 Our Facility</button>
+                    <button class="filter-tab" data-filter="hydro">💧 Hydrotherapy</button>
+                </div>
+                
+                <!-- Gallery Grid -->
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Images from spa-tour page -->
+                    <div class="gallery-item" data-category="daycare" data-index="0">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3118-450x350.jpg" alt="Dogs playing at Good Dog Spa" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🐾 Playtime Fun</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="daycare" data-index="1">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3121-1024x683-450x350.jpg" alt="Happy dogs at daycare" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🐾 Social Time</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="daycare" data-index="2">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3123-768x1024-450x350.jpg" alt="Dog enjoying daycare" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🐾 Happy Pup</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="daycare" data-index="3">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3127-683x1024-450x350.jpg" alt="Dogs at Good Dog Spa" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🐾 Best Friends</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="daycare" data-index="4">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3128-683x1024-450x350.jpg" alt="Dogs playing together" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🐾 Group Play</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="facility" data-index="5">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3130-1024x683-450x350.jpg" alt="Good Dog Spa facility" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🏢 Our Facility</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="facility" data-index="6">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3131-1024x683-450x350.jpg" alt="Indoor play area" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🏢 Play Area</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="facility" data-index="7">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3132-1024x683-450x350.jpg" alt="Good Dog Spa interior" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🏢 Clean & Safe</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="hydro" data-index="8">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2024/05/54dcc163.jpg" alt="Hydrotherapy session" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>💧 Hydrotherapy</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="daycare" data-index="9">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3133-683x1024-450x350.jpg" alt="Happy dog portrait" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🐾 Smile!</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="daycare" data-index="10">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3134-683x1024-450x350.jpg" alt="Dogs at play" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🐾 Fun Times</span>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="facility" data-index="11">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3135-1024x683-450x350.jpg" alt="Outdoor area" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span>🏢 Outdoor Space</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Load More (placeholder for future) -->
+                <div class="text-center mt-10">
+                    <p class="text-gray mb-4">Want to see your pup featured? Tag us on social media!</p>
+                    <a href="login.html" class="btn btn-primary btn-lg">Book a Visit 🐾</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" aria-label="Close lightbox">✕</button>
+        <button class="lightbox-nav lightbox-prev" aria-label="Previous image">←</button>
+        <button class="lightbox-nav lightbox-next" aria-label="Next image">→</button>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightbox-img">
+            <div class="lightbox-caption">
+                <span id="lightbox-title"></span>
+                <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">12</span></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="footer-logo">
+                    <p>Your dog's home away from home. Premium day care, hydrotherapy & rehabilitation in Christchurch.</p>
+                    <a href="https://wigramvet.co.nz" target="_blank" rel="noopener" class="wigram-link mt-4">🏥 Part of Wigram Vet</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <a href="daycare.html">Dog Day Care</a>
+                    <a href="rehabilitation.html">Rehabilitation</a>
+                    <a href="rehabilitation.html#hydrotherapy">Hydrotherapy</a>
+                    <a href="daycare-prices.html">Pricing</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="services.html">All Services</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="login.html">Member Portal</a>
+                    <a href="daycare-regulations.html">Regulations</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📞 <a href="tel:039290987">(03) 929 0987</a></p>
+                    <p>✉️ <a href="mailto:gooddogspa@wigramvet.co.nz">gooddogspa@wigramvet.co.nz</a></p>
+                    <p>📍 Wigram, Christchurch</p>
+                    <p>🕐 Mon-Fri: 7am - 6pm</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© <span class="current-year">2024</span> Good Dog Spa Wigram. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="terms.html">Terms & Conditions</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/components/navigation.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- Gallery & Lightbox Script -->
+    <script>
+        (function() {
+            // Gallery data
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxCurrent = document.getElementById('lightbox-current');
+            const lightboxTotal = document.getElementById('lightbox-total');
+            
+            let currentIndex = 0;
+            let visibleItems = [];
+            
+            // Update visible items array
+            function updateVisibleItems() {
+                visibleItems = Array.from(galleryItems).filter(item => 
+                    item.style.display !== 'none'
+                );
+                lightboxTotal.textContent = visibleItems.length;
+            }
+            
+            // Filter functionality
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Update active state
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const filter = tab.dataset.filter;
+                    
+                    // Filter gallery items
+                    galleryItems.forEach(item => {
+                        if (filter === 'all' || item.dataset.category === filter) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                    
+                    updateVisibleItems();
+                });
+            });
+            
+            // Open lightbox
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    updateVisibleItems();
+                    currentIndex = visibleItems.indexOf(item);
+                    showImage(currentIndex);
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Show image in lightbox
+            function showImage(index) {
+                if (index < 0) index = visibleItems.length - 1;
+                if (index >= visibleItems.length) index = 0;
+                currentIndex = index;
+                
+                const item = visibleItems[index];
+                const img = item.querySelector('img');
+                const title = item.querySelector('.gallery-item-overlay span');
+                
+                lightboxImg.src = img.src.replace('-450x350', '');
+                lightboxImg.alt = img.alt;
+                lightboxTitle.textContent = title ? title.textContent : '';
+                lightboxCurrent.textContent = index + 1;
+            }
+            
+            // Close lightbox
+            document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            // Navigation
+            document.querySelector('.lightbox-prev').addEventListener('click', (e) => {
+                e.stopPropagation();
+                showImage(currentIndex - 1);
+            });
+            
+            document.querySelector('.lightbox-next').addEventListener('click', (e) => {
+                e.stopPropagation();
+                showImage(currentIndex + 1);
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+                if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+            });
+            
+            // Initialize
+            updateVisibleItems();
+        })();
+    </script>
+</body>
+</html>

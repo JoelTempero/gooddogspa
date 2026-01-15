@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Blog | Good Dog Spa Wigram - Dog Care Tips & News</title>
+    <meta name="description" content="Read the latest news, tips, and updates from Good Dog Spa Wigram. Expert advice on dog care, health, training, and more from our Christchurch team.">
+    <meta name="keywords" content="dog care blog, pet tips, dog health advice, Good Dog Spa news, Christchurch dog blog">
+    <link rel="canonical" href="https://gooddogspa.sidequest.nz/blog.html">
+    
+    <meta property="og:title" content="Blog | Good Dog Spa Wigram">
+    <meta property="og:description" content="Dog care tips, news, and updates from Good Dog Spa Wigram.">
+    <meta property="og:url" content="https://gooddogspa.sidequest.nz/blog.html">
+    
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    
+    <style>
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-fixed);
+            background: var(--color-white);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+            padding: 0 var(--container-padding);
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        
+        .logo img { height: 50px; width: auto; }
+        
+        .nav-desktop { display: none; align-items: center; gap: var(--space-8); }
+        @media (min-width: 1024px) { .nav-desktop { display: flex; } }
+        
+        .nav-list { display: flex; align-items: center; gap: var(--space-6); }
+        
+        .nav-link {
+            position: relative;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            padding: var(--space-2) 0;
+        }
+        
+        .nav-link:hover, .nav-link.active { color: var(--color-blue-primary); }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--color-yellow-primary);
+            border-radius: var(--radius-full);
+            transition: width var(--transition-base);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            gap: 6px;
+            cursor: pointer;
+        }
+        
+        @media (min-width: 1024px) { .mobile-menu-btn { display: none; } }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--color-dark);
+            border-radius: var(--radius-full);
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 350px;
+            height: 100vh;
+            background: var(--color-white);
+            padding: var(--space-20) var(--space-6) var(--space-6);
+            box-shadow: var(--shadow-2xl);
+            transform: translateX(100%);
+            transition: transform var(--transition-base);
+            z-index: var(--z-fixed);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            background: var(--color-gray-100);
+            border-radius: var(--radius-full);
+        }
+        
+        .mobile-nav-list { display: flex; flex-direction: column; gap: var(--space-2); }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: var(--space-4);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            border-radius: var(--radius-lg);
+        }
+        
+        .mobile-nav-link:hover { background: var(--color-blue-light); color: var(--color-blue-primary); }
+        
+        .mobile-menu-cta { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-gray-200); }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            z-index: calc(var(--z-fixed) - 1);
+        }
+        
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        /* Page Hero */
+        .page-hero {
+            padding: calc(var(--header-height) + var(--space-12)) 0 var(--space-12);
+            background: linear-gradient(135deg, var(--color-yellow-light) 0%, var(--color-blue-light) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: '📝';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.08;
+            top: -20%;
+            right: -5%;
+        }
+        
+        .page-hero h1 { margin-bottom: var(--space-4); }
+        .page-hero p { max-width: 600px; margin: 0 auto; color: var(--color-gray-600); font-size: var(--font-size-lg); }
+        
+        /* Blog Layout */
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-10);
+        }
+        
+        @media (min-width: 1024px) {
+            .blog-layout {
+                grid-template-columns: 1fr 320px;
+            }
+        }
+        
+        /* Blog Cards */
+        .blog-grid {
+            display: grid;
+            gap: var(--space-8);
+        }
+        
+        .blog-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-5);
+            background: var(--color-white);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+        
+        @media (min-width: 640px) {
+            .blog-card {
+                grid-template-columns: 280px 1fr;
+            }
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .blog-card-image {
+            aspect-ratio: 16/10;
+            overflow: hidden;
+        }
+        
+        @media (min-width: 640px) {
+            .blog-card-image {
+                aspect-ratio: auto;
+                height: 100%;
+            }
+        }
+        
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+        
+        .blog-card:hover .blog-card-image img {
+            transform: scale(1.05);
+        }
+        
+        .blog-card-content {
+            padding: var(--space-5);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 640px) {
+            .blog-card-content {
+                padding: var(--space-6);
+            }
+        }
+        
+        .blog-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            margin-bottom: var(--space-3);
+        }
+        
+        .blog-category {
+            display: inline-block;
+            padding: var(--space-1) var(--space-3);
+            background: var(--color-blue-light);
+            color: var(--color-blue-primary);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-bold);
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+        }
+        
+        .blog-date {
+            color: var(--color-gray-500);
+            font-size: var(--font-size-sm);
+        }
+        
+        .blog-card h2 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-3);
+            line-height: 1.3;
+        }
+        
+        .blog-card h2 a {
+            color: var(--color-dark);
+            transition: color var(--transition-fast);
+        }
+        
+        .blog-card h2 a:hover {
+            color: var(--color-blue-primary);
+        }
+        
+        .blog-card p {
+            color: var(--color-gray-600);
+            flex-grow: 1;
+            margin-bottom: var(--space-4);
+        }
+        
+        .blog-card .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-blue-primary);
+        }
+        
+        .blog-card .read-more:hover {
+            gap: var(--space-3);
+        }
+        
+        /* Featured Post */
+        .featured-post {
+            grid-column: 1 / -1;
+        }
+        
+        @media (min-width: 640px) {
+            .featured-post {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .featured-post .blog-card-image {
+                aspect-ratio: auto;
+            }
+        }
+        
+        .featured-post .blog-category {
+            background: var(--color-yellow-primary);
+            color: var(--color-dark);
+        }
+        
+        .featured-post h2 {
+            font-size: var(--font-size-2xl);
+        }
+        
+        /* Sidebar */
+        .blog-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+        
+        .sidebar-widget {
+            background: var(--color-white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-widget h3 {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-3);
+            border-bottom: 2px dashed var(--color-gray-200);
+        }
+        
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+        
+        .category-list a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3);
+            border-radius: var(--radius-lg);
+            color: var(--color-gray-700);
+            transition: all var(--transition-fast);
+        }
+        
+        .category-list a:hover {
+            background: var(--color-blue-light);
+            color: var(--color-blue-primary);
+        }
+        
+        .category-list span {
+            background: var(--color-gray-100);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-bold);
+        }
+        
+        .category-list a:hover span {
+            background: var(--color-blue-primary);
+            color: var(--color-white);
+        }
+        
+        /* Newsletter Widget */
+        .newsletter-widget {
+            background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal));
+            color: var(--color-white);
+        }
+        
+        .newsletter-widget h3 {
+            color: var(--color-white);
+            border-bottom-color: rgba(255,255,255,0.2);
+        }
+        
+        .newsletter-widget p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: var(--space-4);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+        
+        .newsletter-form input {
+            padding: var(--space-3) var(--space-4);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+        }
+        
+        .newsletter-form button {
+            padding: var(--space-3) var(--space-4);
+            background: var(--color-yellow-primary);
+            color: var(--color-dark);
+            font-weight: var(--font-weight-bold);
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .newsletter-form button:hover {
+            background: var(--color-yellow-dark);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--color-dark);
+            color: var(--color-white);
+            padding: var(--space-16) 0 var(--space-8);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-10);
+            margin-bottom: var(--space-10);
+        }
+        
+        .footer-section h4 { color: var(--color-yellow-primary); font-size: var(--font-size-lg); margin-bottom: var(--space-5); }
+        .footer-section p, .footer-section a { color: rgba(255, 255, 255, 0.7); display: block; margin-bottom: var(--space-3); }
+        .footer-section a:hover { color: var(--color-yellow-primary); }
+        .footer-logo { height: 50px; margin-bottom: var(--space-4); filter: brightness(0) invert(1); }
+        
+        .footer-bottom {
+            padding-top: var(--space-8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        .footer-bottom p { color: rgba(255, 255, 255, 0.5); margin-bottom: 0; }
+        .footer-bottom-links { display: flex; gap: var(--space-6); }
+        .footer-bottom-links a { color: rgba(255, 255, 255, 0.5); font-size: var(--font-size-sm); }
+        
+        .wigram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-sm);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa Logo" width="180" height="60">
+            </a>
+            
+            <nav class="nav-desktop">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="daycare.html" class="nav-link">Day Care</a></li>
+                    <li><a href="rehabilitation.html" class="nav-link">Rehab & Hydro</a></li>
+                    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-primary"><span>🔐</span> Member Login</a>
+                </div>
+            </nav>
+            
+            <button class="mobile-menu-btn" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+    
+    <div class="mobile-menu-overlay"></div>
+    
+    <nav class="mobile-menu">
+        <button class="mobile-menu-close" aria-label="Close menu">✕</button>
+        <ul class="mobile-nav-list">
+            <li><a href="index.html" class="mobile-nav-link">🏠 Home</a></li>
+            <li><a href="services.html" class="mobile-nav-link">🎾 Services</a></li>
+            <li><a href="daycare.html" class="mobile-nav-link">🐕 Day Care</a></li>
+            <li><a href="daycare-prices.html" class="mobile-nav-link">💰 Pricing</a></li>
+            <li><a href="rehabilitation.html" class="mobile-nav-link">💧 Rehab & Hydro</a></li>
+            <li><a href="gallery.html" class="mobile-nav-link">📸 Gallery</a></li>
+            <li><a href="blog.html" class="mobile-nav-link">📝 Blog</a></li>
+            <li><a href="index.html#contact" class="mobile-nav-link">📞 Contact</a></li>
+        </ul>
+        <div class="mobile-menu-cta">
+            <a href="login.html" class="btn btn-primary btn-block"><span>🔐</span> Member Login</a>
+        </div>
+    </nav>
+    
+    <main id="main-content">
+        <!-- Page Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-badge">📝 Latest News & Tips</span>
+                <h1>Good Dog Blog</h1>
+                <p>Expert advice on dog care, health tips, training insights, and the latest news from Good Dog Spa Wigram.</p>
+            </div>
+        </section>
+        
+        <!-- Blog Section -->
+        <section class="section">
+            <div class="container">
+                <div class="blog-layout">
+                    <!-- Main Content -->
+                    <div class="blog-grid">
+                        <!-- Featured Post -->
+                        <article class="blog-card featured-post">
+                            <div class="blog-card-image">
+                                <img src="https://wigramvet.co.nz/wp-content/uploads/2024/05/54dcc163.jpg" alt="Dog in hydrotherapy" loading="lazy">
+                            </div>
+                            <div class="blog-card-content">
+                                <div class="blog-card-meta">
+                                    <span class="blog-category">⭐ Featured</span>
+                                    <span class="blog-date">January 10, 2025</span>
+                                </div>
+                                <h2><a href="#">The Benefits of Hydrotherapy for Senior Dogs</a></h2>
+                                <p>Discover how underwater treadmill therapy can help your aging companion maintain mobility, reduce joint pain, and improve quality of life. Our AQUATREAD system offers a low-impact solution for dogs with arthritis and mobility issues.</p>
+                                <a href="#" class="read-more">Read More →</a>
+                            </div>
+                        </article>
+                        
+                        <!-- Regular Posts -->
+                        <article class="blog-card">
+                            <div class="blog-card-image">
+                                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3118-450x350.jpg" alt="Dogs socialising" loading="lazy">
+                            </div>
+                            <div class="blog-card-content">
+                                <div class="blog-card-meta">
+                                    <span class="blog-category">🐕 Day Care</span>
+                                    <span class="blog-date">January 5, 2025</span>
+                                </div>
+                                <h2><a href="#">Why Socialisation is Important for Your Dog</a></h2>
+                                <p>Learn how regular interaction with other dogs can improve your pet's behaviour, reduce anxiety, and create a happier, more confident companion.</p>
+                                <a href="#" class="read-more">Read More →</a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <div class="blog-card-image">
+                                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3121-1024x683-450x350.jpg" alt="Dog rehabilitation" loading="lazy">
+                            </div>
+                            <div class="blog-card-content">
+                                <div class="blog-card-meta">
+                                    <span class="blog-category">🏥 Rehabilitation</span>
+                                    <span class="blog-date">December 28, 2024</span>
+                                </div>
+                                <h2><a href="#">Post-Surgery Recovery: What to Expect</a></h2>
+                                <p>A guide to helping your dog recover after orthopaedic surgery. Tips on rest, exercise restrictions, and how rehabilitation therapy can speed recovery.</p>
+                                <a href="#" class="read-more">Read More →</a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <div class="blog-card-image">
+                                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3123-768x1024-450x350.jpg" alt="Happy dog" loading="lazy">
+                            </div>
+                            <div class="blog-card-content">
+                                <div class="blog-card-meta">
+                                    <span class="blog-category">💡 Tips</span>
+                                    <span class="blog-date">December 20, 2024</span>
+                                </div>
+                                <h2><a href="#">Preparing Your Dog for Their First Daycare Visit</a></h2>
+                                <p>Nervous about your pup's first day? Here's everything you need to know to set them up for success at doggy daycare.</p>
+                                <a href="#" class="read-more">Read More →</a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <div class="blog-card-image">
+                                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3130-1024x683-450x350.jpg" alt="Dogs playing" loading="lazy">
+                            </div>
+                            <div class="blog-card-content">
+                                <div class="blog-card-meta">
+                                    <span class="blog-category">📢 News</span>
+                                    <span class="blog-date">December 15, 2024</span>
+                                </div>
+                                <h2><a href="#">Mondays Now Reserved for Small Breeds!</a></h2>
+                                <p>Great news for small dog owners! We've dedicated Mondays exclusively to small breeds, ensuring a safer and more comfortable environment for your little ones.</p>
+                                <a href="#" class="read-more">Read More →</a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card">
+                            <div class="blog-card-image">
+                                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3127-683x1024-450x350.jpg" alt="Dog swimming" loading="lazy">
+                            </div>
+                            <div class="blog-card-content">
+                                <div class="blog-card-meta">
+                                    <span class="blog-category">💧 Hydrotherapy</span>
+                                    <span class="blog-date">December 8, 2024</span>
+                                </div>
+                                <h2><a href="#">Understanding Canine Arthritis: Signs & Treatments</a></h2>
+                                <p>Is your dog slowing down? Learn to recognise the signs of arthritis and discover how hydrotherapy can help manage pain and improve mobility.</p>
+                                <a href="#" class="read-more">Read More →</a>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <!-- Sidebar -->
+                    <aside class="blog-sidebar">
+                        <!-- Categories -->
+                        <div class="sidebar-widget">
+                            <h3>📂 Categories</h3>
+                            <div class="category-list">
+                                <a href="#">
+                                    🐕 Day Care
+                                    <span>8</span>
+                                </a>
+                                <a href="#">
+                                    💧 Hydrotherapy
+                                    <span>5</span>
+                                </a>
+                                <a href="#">
+                                    🏥 Rehabilitation
+                                    <span>6</span>
+                                </a>
+                                <a href="#">
+                                    💡 Tips & Advice
+                                    <span>12</span>
+                                </a>
+                                <a href="#">
+                                    📢 News & Updates
+                                    <span>4</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Newsletter -->
+                        <div class="sidebar-widget newsletter-widget">
+                            <h3>📬 Stay Updated</h3>
+                            <p>Get the latest tips and news delivered to your inbox!</p>
+                            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thanks for subscribing!');">
+                                <input type="email" placeholder="Your email address" required>
+                                <button type="submit">Subscribe 🐾</button>
+                            </form>
+                        </div>
+                        
+                        <!-- Quick Contact -->
+                        <div class="sidebar-widget">
+                            <h3>📞 Questions?</h3>
+                            <p class="text-gray mb-4">We'd love to hear from you!</p>
+                            <p class="mb-2"><strong>Phone:</strong></p>
+                            <p class="text-blue mb-4"><a href="tel:039290987">(03) 929 0987</a></p>
+                            <p class="mb-2"><strong>Email:</strong></p>
+                            <p class="text-blue"><a href="mailto:gooddogspa@wigramvet.co.nz">gooddogspa@wigramvet.co.nz</a></p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="footer-logo">
+                    <p>Your dog's home away from home. Premium day care, hydrotherapy & rehabilitation in Christchurch.</p>
+                    <a href="https://wigramvet.co.nz" target="_blank" rel="noopener" class="wigram-link mt-4">🏥 Part of Wigram Vet</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <a href="daycare.html">Dog Day Care</a>
+                    <a href="rehabilitation.html">Rehabilitation</a>
+                    <a href="rehabilitation.html#hydrotherapy">Hydrotherapy</a>
+                    <a href="daycare-prices.html">Pricing</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="services.html">All Services</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="login.html">Member Portal</a>
+                    <a href="daycare-regulations.html">Regulations</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📞 <a href="tel:039290987">(03) 929 0987</a></p>
+                    <p>✉️ <a href="mailto:gooddogspa@wigramvet.co.nz">gooddogspa@wigramvet.co.nz</a></p>
+                    <p>📍 Wigram, Christchurch</p>
+                    <p>🕐 Mon-Fri: 7am - 6pm</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© <span class="current-year">2024</span> Good Dog Spa Wigram. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="terms.html">Terms & Conditions</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/components/navigation.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
