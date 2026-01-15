@@ -13,16 +13,16 @@ const MockAuth = (function() {
             uid: 'demo-user-001',
             email: 'demo@gooddogspa.co.nz',
             password: 'demo123',
-            displayName: 'Sarah Mitchell',
+            displayName: 'Joel Tempero',
             role: 'member',
-            phone: '021 555 1234',
+            phone: '0204 023 9009',
             createdAt: '2024-06-15T10:00:00Z'
         },
         {
             uid: 'demo-admin-001',
             email: 'admin@gooddogspa.co.nz',
             password: 'admin123',
-            displayName: 'Kate Donald',
+            displayName: 'Spa Admin',
             role: 'admin',
             phone: '03 929 0987',
             createdAt: '2024-01-01T09:00:00Z'
