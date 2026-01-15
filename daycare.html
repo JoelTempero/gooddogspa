@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Dog Day Care | Good Dog Spa Wigram - Premium Doggy Daycare Christchurch</title>
+    <meta name="description" content="Premium dog day care in Christchurch. Supervised play, socialisation, and rest for your furry friend. Monday small breeds only. FREE behaviour assessment. From $26.50.">
+    <meta name="keywords" content="dog daycare Christchurch, doggy daycare Wigram, dog day care, puppy daycare, dog socialisation, pet care Christchurch">
+    <link rel="canonical" href="https://gooddogspa.sidequest.nz/daycare.html">
+    
+    <meta property="og:title" content="Dog Day Care | Good Dog Spa Wigram">
+    <meta property="og:description" content="Your dog's home away from home! Premium daycare with supervised play and socialisation.">
+    <meta property="og:url" content="https://gooddogspa.sidequest.nz/daycare.html">
+    <meta property="og:image" content="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    
+    <style>
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-fixed);
+            background: var(--color-white);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+            padding: 0 var(--container-padding);
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        
+        .logo img { height: 50px; width: auto; }
+        
+        .nav-desktop { display: none; align-items: center; gap: var(--space-8); }
+        @media (min-width: 1024px) { .nav-desktop { display: flex; } }
+        
+        .nav-list { display: flex; align-items: center; gap: var(--space-6); }
+        
+        .nav-link {
+            position: relative;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            padding: var(--space-2) 0;
+        }
+        
+        .nav-link:hover, .nav-link.active { color: var(--color-blue-primary); }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--color-yellow-primary);
+            border-radius: var(--radius-full);
+            transition: width var(--transition-base);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            gap: 6px;
+            cursor: pointer;
+        }
+        
+        @media (min-width: 1024px) { .mobile-menu-btn { display: none; } }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--color-dark);
+            border-radius: var(--radius-full);
+            transition: all var(--transition-base);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 350px;
+            height: 100vh;
+            background: var(--color-white);
+            padding: var(--space-20) var(--space-6) var(--space-6);
+            box-shadow: var(--shadow-2xl);
+            transform: translateX(100%);
+            transition: transform var(--transition-base);
+            z-index: var(--z-fixed);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            background: var(--color-gray-100);
+            border-radius: var(--radius-full);
+        }
+        
+        .mobile-menu-close:hover { background: var(--color-coral); color: var(--color-white); }
+        
+        .mobile-nav-list { display: flex; flex-direction: column; gap: var(--space-2); }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: var(--space-4);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            border-radius: var(--radius-lg);
+        }
+        
+        .mobile-nav-link:hover { background: var(--color-blue-light); color: var(--color-blue-primary); }
+        
+        .mobile-menu-cta { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-gray-200); }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+            z-index: calc(var(--z-fixed) - 1);
+        }
+        
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        /* Page Hero */
+        .page-hero {
+            padding-top: calc(var(--header-height) + var(--space-12));
+            padding-bottom: var(--space-12);
+            background: linear-gradient(135deg, var(--color-yellow-light) 0%, var(--color-blue-light) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: '🐕';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.05;
+            top: -20%;
+            right: -5%;
+        }
+        
+        .page-hero h1 { margin-bottom: var(--space-4); }
+        .page-hero p { max-width: 600px; margin: 0 auto; color: var(--color-gray-600); font-size: var(--font-size-lg); }
+        
+        /* Info Banner */
+        .info-banner {
+            background: var(--color-blue-primary);
+            color: var(--color-white);
+            padding: var(--space-4) 0;
+            text-align: center;
+        }
+        
+        .info-banner p {
+            margin: 0;
+            font-weight: var(--font-weight-bold);
+        }
+        
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-6);
+        }
+        
+        .feature-card {
+            background: var(--color-white);
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: all var(--transition-base);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-card-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--color-blue-light), var(--color-yellow-light));
+            border-radius: var(--radius-full);
+            margin: 0 auto var(--space-4);
+        }
+        
+        .feature-card h3 {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-2);
+        }
+        
+        .feature-card p {
+            color: var(--color-gray-600);
+            margin-bottom: 0;
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Team Section */
+        .team-card {
+            display: flex;
+            gap: var(--space-6);
+            background: var(--color-white);
+            padding: var(--space-6);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-md);
+            align-items: center;
+        }
+        
+        @media (max-width: 767px) {
+            .team-card { flex-direction: column; text-align: center; }
+        }
+        
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--color-yellow-primary), var(--color-yellow-dark));
+            border-radius: var(--radius-full);
+        }
+        
+        .team-info h3 { margin-bottom: var(--space-2); }
+        .team-info .role { color: var(--color-blue-primary); font-weight: var(--font-weight-bold); margin-bottom: var(--space-3); }
+        .team-info p { color: var(--color-gray-600); margin-bottom: 0; }
+        
+        /* Schedule */
+        .schedule-card {
+            background: var(--color-white);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .schedule-header {
+            background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal));
+            color: var(--color-white);
+            padding: var(--space-6);
+            text-align: center;
+        }
+        
+        .schedule-header h3 { color: var(--color-white); margin-bottom: var(--space-2); }
+        .schedule-header p { margin: 0; opacity: 0.9; }
+        
+        .schedule-body { padding: var(--space-6); }
+        
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-4);
+            border-bottom: 1px dashed var(--color-gray-200);
+        }
+        
+        .schedule-item:last-child { border-bottom: none; }
+        
+        .schedule-day { font-weight: var(--font-weight-bold); }
+        .schedule-time { color: var(--color-gray-600); }
+        .schedule-note { 
+            font-size: var(--font-size-sm); 
+            color: var(--color-blue-primary);
+            font-weight: var(--font-weight-bold);
+        }
+        
+        /* Quick Links */
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+            justify-content: center;
+        }
+        
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-4) var(--space-6);
+            background: var(--color-white);
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-sm);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            transition: all var(--transition-base);
+        }
+        
+        .quick-link:hover {
+            background: var(--color-blue-primary);
+            color: var(--color-white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--color-yellow-primary), var(--color-yellow-dark));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '🐾';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.1;
+            top: -30%;
+            left: -5%;
+        }
+        
+        .cta-content { position: relative; z-index: 1; text-align: center; }
+        .cta-content h2 { margin-bottom: var(--space-4); }
+        .cta-content p { color: var(--color-gray-700); font-size: var(--font-size-lg); max-width: 600px; margin: 0 auto var(--space-8); }
+        
+        /* Footer */
+        .footer {
+            background: var(--color-dark);
+            color: var(--color-white);
+            padding: var(--space-16) 0 var(--space-8);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-10);
+            margin-bottom: var(--space-10);
+        }
+        
+        .footer-section h4 { color: var(--color-yellow-primary); font-size: var(--font-size-lg); margin-bottom: var(--space-5); }
+        .footer-section p, .footer-section a { color: rgba(255, 255, 255, 0.7); display: block; margin-bottom: var(--space-3); }
+        .footer-section a:hover { color: var(--color-yellow-primary); }
+        .footer-logo { height: 50px; margin-bottom: var(--space-4); filter: brightness(0) invert(1); }
+        
+        .footer-bottom {
+            padding-top: var(--space-8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        .footer-bottom p { color: rgba(255, 255, 255, 0.5); margin-bottom: 0; }
+        .footer-bottom-links { display: flex; gap: var(--space-6); }
+        .footer-bottom-links a { color: rgba(255, 255, 255, 0.5); font-size: var(--font-size-sm); }
+        .footer-bottom-links a:hover { color: var(--color-yellow-primary); }
+        
+        .wigram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-sm);
+        }
+        
+        .wigram-link:hover { background: rgba(255, 255, 255, 0.2); color: var(--color-white); }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa Logo" width="180" height="60">
+            </a>
+            
+            <nav class="nav-desktop">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="daycare.html" class="nav-link active">Day Care</a></li>
+                    <li><a href="rehabilitation.html" class="nav-link">Rehab & Hydro</a></li>
+                    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-primary"><span>🔐</span> Member Login</a>
+                </div>
+            </nav>
+            
+            <button class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+    
+    <div class="mobile-menu-overlay"></div>
+    
+    <nav class="mobile-menu">
+        <button class="mobile-menu-close" aria-label="Close menu">✕</button>
+        <ul class="mobile-nav-list">
+            <li><a href="index.html" class="mobile-nav-link">🏠 Home</a></li>
+            <li><a href="services.html" class="mobile-nav-link">🎾 Services</a></li>
+            <li><a href="daycare.html" class="mobile-nav-link">🐕 Day Care</a></li>
+            <li><a href="daycare-prices.html" class="mobile-nav-link">💰 Pricing</a></li>
+            <li><a href="rehabilitation.html" class="mobile-nav-link">💧 Rehab & Hydro</a></li>
+            <li><a href="gallery.html" class="mobile-nav-link">📸 Gallery</a></li>
+            <li><a href="blog.html" class="mobile-nav-link">📝 Blog</a></li>
+            <li><a href="index.html#contact" class="mobile-nav-link">📞 Contact</a></li>
+        </ul>
+        <div class="mobile-menu-cta">
+            <a href="login.html" class="btn btn-primary btn-block"><span>🔐</span> Member Login</a>
+        </div>
+    </nav>
+    
+    <main id="main-content">
+        <!-- Page Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-badge">🐕 Day Care</span>
+                <h1>Your Dog's Home Away From Home</h1>
+                <p>Carefully scheduled days of play, socialisation, activities, and rest in our purpose-built facility supervised by qualified animal care professionals.</p>
+            </div>
+        </section>
+        
+        <!-- Info Banner -->
+        <div class="info-banner">
+            <div class="container">
+                <p>🐾 Mondays are reserved for SMALL BREEDS only! 🐾</p>
+            </div>
+        </div>
+        
+        <!-- What We Offer -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">✨ What We Offer</span>
+                    <h2>A Tail-Wagging Good Time!</h2>
+                    <p>Every day at Good Dog Spa is an adventure for your furry friend.</p>
+                </div>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-card-icon">🎾</div>
+                        <h3>Supervised Play</h3>
+                        <p>Structured group play sessions with constant supervision from our trained staff.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-card-icon">🐕‍🦺</div>
+                        <h3>Size-Appropriate Groups</h3>
+                        <p>Dogs are grouped by size and temperament for safe, enjoyable play.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-card-icon">😴</div>
+                        <h3>Rest Periods</h3>
+                        <p>Scheduled quiet time ensures your dog doesn't get overtired.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-card-icon">🏥</div>
+                        <h3>Vet On-Site</h3>
+                        <p>Part of Wigram Vet, giving you peace of mind with medical support nearby.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-card-icon">🌿</div>
+                        <h3>Outdoor Area</h3>
+                        <p>Specially designed exterior fenced area for toileting and fresh air.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-card-icon">💕</div>
+                        <h3>Socialisation</h3>
+                        <p>Help your dog build confidence and social skills with other pups.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Our Team -->
+        <section class="section bg-gray">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">👋 Meet the Team</span>
+                    <h2>Qualified & Caring Staff</h2>
+                    <p>Our team loves dogs as much as you do!</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="team-card">
+                        <div class="team-avatar">👩</div>
+                        <div class="team-info">
+                            <h3>Courtney</h3>
+                            <p class="role">Day Care Supervisor</p>
+                            <p>Courtney ensures every pup has a fun, safe day at the spa. Her passion for animal care shines through in everything she does.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-avatar">👩</div>
+                        <div class="team-info">
+                            <h3>Ginny</h3>
+                            <p class="role">Day Care Assistant</p>
+                            <p>Ginny brings endless energy and love to our daycare. She's a favourite among our regular pups!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Schedule & Quick Links -->
+        <section class="section">
+            <div class="container">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Schedule -->
+                    <div class="schedule-card">
+                        <div class="schedule-header">
+                            <h3>🕐 Hours of Operation</h3>
+                            <p>Drop off & pick up times</p>
+                        </div>
+                        <div class="schedule-body">
+                            <div class="schedule-item">
+                                <span class="schedule-day">Monday</span>
+                                <span class="schedule-time">7am - 6pm</span>
+                                <span class="schedule-note">Small Breeds Only</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Tuesday</span>
+                                <span class="schedule-time">7am - 6pm</span>
+                                <span></span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Wednesday</span>
+                                <span class="schedule-time">7am - 6pm</span>
+                                <span></span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Thursday</span>
+                                <span class="schedule-time">7am - 6pm</span>
+                                <span></span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Friday</span>
+                                <span class="schedule-time">7am - 6pm</span>
+                                <span></span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Saturday</span>
+                                <span class="schedule-time">Closed</span>
+                                <span></span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Sunday</span>
+                                <span class="schedule-time">Closed</span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Session Types -->
+                    <div>
+                        <h3 class="mb-6">📅 Session Types</h3>
+                        
+                        <div class="card p-5 mb-4">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h4 class="font-display">3 Hour Stay</h4>
+                                    <p class="text-gray mb-0 text-sm">Perfect for a quick play date</p>
+                                </div>
+                                <span class="text-2xl font-bold text-blue">$26.50</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card p-5 mb-4">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h4 class="font-display">Half Day</h4>
+                                    <p class="text-gray mb-0 text-sm">7am-12:30pm or 12:30pm-6pm</p>
+                                </div>
+                                <span class="text-2xl font-bold text-blue">$38.50</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card p-5 mb-4 border-3 border-yellow">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h4 class="font-display">Full Day <span class="badge badge-secondary">Popular</span></h4>
+                                    <p class="text-gray mb-0 text-sm">7am - 6pm</p>
+                                </div>
+                                <span class="text-2xl font-bold text-blue">$50.50</span>
+                            </div>
+                        </div>
+                        
+                        <a href="daycare-prices.html" class="btn btn-secondary btn-block">View All Prices & Concessions →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Quick Links -->
+        <section class="section bg-gray">
+            <div class="container">
+                <div class="section-header">
+                    <h2>📚 Important Information</h2>
+                    <p>Everything you need to know before your dog's first visit</p>
+                </div>
+                
+                <div class="quick-links">
+                    <a href="daycare-prices.html" class="quick-link">💰 Full Price List</a>
+                    <a href="daycare-regulations.html" class="quick-link">📋 Daycare Rules</a>
+                    <a href="gallery.html" class="quick-link">📸 Photo Gallery</a>
+                    <a href="login.html" class="quick-link">📅 Book Online</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA -->
+        <section class="cta-section section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Book Your Pup's First Visit? 🐕</h2>
+                    <p>Book a FREE 15-minute behaviour assessment to see if your dog is the perfect fit for our daycare family!</p>
+                    <div class="flex justify-center gap-4 flex-wrap">
+                        <a href="login.html" class="btn btn-primary btn-lg">Book Free Assessment 🐾</a>
+                        <a href="tel:039290987" class="btn btn-outline btn-lg">📞 Call (03) 929 0987</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="footer-logo">
+                    <p>Your dog's home away from home. Premium day care, hydrotherapy & rehabilitation in Christchurch.</p>
+                    <a href="https://wigramvet.co.nz" target="_blank" rel="noopener" class="wigram-link mt-4">🏥 Part of Wigram Vet</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <a href="daycare.html">Dog Day Care</a>
+                    <a href="rehabilitation.html">Rehabilitation</a>
+                    <a href="rehabilitation.html#hydrotherapy">Hydrotherapy</a>
+                    <a href="daycare-prices.html">Pricing</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="services.html">All Services</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="login.html">Member Portal</a>
+                    <a href="daycare-regulations.html">Regulations</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📞 <a href="tel:039290987">(03) 929 0987</a></p>
+                    <p>✉️ <a href="mailto:gooddogspa@wigramvet.co.nz">gooddogspa@wigramvet.co.nz</a></p>
+                    <p>📍 Wigram, Christchurch</p>
+                    <p>🕐 Mon-Fri: 7am - 6pm</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© <span class="current-year">2024</span> Good Dog Spa Wigram. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="terms.html">Terms & Conditions</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/components/navigation.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

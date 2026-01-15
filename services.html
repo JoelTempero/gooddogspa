@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Our Services | Good Dog Spa Wigram - Day Care, Hydrotherapy & Rehabilitation</title>
+    <meta name="description" content="Explore our range of premium dog services including day care, hydrotherapy, and rehabilitation therapy. Purpose-built facility in Christchurch with qualified staff.">
+    <meta name="keywords" content="dog services Christchurch, dog day care, hydrotherapy, dog rehabilitation, pet services Wigram">
+    <link rel="canonical" href="https://gooddogspa.sidequest.nz/services.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Our Services | Good Dog Spa Wigram">
+    <meta property="og:description" content="Premium dog day care, hydrotherapy & rehabilitation services in Christchurch.">
+    <meta property="og:url" content="https://gooddogspa.sidequest.nz/services.html">
+    <meta property="og:image" content="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    
+    <style>
+        /* Header styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-fixed);
+            background: var(--color-white);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+            padding: 0 var(--container-padding);
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        
+        .logo img { height: 50px; width: auto; }
+        
+        .nav-desktop {
+            display: none;
+            align-items: center;
+            gap: var(--space-8);
+        }
+        
+        @media (min-width: 1024px) {
+            .nav-desktop { display: flex; }
+        }
+        
+        .nav-list {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+        }
+        
+        .nav-link {
+            position: relative;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            padding: var(--space-2) 0;
+        }
+        
+        .nav-link:hover, .nav-link.active { color: var(--color-blue-primary); }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--color-yellow-primary);
+            border-radius: var(--radius-full);
+            transition: width var(--transition-base);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            gap: 6px;
+            cursor: pointer;
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-menu-btn { display: none; }
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--color-dark);
+            border-radius: var(--radius-full);
+            transition: all var(--transition-base);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 350px;
+            height: 100vh;
+            background: var(--color-white);
+            padding: var(--space-20) var(--space-6) var(--space-6);
+            box-shadow: var(--shadow-2xl);
+            transform: translateX(100%);
+            transition: transform var(--transition-base);
+            z-index: var(--z-fixed);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            background: var(--color-gray-100);
+            border-radius: var(--radius-full);
+        }
+        
+        .mobile-menu-close:hover { background: var(--color-coral); color: var(--color-white); }
+        
+        .mobile-nav-list { display: flex; flex-direction: column; gap: var(--space-2); }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: var(--space-4);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            border-radius: var(--radius-lg);
+        }
+        
+        .mobile-nav-link:hover { background: var(--color-blue-light); color: var(--color-blue-primary); }
+        
+        .mobile-menu-cta {
+            margin-top: var(--space-6);
+            padding-top: var(--space-6);
+            border-top: 1px solid var(--color-gray-200);
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+            z-index: calc(var(--z-fixed) - 1);
+        }
+        
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        /* Page Header */
+        .page-hero {
+            padding-top: calc(var(--header-height) + var(--space-12));
+            padding-bottom: var(--space-12);
+            background: linear-gradient(135deg, var(--color-yellow-light) 0%, var(--color-blue-light) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: '🐾';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.05;
+            top: -20%;
+            left: -5%;
+        }
+        
+        .page-hero h1 { margin-bottom: var(--space-4); }
+        .page-hero p { max-width: 600px; margin: 0 auto; color: var(--color-gray-600); font-size: var(--font-size-lg); }
+        
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-8);
+        }
+        
+        @media (min-width: 768px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (min-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        
+        .service-card-large {
+            background: var(--color-white);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+        
+        .service-card-large:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .service-card-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .service-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+        
+        .service-card-large:hover .service-card-image img {
+            transform: scale(1.1);
+        }
+        
+        .service-card-badge {
+            position: absolute;
+            top: var(--space-4);
+            left: var(--space-4);
+            padding: var(--space-2) var(--space-4);
+            background: var(--color-yellow-primary);
+            color: var(--color-dark);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-bold);
+            border-radius: var(--radius-full);
+        }
+        
+        .service-card-body {
+            padding: var(--space-6);
+        }
+        
+        .service-card-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--color-blue-light), var(--color-yellow-light));
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--space-4);
+        }
+        
+        .service-card-body h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-3);
+        }
+        
+        .service-card-body p {
+            color: var(--color-gray-600);
+            margin-bottom: var(--space-5);
+        }
+        
+        .service-card-features {
+            margin-bottom: var(--space-5);
+        }
+        
+        .service-card-features li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) 0;
+            color: var(--color-gray-600);
+            font-size: var(--font-size-sm);
+        }
+        
+        .service-card-features li::before {
+            content: '✓';
+            color: var(--color-green);
+            font-weight: bold;
+        }
+        
+        /* Who Benefits Section */
+        .benefits-section {
+            background: var(--color-gray-50);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-6);
+        }
+        
+        .benefit-card {
+            background: var(--color-white);
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-3);
+        }
+        
+        .benefit-card h4 {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-2);
+        }
+        
+        .benefit-card p {
+            color: var(--color-gray-600);
+            font-size: var(--font-size-sm);
+            margin-bottom: 0;
+        }
+        
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '🐾';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.1;
+            top: -30%;
+            left: -5%;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .cta-content h2 { color: var(--color-white); margin-bottom: var(--space-4); }
+        .cta-content p { color: rgba(255, 255, 255, 0.9); font-size: var(--font-size-lg); max-width: 600px; margin: 0 auto var(--space-8); }
+        
+        /* Footer */
+        .footer {
+            background: var(--color-dark);
+            color: var(--color-white);
+            padding: var(--space-16) 0 var(--space-8);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-10);
+            margin-bottom: var(--space-10);
+        }
+        
+        .footer-section h4 {
+            color: var(--color-yellow-primary);
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-5);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            display: block;
+            margin-bottom: var(--space-3);
+        }
+        
+        .footer-section a:hover { color: var(--color-yellow-primary); }
+        
+        .footer-logo { height: 50px; margin-bottom: var(--space-4); filter: brightness(0) invert(1); }
+        
+        .footer-bottom {
+            padding-top: var(--space-8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        .footer-bottom p { color: rgba(255, 255, 255, 0.5); margin-bottom: 0; }
+        .footer-bottom-links { display: flex; gap: var(--space-6); }
+        .footer-bottom-links a { color: rgba(255, 255, 255, 0.5); font-size: var(--font-size-sm); }
+        .footer-bottom-links a:hover { color: var(--color-yellow-primary); }
+        
+        .wigram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-sm);
+        }
+        
+        .wigram-link:hover { background: rgba(255, 255, 255, 0.2); color: var(--color-white); }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa Logo" width="180" height="60">
+            </a>
+            
+            <nav class="nav-desktop">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link active">Services</a></li>
+                    <li><a href="daycare.html" class="nav-link">Day Care</a></li>
+                    <li><a href="rehabilitation.html" class="nav-link">Rehab & Hydro</a></li>
+                    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-primary"><span>🔐</span> Member Login</a>
+                </div>
+            </nav>
+            
+            <button class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+    
+    <div class="mobile-menu-overlay"></div>
+    
+    <nav class="mobile-menu">
+        <button class="mobile-menu-close" aria-label="Close menu">✕</button>
+        <ul class="mobile-nav-list">
+            <li><a href="index.html" class="mobile-nav-link">🏠 Home</a></li>
+            <li><a href="services.html" class="mobile-nav-link">🎾 Services</a></li>
+            <li><a href="daycare.html" class="mobile-nav-link">🐕 Day Care</a></li>
+            <li><a href="daycare-prices.html" class="mobile-nav-link">💰 Pricing</a></li>
+            <li><a href="rehabilitation.html" class="mobile-nav-link">💧 Rehab & Hydro</a></li>
+            <li><a href="gallery.html" class="mobile-nav-link">📸 Gallery</a></li>
+            <li><a href="blog.html" class="mobile-nav-link">📝 Blog</a></li>
+            <li><a href="index.html#contact" class="mobile-nav-link">📞 Contact</a></li>
+        </ul>
+        <div class="mobile-menu-cta">
+            <a href="login.html" class="btn btn-primary btn-block"><span>🔐</span> Member Login</a>
+        </div>
+    </nav>
+    
+    <main id="main-content">
+        <!-- Page Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-badge">🎾 Our Services</span>
+                <h1>Services for Happy, Healthy Pups!</h1>
+                <p>From playtime to pampering, rehabilitation to relaxation - we provide comprehensive care for your furry family members.</p>
+            </div>
+        </section>
+        
+        <!-- Main Services -->
+        <section class="section">
+            <div class="container">
+                <div class="services-grid">
+                    <!-- Day Care -->
+                    <article class="service-card-large">
+                        <div class="service-card-image">
+                            <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3118-450x350.jpg" alt="Dogs playing at daycare" loading="lazy">
+                            <span class="service-card-badge">Most Popular</span>
+                        </div>
+                        <div class="service-card-body">
+                            <div class="service-card-icon">🏠</div>
+                            <h3>Dog Day Care</h3>
+                            <p>Your dog's home away from home! Carefully scheduled days of play, socialisation, activities, and rest supervised by our qualified team.</p>
+                            <ul class="service-card-features">
+                                <li>Supervised group play sessions</li>
+                                <li>Size-appropriate play groups</li>
+                                <li>Monday small breeds only</li>
+                                <li>Free behaviour assessment</li>
+                            </ul>
+                            <a href="daycare.html" class="btn btn-primary btn-block">Learn More →</a>
+                        </div>
+                    </article>
+                    
+                    <!-- Rehabilitation -->
+                    <article class="service-card-large">
+                        <div class="service-card-image">
+                            <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3121-1024x683-450x350.jpg" alt="Dog rehabilitation therapy" loading="lazy">
+                            <span class="service-card-badge">Expert Care</span>
+                        </div>
+                        <div class="service-card-body">
+                            <div class="service-card-icon">🏥</div>
+                            <h3>Physical Rehabilitation</h3>
+                            <p>Canine Rehabilitation at the Good Dog Spa provides the same high quality care we expect for ourselves after an injury.</p>
+                            <ul class="service-card-features">
+                                <li>Certified practitioner (Kate Donald)</li>
+                                <li>Post-surgery recovery</li>
+                                <li>Arthritis management</li>
+                                <li>Individualised programs</li>
+                            </ul>
+                            <a href="rehabilitation.html" class="btn btn-primary btn-block">Learn More →</a>
+                        </div>
+                    </article>
+                    
+                    <!-- Hydrotherapy -->
+                    <article class="service-card-large">
+                        <div class="service-card-image">
+                            <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3127-683x1024-450x350.jpg" alt="Dog hydrotherapy underwater treadmill" loading="lazy">
+                            <span class="service-card-badge">State-of-the-Art</span>
+                        </div>
+                        <div class="service-card-body">
+                            <div class="service-card-icon">💧</div>
+                            <h3>Hydrotherapy</h3>
+                            <p>Our AQUATREAD underwater treadmill provides a controlled environment for physical rehabilitation and conditioning.</p>
+                            <ul class="service-card-features">
+                                <li>AQUATREAD underwater treadmill</li>
+                                <li>Reduces joint stress</li>
+                                <li>Builds muscle strength</li>
+                                <li>Pain management benefits</li>
+                            </ul>
+                            <a href="rehabilitation.html#hydrotherapy" class="btn btn-primary btn-block">Learn More →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Who Benefits -->
+        <section class="benefits-section section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">🌟 Who We Help</span>
+                    <h2>Our Services Benefit Many Pets</h2>
+                    <p>We work with a wide variety of dogs (and some cats!) to improve their mobility and quality of life.</p>
+                </div>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🐕‍🦺</div>
+                        <h4>Senior Pets</h4>
+                        <p>Improve strength, mobility and vitality for older dogs with arthritis or age-related conditions.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🏃</div>
+                        <h4>Agility Dogs</h4>
+                        <p>Improve strength, fitness and condition with full body assessments before events.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🐕</div>
+                        <h4>Ex-Racing Greyhounds</h4>
+                        <p>Help retired racers transition to pet life with proper rehabilitation care.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🐑</div>
+                        <h4>Working Dogs</h4>
+                        <p>Farm dogs, Search and Rescue, Police Dogs - keep them in peak condition.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🐱</div>
+                        <h4>Cats Too!</h4>
+                        <p>We also treat cats with orthopaedic, musculo-skeletal or neurological conditions.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🩹</div>
+                        <h4>Post-Surgery Recovery</h4>
+                        <p>Vital rehabilitation following orthopedic or neurological surgery.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing Preview -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">💰 Pricing</span>
+                    <h2>Transparent, Fair Pricing</h2>
+                    <p>We offer competitive rates with concession discounts for regular visitors.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Daycare Pricing -->
+                    <div class="card p-8">
+                        <h3 class="mb-4">🏠 Day Care Rates</h3>
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center py-3 border-b">
+                                <span>3 Hour Stay</span>
+                                <span class="font-bold text-blue">$26.50</span>
+                            </div>
+                            <div class="flex justify-between items-center py-3 border-b">
+                                <span>Half Day (7am-12:30pm or 12:30-6pm)</span>
+                                <span class="font-bold text-blue">$38.50</span>
+                            </div>
+                            <div class="flex justify-between items-center py-3 border-b">
+                                <span>Full Day (7am-6pm)</span>
+                                <span class="font-bold text-blue">$50.50</span>
+                            </div>
+                        </div>
+                        <a href="daycare-prices.html" class="btn btn-secondary btn-block">View All Daycare Prices →</a>
+                    </div>
+                    
+                    <!-- Rehab Pricing -->
+                    <div class="card p-8">
+                        <h3 class="mb-4">🏥 Rehabilitation Rates</h3>
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center py-3 border-b">
+                                <span>First Assessment + Session (1hr)</span>
+                                <span class="font-bold text-blue">$125</span>
+                            </div>
+                            <div class="flex justify-between items-center py-3 border-b">
+                                <span>Follow-up Rehab or Hydro (30min)</span>
+                                <span class="font-bold text-blue">$70</span>
+                            </div>
+                            <div class="flex justify-between items-center py-3 border-b">
+                                <span>Full Session - Rehab + Hydro (1hr)</span>
+                                <span class="font-bold text-blue">$125</span>
+                            </div>
+                        </div>
+                        <a href="rehabilitation.html#pricing" class="btn btn-secondary btn-block">View All Rehab Prices →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA -->
+        <section class="cta-section section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Get Started? 🎉</h2>
+                    <p>Book a FREE behaviour assessment for daycare, or schedule a rehabilitation consultation with Kate.</p>
+                    <div class="flex justify-center gap-4 flex-wrap">
+                        <a href="login.html" class="btn btn-secondary btn-lg">Book Online 🐾</a>
+                        <a href="tel:039290987" class="btn btn-outline-light btn-lg">📞 Call (03) 929 0987</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="footer-logo">
+                    <p>Your dog's home away from home. Premium day care, hydrotherapy & rehabilitation in Christchurch.</p>
+                    <a href="https://wigramvet.co.nz" target="_blank" rel="noopener" class="wigram-link mt-4">🏥 Part of Wigram Vet</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <a href="daycare.html">Dog Day Care</a>
+                    <a href="rehabilitation.html">Rehabilitation</a>
+                    <a href="rehabilitation.html#hydrotherapy">Hydrotherapy</a>
+                    <a href="daycare-prices.html">Pricing</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="services.html">All Services</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="login.html">Member Portal</a>
+                    <a href="daycare-regulations.html">Regulations</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📞 <a href="tel:039290987">(03) 929 0987</a></p>
+                    <p>✉️ <a href="mailto:gooddogspa@wigramvet.co.nz">gooddogspa@wigramvet.co.nz</a></p>
+                    <p>📍 Wigram, Christchurch</p>
+                    <p>🕐 Mon-Fri: 7am - 6pm</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© <span class="current-year">2024</span> Good Dog Spa Wigram. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="terms.html">Terms & Conditions</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/components/navigation.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

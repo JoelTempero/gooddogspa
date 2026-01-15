@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Daycare Regulations | Good Dog Spa Wigram - Rules & Requirements</title>
+    <meta name="description" content="Important rules and regulations for dog daycare at Good Dog Spa Wigram. Health requirements, vaccination policy, behaviour standards, and cancellation policy.">
+    <meta name="keywords" content="dog daycare rules, daycare requirements, vaccination requirements dogs, dog daycare policy">
+    <link rel="canonical" href="https://gooddogspa.sidequest.nz/daycare-regulations.html">
+    
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    
+    <style>
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-fixed);
+            background: var(--color-white);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+            padding: 0 var(--container-padding);
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        
+        .logo img { height: 50px; width: auto; }
+        
+        .nav-desktop { display: none; align-items: center; gap: var(--space-8); }
+        @media (min-width: 1024px) { .nav-desktop { display: flex; } }
+        
+        .nav-list { display: flex; align-items: center; gap: var(--space-6); }
+        
+        .nav-link {
+            position: relative;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            padding: var(--space-2) 0;
+        }
+        
+        .nav-link:hover, .nav-link.active { color: var(--color-blue-primary); }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--color-yellow-primary);
+            border-radius: var(--radius-full);
+            transition: width var(--transition-base);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            gap: 6px;
+            cursor: pointer;
+        }
+        
+        @media (min-width: 1024px) { .mobile-menu-btn { display: none; } }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--color-dark);
+            border-radius: var(--radius-full);
+            transition: all var(--transition-base);
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 350px;
+            height: 100vh;
+            background: var(--color-white);
+            padding: var(--space-20) var(--space-6) var(--space-6);
+            box-shadow: var(--shadow-2xl);
+            transform: translateX(100%);
+            transition: transform var(--transition-base);
+            z-index: var(--z-fixed);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            background: var(--color-gray-100);
+            border-radius: var(--radius-full);
+        }
+        
+        .mobile-nav-list { display: flex; flex-direction: column; gap: var(--space-2); }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: var(--space-4);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            border-radius: var(--radius-lg);
+        }
+        
+        .mobile-nav-link:hover { background: var(--color-blue-light); color: var(--color-blue-primary); }
+        
+        .mobile-menu-cta { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-gray-200); }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            z-index: calc(var(--z-fixed) - 1);
+        }
+        
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        /* Page Hero */
+        .page-hero {
+            padding-top: calc(var(--header-height) + var(--space-12));
+            padding-bottom: var(--space-12);
+            background: linear-gradient(135deg, var(--color-yellow-light) 0%, var(--color-blue-light) 100%);
+            text-align: center;
+        }
+        
+        .page-hero h1 { margin-bottom: var(--space-4); }
+        .page-hero p { max-width: 600px; margin: 0 auto; color: var(--color-gray-600); font-size: var(--font-size-lg); }
+        
+        /* Breadcrumbs */
+        .breadcrumbs-section {
+            background: var(--color-white);
+            padding: var(--space-4) 0;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+        
+        /* Regulation Cards */
+        .regulation-card {
+            background: var(--color-white);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            margin-bottom: var(--space-6);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .regulation-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            margin-bottom: var(--space-5);
+        }
+        
+        .regulation-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--color-blue-light), var(--color-yellow-light));
+            border-radius: var(--radius-xl);
+            flex-shrink: 0;
+        }
+        
+        .regulation-header h3 {
+            font-size: var(--font-size-xl);
+            margin: 0;
+        }
+        
+        .regulation-content p {
+            color: var(--color-gray-600);
+            line-height: 1.7;
+        }
+        
+        .regulation-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--color-yellow-light);
+            border-left: 4px solid var(--color-yellow-primary);
+            padding: var(--space-5);
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+            margin: var(--space-5) 0;
+        }
+        
+        .highlight-box p {
+            margin: 0;
+            color: var(--color-gray-700);
+        }
+        
+        /* Alert Box */
+        .alert-box {
+            background: var(--color-coral);
+            color: var(--color-white);
+            padding: var(--space-5);
+            border-radius: var(--radius-lg);
+            margin: var(--space-5) 0;
+        }
+        
+        .alert-box p {
+            margin: 0;
+            color: var(--color-white);
+        }
+        
+        /* Quick Summary */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-10);
+        }
+        
+        .summary-item {
+            background: var(--color-white);
+            padding: var(--space-5);
+            border-radius: var(--radius-xl);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .summary-item-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-2);
+        }
+        
+        .summary-item h4 {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--space-1);
+        }
+        
+        .summary-item p {
+            color: var(--color-gray-600);
+            font-size: var(--font-size-sm);
+            margin: 0;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--color-dark);
+            color: var(--color-white);
+            padding: var(--space-16) 0 var(--space-8);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-10);
+            margin-bottom: var(--space-10);
+        }
+        
+        .footer-section h4 { color: var(--color-yellow-primary); font-size: var(--font-size-lg); margin-bottom: var(--space-5); }
+        .footer-section p, .footer-section a { color: rgba(255, 255, 255, 0.7); display: block; margin-bottom: var(--space-3); }
+        .footer-section a:hover { color: var(--color-yellow-primary); }
+        .footer-logo { height: 50px; margin-bottom: var(--space-4); filter: brightness(0) invert(1); }
+        
+        .footer-bottom {
+            padding-top: var(--space-8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        .footer-bottom p { color: rgba(255, 255, 255, 0.5); margin-bottom: 0; }
+        .footer-bottom-links { display: flex; gap: var(--space-6); }
+        .footer-bottom-links a { color: rgba(255, 255, 255, 0.5); font-size: var(--font-size-sm); }
+        
+        .wigram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-sm);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa Logo" width="180" height="60">
+            </a>
+            
+            <nav class="nav-desktop">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="daycare.html" class="nav-link active">Day Care</a></li>
+                    <li><a href="rehabilitation.html" class="nav-link">Rehab & Hydro</a></li>
+                    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-primary"><span>🔐</span> Member Login</a>
+                </div>
+            </nav>
+            
+            <button class="mobile-menu-btn" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+    
+    <div class="mobile-menu-overlay"></div>
+    
+    <nav class="mobile-menu">
+        <button class="mobile-menu-close" aria-label="Close menu">✕</button>
+        <ul class="mobile-nav-list">
+            <li><a href="index.html" class="mobile-nav-link">🏠 Home</a></li>
+            <li><a href="services.html" class="mobile-nav-link">🎾 Services</a></li>
+            <li><a href="daycare.html" class="mobile-nav-link">🐕 Day Care</a></li>
+            <li><a href="daycare-prices.html" class="mobile-nav-link">💰 Pricing</a></li>
+            <li><a href="rehabilitation.html" class="mobile-nav-link">💧 Rehab & Hydro</a></li>
+            <li><a href="gallery.html" class="mobile-nav-link">📸 Gallery</a></li>
+            <li><a href="blog.html" class="mobile-nav-link">📝 Blog</a></li>
+            <li><a href="index.html#contact" class="mobile-nav-link">📞 Contact</a></li>
+        </ul>
+        <div class="mobile-menu-cta">
+            <a href="login.html" class="btn btn-primary btn-block"><span>🔐</span> Member Login</a>
+        </div>
+    </nav>
+    
+    <main id="main-content">
+        <!-- Page Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-badge">📋 Rules & Requirements</span>
+                <h1>Daycare Regulations</h1>
+                <p>Important information to ensure a safe and enjoyable experience for all our furry guests.</p>
+            </div>
+        </section>
+        
+        <!-- Breadcrumbs -->
+        <section class="breadcrumbs-section">
+            <div class="container">
+                <nav class="breadcrumbs">
+                    <a href="index.html">Home</a>
+                    <span class="separator">›</span>
+                    <a href="daycare.html">Day Care</a>
+                    <span class="separator">›</span>
+                    <span class="current">Regulations</span>
+                </nav>
+            </div>
+        </section>
+        
+        <!-- Quick Summary -->
+        <section class="section bg-gray">
+            <div class="container">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-item-icon">💉</div>
+                        <h4>Vaccinated</h4>
+                        <p>All vaccinations required</p>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-icon">🎂</div>
+                        <h4>12+ Weeks</h4>
+                        <p>Minimum age requirement</p>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-icon">✅</div>
+                        <h4>Assessment</h4>
+                        <p>Must pass behaviour test</p>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-icon">⏰</div>
+                        <h4>48hr Notice</h4>
+                        <p>Cancellation policy</p>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-icon">💳</div>
+                        <h4>Pre-Pay</h4>
+                        <p>Payment in advance</p>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-icon">🕕</div>
+                        <h4>Closes 6pm</h4>
+                        <p>Prompt pickup required</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Regulations -->
+        <section class="section">
+            <div class="container container-sm">
+                
+                <!-- Health -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">🏥</div>
+                        <h3>Health Requirements</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>All dogs must be in good health. All clients will need to certify that their dog(s) are in good health and have been free from any condition that could potentially jeopardise other canine guests.</p>
+                        
+                        <p>Dogs that have been ill with a contagious condition in the last 14 days will require written veterinary certification of health to be admitted or readmitted.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Important:</strong> If, at any time during our care, it becomes evident that your dog is ill, you'll be notified and expected to pick up your dog as soon as possible.</p>
+                        </div>
+                        
+                        <p>If, at any time during our care, it becomes evident that your dog has fleas, ticks or worms, treatment will be applied and charged to the pet parent.</p>
+                        
+                        <p>Dogs requiring special attention due to medical restrictions may be charged an additional per day fee for any medicines that need to be administered.</p>
+                    </div>
+                </article>
+                
+                <!-- Leashes & Collars -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">🦮</div>
+                        <h3>Leashes & Collars</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>All dogs <strong>MUST</strong> enter and exit the facility on a leash. We ask you use a fixed length leash no longer than 1 metre.</p>
+                        
+                        <p>Collars should fit your dog(s) well and not be able to be slipped off the head. Good Dog Spa staff will be able to advise if collars are not fitted well.</p>
+                    </div>
+                </article>
+                
+                <!-- Food & Bedding -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">🍖</div>
+                        <h3>Food & Bedding</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>Overnight boarding guests are required to bring their own food into Good Dog Spa. We appreciate when food is measured and packaged in individual servings.</p>
+                        
+                        <p>Clients are to bring in their own bedding.</p>
+                    </div>
+                </article>
+                
+                <!-- Behaviour -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">🐕</div>
+                        <h3>Behaviour Requirements</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>All dogs must pass the <strong>Good Dog Spa Behaviour Assessment</strong> for enrolment in our program. Parents will need to certify that their dog(s) have not harmed or shown any aggressive or threatening behaviour towards any person and/or animal.</p>
+                        
+                        <p>The dogs' safety and health is our main priority. Keep in mind that although your dog is supervised when playing with other dogs, he/she still might receive an occasional nip or scratch.</p>
+                        
+                        <div class="alert-box">
+                            <p><strong>⚠️ We do not accept fence climbers.</strong></p>
+                        </div>
+                        
+                        <p>Dogs must be social and get along with all other dogs if they are to be a guest at Good Dog Spa.</p>
+                    </div>
+                </article>
+                
+                <!-- Elimination -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">🌿</div>
+                        <h3>Toileting</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>At daycare we aim to minimise the number of toileting incidents in our facility. We would be grateful if you could encourage your dog(s) to toilet prior to their attendance at daycare.</p>
+                        
+                        <p>If you do not have time, we have a specially designed exterior fenced area with poo collection which your dog can use if you are running short on time.</p>
+                    </div>
+                </article>
+                
+                <!-- Age -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">🎂</div>
+                        <h3>Age Requirements</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>All dogs must be at least <strong>12 weeks of age</strong> and have all required vaccinations, unless otherwise arranged.</p>
+                    </div>
+                </article>
+                
+                <!-- Fees -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">💳</div>
+                        <h3>Payment & Fees</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>All daycare and boarding fees must be <strong>paid in advance</strong>.</p>
+                        
+                        <p>Discounted, pre-paid concession cards are available. These concessions are <strong>non-refundable</strong>.</p>
+                        
+                        <p><a href="daycare-prices.html" class="text-blue font-bold">View our full price list →</a></p>
+                    </div>
+                </article>
+                
+                <!-- Pickup -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">⏰</div>
+                        <h3>Collecting Your Precious Pet</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>Good Dog Spa closes <strong>promptly at 6pm Monday-Friday</strong>.</p>
+                        
+                        <p>We understand that things don't always run as planned, travel schedules especially can be disrupted. We can make other arrangements if you are running late, just let us know as soon as you know.</p>
+                    </div>
+                </article>
+                
+                <!-- Cancellations -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">📅</div>
+                        <h3>Cancellations</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>Notification of a cancellation must be provided <strong>48 hours prior</strong> to their daycare/overnight stay.</p>
+                    </div>
+                </article>
+                
+                <!-- Emergency -->
+                <article class="regulation-card">
+                    <div class="regulation-header">
+                        <div class="regulation-icon">🚨</div>
+                        <h3>Emergency Medical Release</h3>
+                    </div>
+                    <div class="regulation-content">
+                        <p>In case of any emergency situation or injury, we will attempt to contact you or your emergency contact immediately for instructions.</p>
+                        
+                        <p>If we cannot reach you or your emergency contact and we determine that immediate medical attention is required, we will use <strong>Wigram Vet</strong> for treatment. You will be responsible for any and all costs incurred for treatment.</p>
+                        
+                        <p>If the situation does not require immediate attention, you or your emergency contact will be contacted and advised of the situation. We will then await your instructions.</p>
+                    </div>
+                </article>
+                
+                <!-- CTA -->
+                <div class="text-center mt-10">
+                    <p class="text-lg mb-6">Ready to book your dog's first visit?</p>
+                    <a href="login.html" class="btn btn-primary btn-lg">Book Free Assessment 🐾</a>
+                </div>
+                
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="footer-logo">
+                    <p>Your dog's home away from home. Premium day care, hydrotherapy & rehabilitation in Christchurch.</p>
+                    <a href="https://wigramvet.co.nz" target="_blank" rel="noopener" class="wigram-link mt-4">🏥 Part of Wigram Vet</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <a href="daycare.html">Dog Day Care</a>
+                    <a href="rehabilitation.html">Rehabilitation</a>
+                    <a href="rehabilitation.html#hydrotherapy">Hydrotherapy</a>
+                    <a href="daycare-prices.html">Pricing</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="services.html">All Services</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="login.html">Member Portal</a>
+                    <a href="daycare-regulations.html">Regulations</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📞 <a href="tel:039290987">(03) 929 0987</a></p>
+                    <p>✉️ <a href="mailto:gooddogspa@wigramvet.co.nz">gooddogspa@wigramvet.co.nz</a></p>
+                    <p>📍 Wigram, Christchurch</p>
+                    <p>🕐 Mon-Fri: 7am - 6pm</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© <span class="current-year">2024</span> Good Dog Spa Wigram. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="terms.html">Terms & Conditions</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/components/navigation.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
