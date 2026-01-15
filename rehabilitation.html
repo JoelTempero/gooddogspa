@@ -31,7 +31,7 @@
             left: 0;
             right: 0;
             z-index: var(--z-fixed);
-            background: var(--color-white);
+            background: var(--color-blue-primary);
             box-shadow: var(--shadow-md);
         }
         
@@ -55,11 +55,11 @@
         .nav-link {
             position: relative;
             font-weight: var(--font-weight-bold);
-            color: var(--color-gray-700);
+            color: rgba(255, 255, 255, 0.9);
             padding: var(--space-2) 0;
         }
         
-        .nav-link:hover, .nav-link.active { color: var(--color-blue-primary); }
+        .nav-link:hover, .nav-link.active { color: var(--color-yellow-primary); }
         
         .nav-link::after {
             content: '';
@@ -92,7 +92,7 @@
             display: block;
             width: 28px;
             height: 3px;
-            background: var(--color-dark);
+            background: var(--color-white);
             border-radius: var(--radius-full);
         }
         
@@ -103,7 +103,7 @@
             width: 100%;
             max-width: 350px;
             height: 100vh;
-            background: var(--color-white);
+            background: var(--color-blue-primary);
             padding: var(--space-20) var(--space-6) var(--space-6);
             box-shadow: var(--shadow-2xl);
             transform: translateX(100%);
@@ -134,11 +134,11 @@
             display: block;
             padding: var(--space-4);
             font-weight: var(--font-weight-bold);
-            color: var(--color-gray-700);
+            color: rgba(255, 255, 255, 0.9);
             border-radius: var(--radius-lg);
         }
         
-        .mobile-nav-link:hover { background: var(--color-blue-light); color: var(--color-blue-primary); }
+        .mobile-nav-link:hover { background: var(--color-blue-light); color: var(--color-yellow-primary); }
         
         .mobile-menu-cta { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-gray-200); }
         
@@ -177,7 +177,7 @@
         
         /* Intro Section */
         .intro-section {
-            background: var(--color-white);
+            background: var(--color-blue-primary);
         }
         
         .intro-content {
@@ -210,7 +210,7 @@
             align-items: center;
             gap: var(--space-3);
             padding: var(--space-4);
-            background: var(--color-white);
+            background: var(--color-blue-primary);
             border-radius: var(--radius-xl);
             box-shadow: var(--shadow-sm);
         }
@@ -284,7 +284,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: var(--space-8);
-            background: var(--color-white);
+            background: var(--color-blue-primary);
             border-radius: var(--radius-2xl);
             padding: var(--space-8);
             box-shadow: var(--shadow-lg);
@@ -348,11 +348,11 @@
         
         /* Pricing Section */
         .pricing-section {
-            background: var(--color-white);
+            background: var(--color-blue-primary);
         }
         
         .pricing-table {
-            background: var(--color-white);
+            background: var(--color-blue-primary);
             border-radius: var(--radius-2xl);
             overflow: hidden;
             box-shadow: var(--shadow-md);
@@ -423,7 +423,7 @@
         
         .appointment-types span {
             padding: var(--space-2) var(--space-4);
-            background: var(--color-white);
+            background: var(--color-blue-primary);
             border-radius: var(--radius-full);
             font-size: var(--font-size-sm);
             font-weight: var(--font-weight-semibold);
@@ -431,7 +431,7 @@
         
         /* Footer */
         .footer {
-            background: var(--color-dark);
+            background: var(--color-white);
             color: var(--color-white);
             padding: var(--space-16) 0 var(--space-8);
         }
@@ -495,7 +495,7 @@
                     <li><a href="index.html#contact" class="nav-link">Contact</a></li>
                 </ul>
                 <div class="nav-actions">
-                    <a href="login.html" class="btn btn-primary"><span>🔐</span> Member Login</a>
+                    <a href="login.html" class="btn btn-secondary"><span>🔐</span> Member Login</a>
                 </div>
             </nav>
             
