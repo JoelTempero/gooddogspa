@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits & Packages | Good Dog Spa Member Portal</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <style>
+        :root { --sidebar-width: 260px; }
+        body { min-height: 100vh; background: var(--color-gray-50); }
+        .portal-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: var(--sidebar-width); background: var(--color-dark); color: var(--color-white); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: var(--z-fixed); }
+        @media (max-width: 1023px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } }
+        .sidebar-header { padding: var(--space-6); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { height: 45px; filter: brightness(0) invert(1); }
+        .sidebar-user { padding: var(--space-5); background: rgba(255,255,255,0.05); margin: var(--space-4); border-radius: var(--radius-xl); }
+        .sidebar-user-avatar { width: 50px; height: 50px; background: linear-gradient(135deg, var(--color-yellow-primary), var(--color-yellow-dark)); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: var(--space-3); }
+        .sidebar-user-name { font-weight: var(--font-weight-bold); margin-bottom: var(--space-1); }
+        .sidebar-user-email { font-size: var(--font-size-sm); color: rgba(255,255,255,0.6); }
+        .sidebar-nav { padding: var(--space-4); }
+        .sidebar-nav-label { font-size: var(--font-size-xs); text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: var(--space-3) var(--space-4); margin-top: var(--space-4); }
+        .sidebar-nav-label:first-child { margin-top: 0; }
+        .sidebar-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.7); border-radius: var(--radius-lg); margin-bottom: var(--space-1); }
+        .sidebar-link:hover { background: rgba(255,255,255,0.1); color: var(--color-white); }
+        .sidebar-link.active { background: var(--color-blue-primary); color: var(--color-white); }
+        .sidebar-link-icon { font-size: 1.2rem; }
+        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
+        .logout-btn { display: flex; align-items: center; gap: var(--space-3); width: 100%; padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.6); border-radius: var(--radius-lg); }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); color: var(--color-coral); }
+        .portal-main { flex: 1; margin-left: var(--sidebar-width); min-height: 100vh; }
+        @media (max-width: 1023px) { .portal-main { margin-left: 0; } }
+        .portal-topbar { background: var(--color-white); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: var(--z-sticky); }
+        .mobile-menu-toggle { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; font-size: 1.5rem; background: var(--color-gray-100); border-radius: var(--radius-lg); cursor: pointer; }
+        @media (max-width: 1023px) { .mobile-menu-toggle { display: flex; } }
+        .page-title h1 { font-size: var(--font-size-xl); margin: 0; }
+        .portal-content { padding: var(--space-6); }
+        @media (min-width: 768px) { .portal-content { padding: var(--space-8); } }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: calc(var(--z-fixed) - 1); }
+        .sidebar-overlay.open { opacity: 1; visibility: visible; }
+        
+        /* Credits Balance */
+        .credits-balance { background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal)); border-radius: var(--radius-2xl); padding: var(--space-6); color: var(--color-white); margin-bottom: var(--space-8); }
+        .credits-balance h2 { color: var(--color-white); margin-bottom: var(--space-5); }
+        .balance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--space-4); }
+        .balance-item { background: rgba(255,255,255,0.15); padding: var(--space-4); border-radius: var(--radius-xl); text-align: center; }
+        .balance-item .count { font-size: var(--font-size-3xl); font-weight: var(--font-weight-extrabold); }
+        .balance-item .label { font-size: var(--font-size-sm); opacity: 0.9; }
+        
+        /* Package Cards */
+        .packages-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-6); margin-bottom: var(--space-8); }
+        .package-card { background: var(--color-white); border-radius: var(--radius-2xl); overflow: hidden; box-shadow: var(--shadow-md); position: relative; transition: all var(--transition-base); }
+        .package-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .package-card.popular { border: 3px solid var(--color-yellow-primary); }
+        .package-badge { position: absolute; top: var(--space-4); right: var(--space-4); background: var(--color-yellow-primary); color: var(--color-dark); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
+        .package-header { padding: var(--space-6); text-align: center; background: var(--color-gray-50); }
+        .package-header h3 { margin-bottom: var(--space-2); }
+        .package-header .type { color: var(--color-gray-500); font-size: var(--font-size-sm); }
+        .package-price { padding: var(--space-4); text-align: center; }
+        .package-price .amount { font-family: var(--font-display); font-size: var(--font-size-4xl); color: var(--color-blue-primary); }
+        .package-price .savings { color: var(--color-green); font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); }
+        .package-footer { padding: var(--space-4) var(--space-6) var(--space-6); }
+        
+        /* Transaction History */
+        .transactions-card { background: var(--color-white); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); overflow: hidden; }
+        .transactions-header { padding: var(--space-5); border-bottom: 1px solid var(--color-gray-100); }
+        .transactions-header h3 { margin: 0; }
+        .transaction-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-gray-100); }
+        .transaction-item:last-child { border-bottom: none; }
+        .transaction-info h4 { font-size: var(--font-size-base); margin-bottom: var(--space-1); }
+        .transaction-info p { font-size: var(--font-size-sm); color: var(--color-gray-500); margin: 0; }
+        .transaction-amount { font-weight: var(--font-weight-bold); }
+        .transaction-amount.positive { color: var(--color-green); }
+        .transaction-amount.negative { color: var(--color-gray-600); }
+        
+        /* Payment Modal */
+        .modal { position: fixed; inset: 0; z-index: var(--z-modal); display: flex; align-items: center; justify-content: center; padding: var(--space-4); opacity: 0; visibility: hidden; }
+        .modal.open { opacity: 1; visibility: visible; }
+        .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
+        .modal-content { position: relative; background: var(--color-white); border-radius: var(--radius-2xl); width: 100%; max-width: 450px; overflow: hidden; box-shadow: var(--shadow-2xl); }
+        .modal-header { padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-gray-100); display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h2 { font-size: var(--font-size-xl); margin: 0; }
+        .modal-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--color-gray-100); border-radius: var(--radius-full); cursor: pointer; }
+        .modal-close:hover { background: var(--color-coral); color: var(--color-white); }
+        .modal-body { padding: var(--space-6); }
+        
+        /* Mock Stripe Form */
+        .stripe-mock { background: var(--color-gray-50); padding: var(--space-5); border-radius: var(--radius-lg); border: 2px dashed var(--color-gray-300); text-align: center; margin-bottom: var(--space-5); }
+        .stripe-mock p { color: var(--color-gray-500); margin: 0; }
+        .demo-badge { display: inline-block; background: var(--color-yellow-primary); color: var(--color-dark); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); font-weight: var(--font-weight-bold); font-size: var(--font-size-sm); margin-bottom: var(--space-3); }
+        .payment-summary { background: var(--color-blue-light); padding: var(--space-4); border-radius: var(--radius-lg); margin-bottom: var(--space-5); }
+        .payment-summary p { margin: 0; display: flex; justify-content: space-between; }
+        .payment-summary strong { color: var(--color-blue-primary); }
+    </style>
+</head>
+<body>
+    <div class="portal-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><a href="../index.html"><img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="sidebar-logo"></a></div>
+            <div class="sidebar-user" id="sidebarUser"><div class="sidebar-user-avatar">👤</div><div class="sidebar-user-name">Loading...</div><div class="sidebar-user-email">...</div></div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Main Menu</div>
+                <a href="dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span>Dashboard</a>
+                <a href="dogs.html" class="sidebar-link"><span class="sidebar-link-icon">🐕</span>My Dogs</a>
+                <a href="bookings.html" class="sidebar-link"><span class="sidebar-link-icon">📅</span>Bookings</a>
+                <a href="credits.html" class="sidebar-link active"><span class="sidebar-link-icon">💳</span>Credits & Packages</a>
+                <div class="sidebar-nav-label">Account</div>
+                <a href="profile.html" class="sidebar-link"><span class="sidebar-link-icon">👤</span>My Profile</a>
+                <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>Back to Website</a>
+            </nav>
+            <div class="sidebar-footer"><button class="logout-btn" onclick="handleLogout()"><span>🚪</span>Sign Out</button></div>
+        </aside>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        
+        <main class="portal-main">
+            <div class="portal-topbar">
+                <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="page-title"><h1>💳 Credits & Packages</h1></div>
+                <div class="topbar-actions"></div>
+            </div>
+            
+            <div class="portal-content">
+                <!-- Current Balance -->
+                <div class="credits-balance">
+                    <h2>💰 Your Credit Balance</h2>
+                    <div class="balance-grid" id="balanceGrid"></div>
+                </div>
+                
+                <!-- Available Packages -->
+                <h2 class="mb-6">📦 Buy Credit Packages</h2>
+                <div class="packages-grid" id="packagesGrid"></div>
+                
+                <!-- Transaction History -->
+                <div class="transactions-card">
+                    <div class="transactions-header">
+                        <h3>📜 Transaction History</h3>
+                    </div>
+                    <div id="transactionsList"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💳 Purchase Credits</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-summary" id="paymentSummary"></div>
+                
+                <div class="stripe-mock">
+                    <span class="demo-badge">🎮 Demo Mode</span>
+                    <p>In production, this would be a Stripe payment form.</p>
+                    <p>Click below to simulate a successful payment!</p>
+                </div>
+                
+                <button class="btn btn-primary btn-block" onclick="processPayment()">
+                    Complete Purchase (Demo) 🐾
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/services/mockAuth.js"></script>
+    <script src="../js/services/mockDatabase.js"></script>
+    <script>
+        let currentUser = null;
+        let selectedPackage = null;
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            currentUser = MockAuth.getCurrentUser();
+            if (!currentUser) { window.location.href = '../login.html'; return; }
+            updateUserInfo();
+            await loadCreditsData();
+        });
+        
+        function updateUserInfo() {
+            document.getElementById('sidebarUser').innerHTML = `
+                <div class="sidebar-user-avatar">${currentUser.displayName?.charAt(0).toUpperCase() || '👤'}</div>
+                <div class="sidebar-user-name">${currentUser.displayName || 'User'}</div>
+                <div class="sidebar-user-email">${currentUser.email}</div>
+            `;
+        }
+        
+        async function loadCreditsData() {
+            const credits = await MockDatabase.getCredits(currentUser.uid);
+            const packages = await MockDatabase.getPackages();
+            
+            renderBalance(credits.balance);
+            renderPackages(packages);
+            renderTransactions(credits.transactions);
+        }
+        
+        function renderBalance(balance) {
+            const labels = { fullDay: 'Full Day', halfDay: 'Half Day', threeHour: '3 Hour', rehab30: 'Rehab 30m', rehab60: 'Rehab 1hr' };
+            document.getElementById('balanceGrid').innerHTML = Object.entries(balance).map(([key, value]) => `
+                <div class="balance-item">
+                    <div class="count">${value}</div>
+                    <div class="label">${labels[key]}</div>
+                </div>
+            `).join('');
+        }
+        
+        function renderPackages(packages) {
+            document.getElementById('packagesGrid').innerHTML = packages.map(pkg => `
+                <div class="package-card ${pkg.popular ? 'popular' : ''}">
+                    ${pkg.badge ? `<span class="package-badge">${pkg.badge}</span>` : ''}
+                    ${pkg.popular ? '<span class="package-badge">⭐ Popular</span>' : ''}
+                    ${pkg.bestValue ? '<span class="package-badge">🏆 Best Value</span>' : ''}
+                    <div class="package-header">
+                        <h3>${pkg.name}</h3>
+                        <p class="type">${pkg.type === 'daycare' ? '🏠 Day Care' : '💧 Rehabilitation'}</p>
+                    </div>
+                    <div class="package-price">
+                        <div class="amount">$${pkg.price.toFixed(2)}</div>
+                        <div class="savings">Save $${pkg.savings.toFixed(2)}</div>
+                    </div>
+                    <div class="package-footer">
+                        <button class="btn btn-primary btn-block" onclick="purchasePackage('${pkg.id}')">Buy Now</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function renderTransactions(transactions) {
+            if (transactions.length === 0) {
+                document.getElementById('transactionsList').innerHTML = '<div style="padding: var(--space-6); text-align: center; color: var(--color-gray-500);">No transactions yet</div>';
+                return;
+            }
+            
+            document.getElementById('transactionsList').innerHTML = transactions.slice(0, 10).map(txn => {
+                const date = new Date(txn.date).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' });
+                const isPositive = txn.type === 'purchase';
+                return `
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>${txn.type === 'purchase' ? `Purchased: ${txn.package}` : txn.description}</h4>
+                            <p>${date}</p>
+                        </div>
+                        <div class="transaction-amount ${isPositive ? 'positive' : 'negative'}">
+                            ${isPositive ? '+' : ''}${txn.credits} credits
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        async function purchasePackage(packageId) {
+            const packages = await MockDatabase.getPackages();
+            selectedPackage = packages.find(p => p.id === packageId);
+            
+            document.getElementById('paymentSummary').innerHTML = `
+                <p><span>Package:</span> <strong>${selectedPackage.name}</strong></p>
+                <p><span>Credits:</span> <strong>${selectedPackage.credits} ${selectedPackage.type === 'daycare' ? 'days' : 'sessions'}</strong></p>
+                <p><span>Total:</span> <strong>$${selectedPackage.price.toFixed(2)}</strong></p>
+            `;
+            
+            document.getElementById('paymentModal').classList.add('open');
+        }
+        
+        async function processPayment() {
+            try {
+                await MockDatabase.addCredits(currentUser.uid, selectedPackage);
+                closeModal();
+                alert('Payment successful! Credits added to your account. 🎉');
+                await loadCreditsData();
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('paymentModal').classList.remove('open');
+        }
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('open');
+        }
+        
+        async function handleLogout() { await MockAuth.signOut(); window.location.href = '../login.html'; }
+    </script>
+</body>
+</html>

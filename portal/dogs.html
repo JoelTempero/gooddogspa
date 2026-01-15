@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>My Dogs | Good Dog Spa Member Portal</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    
+    <style>
+        :root { --sidebar-width: 260px; }
+        body { min-height: 100vh; background: var(--color-gray-50); }
+        
+        .portal-layout { display: flex; min-height: 100vh; }
+        
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--color-dark);
+            color: var(--color-white);
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            overflow-y: auto;
+            z-index: var(--z-fixed);
+            transition: transform var(--transition-base);
+        }
+        
+        @media (max-width: 1023px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+        }
+        
+        .sidebar-header { padding: var(--space-6); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { height: 45px; filter: brightness(0) invert(1); }
+        
+        .sidebar-user {
+            padding: var(--space-5);
+            background: rgba(255,255,255,0.05);
+            margin: var(--space-4);
+            border-radius: var(--radius-xl);
+        }
+        .sidebar-user-avatar {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--color-yellow-primary), var(--color-yellow-dark));
+            border-radius: var(--radius-full);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin-bottom: var(--space-3);
+        }
+        .sidebar-user-name { font-weight: var(--font-weight-bold); margin-bottom: var(--space-1); }
+        .sidebar-user-email { font-size: var(--font-size-sm); color: rgba(255,255,255,0.6); }
+        
+        .sidebar-nav { padding: var(--space-4); }
+        .sidebar-nav-label {
+            font-size: var(--font-size-xs); text-transform: uppercase;
+            letter-spacing: 0.1em; color: rgba(255,255,255,0.4);
+            padding: var(--space-3) var(--space-4); margin-top: var(--space-4);
+        }
+        .sidebar-nav-label:first-child { margin-top: 0; }
+        
+        .sidebar-link {
+            display: flex; align-items: center; gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            color: rgba(255,255,255,0.7);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-1);
+            transition: all var(--transition-fast);
+        }
+        .sidebar-link:hover { background: rgba(255,255,255,0.1); color: var(--color-white); }
+        .sidebar-link.active { background: var(--color-blue-primary); color: var(--color-white); }
+        .sidebar-link-icon { font-size: 1.2rem; }
+        
+        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
+        .logout-btn {
+            display: flex; align-items: center; gap: var(--space-3);
+            width: 100%; padding: var(--space-3) var(--space-4);
+            color: rgba(255,255,255,0.6); border-radius: var(--radius-lg);
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); color: var(--color-coral); }
+        
+        .portal-main { flex: 1; margin-left: var(--sidebar-width); min-height: 100vh; }
+        @media (max-width: 1023px) { .portal-main { margin-left: 0; } }
+        
+        .portal-topbar {
+            background: var(--color-white);
+            padding: var(--space-4) var(--space-6);
+            display: flex; align-items: center; justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            position: sticky; top: 0; z-index: var(--z-sticky);
+        }
+        
+        .mobile-menu-toggle {
+            display: none; width: 44px; height: 44px;
+            align-items: center; justify-content: center;
+            font-size: 1.5rem; background: var(--color-gray-100);
+            border-radius: var(--radius-lg); cursor: pointer;
+        }
+        @media (max-width: 1023px) { .mobile-menu-toggle { display: flex; } }
+        
+        .page-title h1 { font-size: var(--font-size-xl); margin: 0; }
+        
+        .portal-content { padding: var(--space-6); }
+        @media (min-width: 768px) { .portal-content { padding: var(--space-8); } }
+        
+        .sidebar-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.5);
+            opacity: 0; visibility: hidden;
+            z-index: calc(var(--z-fixed) - 1);
+        }
+        .sidebar-overlay.open { opacity: 1; visibility: visible; }
+        
+        /* Dogs Grid */
+        .dogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--space-6);
+        }
+        
+        .dog-card-full {
+            background: var(--color-white);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+        
+        .dog-card-full:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .dog-card-header {
+            background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal));
+            padding: var(--space-6);
+            text-align: center;
+            color: var(--color-white);
+        }
+        
+        .dog-card-avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto var(--space-4);
+            background: var(--color-white);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .dog-card-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .dog-card-header h3 {
+            color: var(--color-white);
+            margin-bottom: var(--space-1);
+        }
+        
+        .dog-card-header p {
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .dog-card-body {
+            padding: var(--space-5);
+        }
+        
+        .dog-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-3) 0;
+            border-bottom: 1px dashed var(--color-gray-200);
+        }
+        
+        .dog-detail:last-child {
+            border-bottom: none;
+        }
+        
+        .dog-detail-label {
+            color: var(--color-gray-500);
+            font-size: var(--font-size-sm);
+        }
+        
+        .dog-detail-value {
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .dog-card-actions {
+            padding: var(--space-4) var(--space-5);
+            background: var(--color-gray-50);
+            display: flex;
+            gap: var(--space-3);
+        }
+        
+        .dog-card-actions .btn {
+            flex: 1;
+        }
+        
+        .assessment-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-bold);
+        }
+        
+        .assessment-badge.passed {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        
+        .assessment-badge.pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        /* Add Dog Card */
+        .add-dog-card {
+            background: var(--color-white);
+            border: 3px dashed var(--color-gray-300);
+            border-radius: var(--radius-2xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-10);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            min-height: 400px;
+        }
+        
+        .add-dog-card:hover {
+            border-color: var(--color-blue-primary);
+            background: var(--color-blue-light);
+        }
+        
+        .add-dog-card span:first-child {
+            font-size: 4rem;
+            margin-bottom: var(--space-4);
+        }
+        
+        .add-dog-card h3 {
+            color: var(--color-gray-600);
+            margin-bottom: var(--space-2);
+        }
+        
+        .add-dog-card p {
+            color: var(--color-gray-500);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: var(--z-modal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-4);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+        }
+        
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .modal-content {
+            position: relative;
+            background: var(--color-white);
+            border-radius: var(--radius-2xl);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-2xl);
+        }
+        
+        .modal-header {
+            padding: var(--space-5) var(--space-6);
+            border-bottom: 1px solid var(--color-gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal-header h2 {
+            font-size: var(--font-size-xl);
+            margin: 0;
+        }
+        
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-gray-100);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-lg);
+            cursor: pointer;
+        }
+        
+        .modal-close:hover {
+            background: var(--color-coral);
+            color: var(--color-white);
+        }
+        
+        .modal-body {
+            padding: var(--space-6);
+        }
+        
+        .modal-footer {
+            padding: var(--space-4) var(--space-6);
+            background: var(--color-gray-50);
+            display: flex;
+            gap: var(--space-3);
+            justify-content: flex-end;
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: var(--space-5);
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-2);
+            color: var(--color-gray-700);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-blue-primary);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        
+        .checkbox-item input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--color-blue-primary);
+        }
+        
+        /* Photo Upload */
+        .photo-upload {
+            text-align: center;
+            padding: var(--space-6);
+            border: 2px dashed var(--color-gray-300);
+            border-radius: var(--radius-xl);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .photo-upload:hover {
+            border-color: var(--color-blue-primary);
+            background: var(--color-blue-light);
+        }
+        
+        .photo-upload-icon {
+            font-size: 3rem;
+            margin-bottom: var(--space-2);
+        }
+        
+        .photo-upload p {
+            color: var(--color-gray-500);
+            font-size: var(--font-size-sm);
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html"><img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="sidebar-logo"></a>
+            </div>
+            <div class="sidebar-user" id="sidebarUser">
+                <div class="sidebar-user-avatar">👤</div>
+                <div class="sidebar-user-name">Loading...</div>
+                <div class="sidebar-user-email">...</div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Main Menu</div>
+                <a href="dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span>Dashboard</a>
+                <a href="dogs.html" class="sidebar-link active"><span class="sidebar-link-icon">🐕</span>My Dogs</a>
+                <a href="bookings.html" class="sidebar-link"><span class="sidebar-link-icon">📅</span>Bookings</a>
+                <a href="credits.html" class="sidebar-link"><span class="sidebar-link-icon">💳</span>Credits & Packages</a>
+                <div class="sidebar-nav-label">Account</div>
+                <a href="profile.html" class="sidebar-link"><span class="sidebar-link-icon">👤</span>My Profile</a>
+                <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>Back to Website</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="handleLogout()"><span>🚪</span>Sign Out</button>
+            </div>
+        </aside>
+        
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        
+        <main class="portal-main">
+            <div class="portal-topbar">
+                <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="page-title"><h1>🐕 My Dogs</h1></div>
+                <div class="topbar-actions">
+                    <button class="btn btn-primary btn-sm" onclick="openAddModal()">+ Add Dog</button>
+                </div>
+            </div>
+            
+            <div class="portal-content">
+                <div class="dogs-grid" id="dogsGrid">
+                    <!-- Dogs loaded via JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Add/Edit Dog Modal -->
+    <div class="modal" id="dogModal">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Dog</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="dogForm">
+                    <input type="hidden" id="dogId">
+                    
+                    <div class="form-group">
+                        <label>Photo (optional)</label>
+                        <div class="photo-upload" onclick="document.getElementById('photoInput').click()">
+                            <div class="photo-upload-icon" id="photoPreview">🐕</div>
+                            <p>Click to upload a photo</p>
+                        </div>
+                        <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="previewPhoto(this)">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dogName">Name *</label>
+                            <input type="text" id="dogName" required placeholder="e.g. Buddy">
+                        </div>
+                        <div class="form-group">
+                            <label for="dogBreed">Breed *</label>
+                            <input type="text" id="dogBreed" required placeholder="e.g. Golden Retriever">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dogAge">Age (years) *</label>
+                            <input type="number" id="dogAge" required min="0" max="25" placeholder="e.g. 3">
+                        </div>
+                        <div class="form-group">
+                            <label for="dogWeight">Weight (kg) *</label>
+                            <input type="number" id="dogWeight" required min="1" max="100" placeholder="e.g. 25">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dogGender">Gender *</label>
+                        <select id="dogGender" required>
+                            <option value="">Select...</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Health Status</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="vaccinated">
+                                Vaccinated
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="desexed">
+                                Desexed
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="microchipped">
+                                Microchipped
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="medicalNotes">Medical Notes</label>
+                        <textarea id="medicalNotes" rows="2" placeholder="Allergies, medications, special needs..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="behaviourNotes">Behaviour Notes</label>
+                        <textarea id="behaviourNotes" rows="2" placeholder="Temperament, play style, things to know..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="emergencyContact">Emergency Contact *</label>
+                        <input type="text" id="emergencyContact" required placeholder="Name - Phone number">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveDog()">Save Dog</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/services/mockAuth.js"></script>
+    <script src="../js/services/mockDatabase.js"></script>
+    <script>
+        let currentUser = null;
+        let editingDogId = null;
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            currentUser = MockAuth.getCurrentUser();
+            if (!currentUser) { window.location.href = '../login.html'; return; }
+            
+            updateUserInfo();
+            await loadDogs();
+        });
+        
+        function updateUserInfo() {
+            document.getElementById('sidebarUser').innerHTML = `
+                <div class="sidebar-user-avatar">${currentUser.displayName ? currentUser.displayName.charAt(0).toUpperCase() : '👤'}</div>
+                <div class="sidebar-user-name">${currentUser.displayName || 'User'}</div>
+                <div class="sidebar-user-email">${currentUser.email}</div>
+            `;
+        }
+        
+        async function loadDogs() {
+            const dogs = await MockDatabase.getDogs(currentUser.uid);
+            renderDogs(dogs);
+        }
+        
+        function renderDogs(dogs) {
+            const grid = document.getElementById('dogsGrid');
+            
+            const dogCards = dogs.map(dog => `
+                <div class="dog-card-full">
+                    <div class="dog-card-header">
+                        <div class="dog-card-avatar">
+                            ${dog.photo ? `<img src="${dog.photo}" alt="${dog.name}">` : '🐕'}
+                        </div>
+                        <h3>${dog.name}</h3>
+                        <p>${dog.breed}</p>
+                    </div>
+                    <div class="dog-card-body">
+                        <div class="dog-detail">
+                            <span class="dog-detail-label">Age</span>
+                            <span class="dog-detail-value">${dog.age} years</span>
+                        </div>
+                        <div class="dog-detail">
+                            <span class="dog-detail-label">Weight</span>
+                            <span class="dog-detail-value">${dog.weight} kg</span>
+                        </div>
+                        <div class="dog-detail">
+                            <span class="dog-detail-label">Gender</span>
+                            <span class="dog-detail-value">${dog.gender === 'male' ? '♂️ Male' : '♀️ Female'}</span>
+                        </div>
+                        <div class="dog-detail">
+                            <span class="dog-detail-label">Assessment</span>
+                            <span class="assessment-badge ${dog.assessmentPassed ? 'passed' : 'pending'}">
+                                ${dog.assessmentPassed ? '✓ Passed' : '⏳ Pending'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="dog-card-actions">
+                        <button class="btn btn-outline btn-sm" onclick="editDog('${dog.id}')">Edit</button>
+                        <button class="btn btn-primary btn-sm" onclick="window.location.href='bookings.html'">Book</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            const addCard = `
+                <div class="add-dog-card" onclick="openAddModal()">
+                    <span>➕</span>
+                    <h3>Add New Dog</h3>
+                    <p>Register another furry friend</p>
+                </div>
+            `;
+            
+            grid.innerHTML = dogCards + addCard;
+        }
+        
+        function openAddModal() {
+            editingDogId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Dog';
+            document.getElementById('dogForm').reset();
+            document.getElementById('photoPreview').textContent = '🐕';
+            document.getElementById('dogModal').classList.add('open');
+        }
+        
+        async function editDog(dogId) {
+            editingDogId = dogId;
+            const dog = await MockDatabase.getDog(dogId);
+            
+            document.getElementById('modalTitle').textContent = 'Edit Dog';
+            document.getElementById('dogId').value = dog.id;
+            document.getElementById('dogName').value = dog.name;
+            document.getElementById('dogBreed').value = dog.breed;
+            document.getElementById('dogAge').value = dog.age;
+            document.getElementById('dogWeight').value = dog.weight;
+            document.getElementById('dogGender').value = dog.gender;
+            document.getElementById('vaccinated').checked = dog.vaccinated;
+            document.getElementById('desexed').checked = dog.desexed;
+            document.getElementById('microchipped').checked = dog.microchipped;
+            document.getElementById('medicalNotes').value = dog.medicalNotes || '';
+            document.getElementById('behaviourNotes').value = dog.behaviourNotes || '';
+            document.getElementById('emergencyContact').value = dog.emergencyContact || '';
+            document.getElementById('photoPreview').textContent = dog.photo ? '📷' : '🐕';
+            
+            document.getElementById('dogModal').classList.add('open');
+        }
+        
+        function closeModal() {
+            document.getElementById('dogModal').classList.remove('open');
+        }
+        
+        function previewPhoto(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('photoPreview').textContent = '📷 Photo selected!';
+            }
+        }
+        
+        async function saveDog() {
+            const dogData = {
+                ownerId: currentUser.uid,
+                name: document.getElementById('dogName').value,
+                breed: document.getElementById('dogBreed').value,
+                age: parseInt(document.getElementById('dogAge').value),
+                weight: parseInt(document.getElementById('dogWeight').value),
+                gender: document.getElementById('dogGender').value,
+                vaccinated: document.getElementById('vaccinated').checked,
+                desexed: document.getElementById('desexed').checked,
+                microchipped: document.getElementById('microchipped').checked,
+                medicalNotes: document.getElementById('medicalNotes').value,
+                behaviourNotes: document.getElementById('behaviourNotes').value,
+                emergencyContact: document.getElementById('emergencyContact').value,
+                vetName: 'Wigram Vet',
+                vetPhone: '03 929 0987'
+            };
+            
+            try {
+                if (editingDogId) {
+                    await MockDatabase.updateDog(editingDogId, dogData);
+                } else {
+                    await MockDatabase.addDog(dogData);
+                }
+                closeModal();
+                await loadDogs();
+            } catch (error) {
+                alert('Error saving dog: ' + error.message);
+            }
+        }
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('open');
+        }
+        
+        async function handleLogout() {
+            await MockAuth.signOut();
+            window.location.href = '../login.html';
+        }
+    </script>
+</body>
+</html>

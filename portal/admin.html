@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Good Dog Spa</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <style>
+        :root { --sidebar-width: 260px; }
+        body { min-height: 100vh; background: var(--color-gray-50); }
+        .portal-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: var(--sidebar-width); background: #1e293b; color: var(--color-white); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: var(--z-fixed); }
+        @media (max-width: 1023px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } }
+        .sidebar-header { padding: var(--space-6); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { height: 45px; filter: brightness(0) invert(1); }
+        .admin-badge { display: inline-block; background: var(--color-coral); color: white; font-size: var(--font-size-xs); padding: 2px 8px; border-radius: var(--radius-full); margin-left: var(--space-2); }
+        .sidebar-user { padding: var(--space-5); background: rgba(255,255,255,0.05); margin: var(--space-4); border-radius: var(--radius-xl); }
+        .sidebar-user-avatar { width: 50px; height: 50px; background: linear-gradient(135deg, var(--color-coral), #ef4444); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: var(--space-3); }
+        .sidebar-user-name { font-weight: var(--font-weight-bold); margin-bottom: var(--space-1); }
+        .sidebar-user-email { font-size: var(--font-size-sm); color: rgba(255,255,255,0.6); }
+        .sidebar-nav { padding: var(--space-4); }
+        .sidebar-nav-label { font-size: var(--font-size-xs); text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: var(--space-3) var(--space-4); margin-top: var(--space-4); }
+        .sidebar-nav-label:first-child { margin-top: 0; }
+        .sidebar-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.7); border-radius: var(--radius-lg); margin-bottom: var(--space-1); }
+        .sidebar-link:hover { background: rgba(255,255,255,0.1); color: var(--color-white); }
+        .sidebar-link.active { background: var(--color-coral); color: var(--color-white); }
+        .sidebar-link-icon { font-size: 1.2rem; }
+        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
+        .logout-btn { display: flex; align-items: center; gap: var(--space-3); width: 100%; padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.6); border-radius: var(--radius-lg); }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); color: var(--color-coral); }
+        .portal-main { flex: 1; margin-left: var(--sidebar-width); min-height: 100vh; }
+        @media (max-width: 1023px) { .portal-main { margin-left: 0; } }
+        .portal-topbar { background: var(--color-white); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: var(--z-sticky); }
+        .mobile-menu-toggle { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; font-size: 1.5rem; background: var(--color-gray-100); border-radius: var(--radius-lg); cursor: pointer; }
+        @media (max-width: 1023px) { .mobile-menu-toggle { display: flex; } }
+        .page-title h1 { font-size: var(--font-size-xl); margin: 0; }
+        .portal-content { padding: var(--space-6); }
+        @media (min-width: 768px) { .portal-content { padding: var(--space-8); } }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: calc(var(--z-fixed) - 1); }
+        .sidebar-overlay.open { opacity: 1; visibility: visible; }
+        
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-5); margin-bottom: var(--space-8); }
+        .stat-card { background: var(--color-white); border-radius: var(--radius-xl); padding: var(--space-5); box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: var(--space-4); }
+        .stat-icon { width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border-radius: var(--radius-xl); }
+        .stat-icon.blue { background: var(--color-blue-light); }
+        .stat-icon.yellow { background: var(--color-yellow-light); }
+        .stat-icon.green { background: #dcfce7; }
+        .stat-icon.red { background: #fee2e2; }
+        .stat-info h3 { font-size: var(--font-size-2xl); margin-bottom: 0; }
+        .stat-info p { color: var(--color-gray-500); font-size: var(--font-size-sm); margin: 0; }
+        
+        /* Date Picker */
+        .date-picker { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6); }
+        .date-picker input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); font-size: var(--font-size-base); }
+        
+        /* Bookings Table */
+        .bookings-card { background: var(--color-white); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); overflow: hidden; }
+        .bookings-header { padding: var(--space-5); border-bottom: 1px solid var(--color-gray-100); display: flex; justify-content: space-between; align-items: center; }
+        .bookings-header h2 { margin: 0; font-size: var(--font-size-lg); }
+        .bookings-table { width: 100%; border-collapse: collapse; }
+        .bookings-table th, .bookings-table td { padding: var(--space-4); text-align: left; border-bottom: 1px solid var(--color-gray-100); }
+        .bookings-table th { background: var(--color-gray-50); font-weight: var(--font-weight-bold); font-size: var(--font-size-sm); color: var(--color-gray-600); }
+        .bookings-table tr:hover { background: var(--color-gray-50); }
+        .status-badge { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
+        .status-badge.confirmed { background: #dcfce7; color: #16a34a; }
+        .status-badge.completed { background: var(--color-blue-light); color: var(--color-blue-primary); }
+        .status-badge.cancelled { background: #fee2e2; color: #dc2626; }
+        
+        .empty-state { padding: var(--space-10); text-align: center; color: var(--color-gray-500); }
+        .empty-state-icon { font-size: 3rem; margin-bottom: var(--space-3); }
+        
+        @media (max-width: 768px) {
+            .bookings-table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html"><img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="sidebar-logo"></a>
+                <span class="admin-badge">ADMIN</span>
+            </div>
+            <div class="sidebar-user" id="sidebarUser"><div class="sidebar-user-avatar">👤</div><div class="sidebar-user-name">Loading...</div><div class="sidebar-user-email">...</div></div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Admin Menu</div>
+                <a href="admin.html" class="sidebar-link active"><span class="sidebar-link-icon">📊</span>Dashboard</a>
+                <a href="#" class="sidebar-link" onclick="alert('Coming soon!')"><span class="sidebar-link-icon">📅</span>All Bookings</a>
+                <a href="#" class="sidebar-link" onclick="alert('Coming soon!')"><span class="sidebar-link-icon">🐕</span>All Dogs</a>
+                <a href="#" class="sidebar-link" onclick="alert('Coming soon!')"><span class="sidebar-link-icon">👥</span>Members</a>
+                <div class="sidebar-nav-label">Quick Links</div>
+                <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>View Website</a>
+            </nav>
+            <div class="sidebar-footer"><button class="logout-btn" onclick="handleLogout()"><span>🚪</span>Sign Out</button></div>
+        </aside>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        
+        <main class="portal-main">
+            <div class="portal-topbar">
+                <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="page-title"><h1>📊 Admin Dashboard</h1></div>
+                <div class="topbar-actions"></div>
+            </div>
+            
+            <div class="portal-content">
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">📅</div>
+                        <div class="stat-info">
+                            <h3 id="statToday">-</h3>
+                            <p>Today's Bookings</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon yellow">📆</div>
+                        <div class="stat-info">
+                            <h3 id="statUpcoming">-</h3>
+                            <p>Upcoming Bookings</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">🐕</div>
+                        <div class="stat-info">
+                            <h3 id="statDogs">-</h3>
+                            <p>Registered Dogs</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red">✅</div>
+                        <div class="stat-info">
+                            <h3 id="statCompleted">-</h3>
+                            <p>Completed This Month</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Date Picker -->
+                <div class="date-picker">
+                    <label><strong>View bookings for:</strong></label>
+                    <input type="date" id="bookingDate" onchange="loadBookingsForDate()">
+                    <button class="btn btn-outline btn-sm" onclick="goToToday()">Today</button>
+                </div>
+                
+                <!-- Bookings Table -->
+                <div class="bookings-card">
+                    <div class="bookings-header">
+                        <h2 id="bookingsTitle">📅 Bookings</h2>
+                    </div>
+                    <div id="bookingsContent">
+                        <table class="bookings-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Dog</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookingsBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="../js/services/mockAuth.js"></script>
+    <script src="../js/services/mockDatabase.js"></script>
+    <script>
+        let currentUser = null;
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            currentUser = MockAuth.getCurrentUser();
+            if (!currentUser) { window.location.href = '../login.html'; return; }
+            if (currentUser.role !== 'admin') { window.location.href = 'dashboard.html'; return; }
+            
+            updateUserInfo();
+            
+            // Set date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('bookingDate').value = today;
+            
+            await loadStats();
+            await loadBookingsForDate();
+        });
+        
+        function updateUserInfo() {
+            document.getElementById('sidebarUser').innerHTML = `
+                <div class="sidebar-user-avatar">${currentUser.displayName?.charAt(0).toUpperCase() || '👤'}</div>
+                <div class="sidebar-user-name">${currentUser.displayName || 'Admin'}</div>
+                <div class="sidebar-user-email">${currentUser.email}</div>
+            `;
+        }
+        
+        async function loadStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const allBookings = await MockDatabase.getAllBookings();
+            const allDogs = await MockDatabase.getAllDogs();
+            
+            const todayBookings = allBookings.filter(b => b.date === today && b.status !== 'cancelled');
+            const upcomingBookings = allBookings.filter(b => b.date >= today && b.status === 'confirmed');
+            const completedThisMonth = allBookings.filter(b => {
+                const bookingDate = new Date(b.date);
+                const now = new Date();
+                return bookingDate.getMonth() === now.getMonth() && 
+                       bookingDate.getFullYear() === now.getFullYear() && 
+                       b.status === 'completed';
+            });
+            
+            document.getElementById('statToday').textContent = todayBookings.length;
+            document.getElementById('statUpcoming').textContent = upcomingBookings.length;
+            document.getElementById('statDogs').textContent = allDogs.length;
+            document.getElementById('statCompleted').textContent = completedThisMonth.length;
+        }
+        
+        async function loadBookingsForDate() {
+            const date = document.getElementById('bookingDate').value;
+            const dateObj = new Date(date);
+            const formatted = dateObj.toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            
+            document.getElementById('bookingsTitle').textContent = `📅 Bookings for ${formatted}`;
+            
+            const bookings = await MockDatabase.getAllBookings({ date });
+            const tbody = document.getElementById('bookingsBody');
+            
+            if (bookings.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">📅</div><p>No bookings for this date</p></div></td></tr>`;
+                return;
+            }
+            
+            tbody.innerHTML = bookings.map(b => {
+                const time = b.type === 'daycare' ? `${b.dropOff} - ${b.pickUp}` : b.time;
+                const service = b.type === 'daycare' ? `Day Care (${b.sessionType})` : `Hydrotherapy (${b.sessionType})`;
+                return `
+                    <tr>
+                        <td><strong>${time}</strong></td>
+                        <td>${b.dogName}</td>
+                        <td>${service}</td>
+                        <td><span class="status-badge ${b.status}">${b.status}</span></td>
+                        <td>
+                            ${b.status === 'confirmed' ? `
+                                <button class="btn btn-sm btn-outline" onclick="markComplete('${b.id}')">Complete</button>
+                                <button class="btn btn-sm btn-outline" onclick="cancelBooking('${b.id}')" style="color: var(--color-coral); border-color: var(--color-coral);">Cancel</button>
+                            ` : '-'}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        function goToToday() {
+            document.getElementById('bookingDate').value = new Date().toISOString().split('T')[0];
+            loadBookingsForDate();
+        }
+        
+        async function markComplete(bookingId) {
+            await MockDatabase.updateBooking(bookingId, { status: 'completed' });
+            await loadStats();
+            await loadBookingsForDate();
+        }
+        
+        async function cancelBooking(bookingId) {
+            if (confirm('Cancel this booking?')) {
+                await MockDatabase.cancelBooking(bookingId);
+                await loadStats();
+                await loadBookingsForDate();
+            }
+        }
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('open');
+        }
+        
+        async function handleLogout() { await MockAuth.signOut(); window.location.href = '../login.html'; }
+    </script>
+</body>
+</html>

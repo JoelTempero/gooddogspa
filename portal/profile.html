@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Good Dog Spa Member Portal</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <style>
+        :root { --sidebar-width: 260px; }
+        body { min-height: 100vh; background: var(--color-gray-50); }
+        .portal-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: var(--sidebar-width); background: var(--color-dark); color: var(--color-white); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: var(--z-fixed); }
+        @media (max-width: 1023px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } }
+        .sidebar-header { padding: var(--space-6); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo { height: 45px; filter: brightness(0) invert(1); }
+        .sidebar-user { padding: var(--space-5); background: rgba(255,255,255,0.05); margin: var(--space-4); border-radius: var(--radius-xl); }
+        .sidebar-user-avatar { width: 50px; height: 50px; background: linear-gradient(135deg, var(--color-yellow-primary), var(--color-yellow-dark)); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: var(--space-3); }
+        .sidebar-user-name { font-weight: var(--font-weight-bold); margin-bottom: var(--space-1); }
+        .sidebar-user-email { font-size: var(--font-size-sm); color: rgba(255,255,255,0.6); }
+        .sidebar-nav { padding: var(--space-4); }
+        .sidebar-nav-label { font-size: var(--font-size-xs); text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: var(--space-3) var(--space-4); margin-top: var(--space-4); }
+        .sidebar-nav-label:first-child { margin-top: 0; }
+        .sidebar-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.7); border-radius: var(--radius-lg); margin-bottom: var(--space-1); }
+        .sidebar-link:hover { background: rgba(255,255,255,0.1); color: var(--color-white); }
+        .sidebar-link.active { background: var(--color-blue-primary); color: var(--color-white); }
+        .sidebar-link-icon { font-size: 1.2rem; }
+        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
+        .logout-btn { display: flex; align-items: center; gap: var(--space-3); width: 100%; padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.6); border-radius: var(--radius-lg); }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); color: var(--color-coral); }
+        .portal-main { flex: 1; margin-left: var(--sidebar-width); min-height: 100vh; }
+        @media (max-width: 1023px) { .portal-main { margin-left: 0; } }
+        .portal-topbar { background: var(--color-white); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: var(--z-sticky); }
+        .mobile-menu-toggle { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; font-size: 1.5rem; background: var(--color-gray-100); border-radius: var(--radius-lg); cursor: pointer; }
+        @media (max-width: 1023px) { .mobile-menu-toggle { display: flex; } }
+        .page-title h1 { font-size: var(--font-size-xl); margin: 0; }
+        .portal-content { padding: var(--space-6); max-width: 800px; }
+        @media (min-width: 768px) { .portal-content { padding: var(--space-8); } }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: calc(var(--z-fixed) - 1); }
+        .sidebar-overlay.open { opacity: 1; visibility: visible; }
+        
+        .profile-card { background: var(--color-white); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: var(--space-6); }
+        .profile-card-header { padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-gray-100); display: flex; justify-content: space-between; align-items: center; }
+        .profile-card-header h2 { font-size: var(--font-size-lg); margin: 0; }
+        .profile-card-body { padding: var(--space-6); }
+        
+        .profile-avatar { width: 100px; height: 100px; background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal)); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--color-white); margin: 0 auto var(--space-6); }
+        
+        .form-group { margin-bottom: var(--space-5); }
+        .form-group label { display: block; font-weight: var(--font-weight-bold); margin-bottom: var(--space-2); color: var(--color-gray-700); }
+        .form-group input { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); font-size: var(--font-size-base); }
+        .form-group input:focus { outline: none; border-color: var(--color-blue-primary); }
+        .form-group input:disabled { background: var(--color-gray-100); cursor: not-allowed; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+        
+        .alert { padding: var(--space-4); border-radius: var(--radius-lg); margin-bottom: var(--space-5); display: none; }
+        .alert.visible { display: block; }
+        .alert-success { background: #dcfce7; color: #16a34a; }
+        .alert-error { background: #fee2e2; color: #dc2626; }
+        
+        .danger-zone { border: 2px solid var(--color-coral); }
+        .danger-zone .profile-card-header { background: #fee2e2; }
+        .danger-zone .profile-card-header h2 { color: #dc2626; }
+    </style>
+</head>
+<body>
+    <div class="portal-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><a href="../index.html"><img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="sidebar-logo"></a></div>
+            <div class="sidebar-user" id="sidebarUser"><div class="sidebar-user-avatar">👤</div><div class="sidebar-user-name">Loading...</div><div class="sidebar-user-email">...</div></div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Main Menu</div>
+                <a href="dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span>Dashboard</a>
+                <a href="dogs.html" class="sidebar-link"><span class="sidebar-link-icon">🐕</span>My Dogs</a>
+                <a href="bookings.html" class="sidebar-link"><span class="sidebar-link-icon">📅</span>Bookings</a>
+                <a href="credits.html" class="sidebar-link"><span class="sidebar-link-icon">💳</span>Credits & Packages</a>
+                <div class="sidebar-nav-label">Account</div>
+                <a href="profile.html" class="sidebar-link active"><span class="sidebar-link-icon">👤</span>My Profile</a>
+                <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>Back to Website</a>
+            </nav>
+            <div class="sidebar-footer"><button class="logout-btn" onclick="handleLogout()"><span>🚪</span>Sign Out</button></div>
+        </aside>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        
+        <main class="portal-main">
+            <div class="portal-topbar">
+                <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="page-title"><h1>👤 My Profile</h1></div>
+                <div class="topbar-actions"></div>
+            </div>
+            
+            <div class="portal-content">
+                <div class="alert alert-success" id="successAlert"></div>
+                <div class="alert alert-error" id="errorAlert"></div>
+                
+                <!-- Profile Info -->
+                <div class="profile-card">
+                    <div class="profile-card-header">
+                        <h2>Profile Information</h2>
+                    </div>
+                    <div class="profile-card-body">
+                        <div class="profile-avatar" id="profileAvatar">👤</div>
+                        
+                        <form id="profileForm" onsubmit="saveProfile(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="profileName">Full Name</label>
+                                    <input type="text" id="profileName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profilePhone">Phone Number</label>
+                                    <input type="tel" id="profilePhone" placeholder="021 123 4567">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="profileEmail">Email Address</label>
+                                <input type="email" id="profileEmail" disabled>
+                                <small style="color: var(--color-gray-500);">Email cannot be changed</small>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Change Password -->
+                <div class="profile-card">
+                    <div class="profile-card-header">
+                        <h2>🔐 Change Password</h2>
+                    </div>
+                    <div class="profile-card-body">
+                        <form id="passwordForm" onsubmit="changePassword(event)">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword" required minlength="6">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" required minlength="6">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-outline">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Demo Reset -->
+                <div class="profile-card danger-zone">
+                    <div class="profile-card-header">
+                        <h2>🔄 Demo Controls</h2>
+                    </div>
+                    <div class="profile-card-body">
+                        <p style="color: var(--color-gray-600); margin-bottom: var(--space-4);">Reset all demo data to its original state. This will clear all changes you've made.</p>
+                        <button class="btn btn-outline" onclick="resetDemo()" style="border-color: var(--color-coral); color: var(--color-coral);">Reset Demo Data</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="../js/services/mockAuth.js"></script>
+    <script src="../js/services/mockDatabase.js"></script>
+    <script>
+        let currentUser = null;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            currentUser = MockAuth.getCurrentUser();
+            if (!currentUser) { window.location.href = '../login.html'; return; }
+            loadProfile();
+        });
+        
+        function loadProfile() {
+            document.getElementById('sidebarUser').innerHTML = `
+                <div class="sidebar-user-avatar">${currentUser.displayName?.charAt(0).toUpperCase() || '👤'}</div>
+                <div class="sidebar-user-name">${currentUser.displayName || 'User'}</div>
+                <div class="sidebar-user-email">${currentUser.email}</div>
+            `;
+            
+            document.getElementById('profileAvatar').textContent = currentUser.displayName?.charAt(0).toUpperCase() || '👤';
+            document.getElementById('profileName').value = currentUser.displayName || '';
+            document.getElementById('profilePhone').value = currentUser.phone || '';
+            document.getElementById('profileEmail').value = currentUser.email;
+        }
+        
+        async function saveProfile(e) {
+            e.preventDefault();
+            try {
+                await MockAuth.updateProfile({
+                    displayName: document.getElementById('profileName').value,
+                    phone: document.getElementById('profilePhone').value
+                });
+                currentUser = MockAuth.getCurrentUser();
+                loadProfile();
+                showSuccess('Profile updated successfully!');
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+        
+        async function changePassword(e) {
+            e.preventDefault();
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            
+            if (newPass !== confirmPass) {
+                showError('New passwords do not match');
+                return;
+            }
+            
+            showSuccess('Password updated! (Demo mode - password not actually changed)');
+            document.getElementById('passwordForm').reset();
+        }
+        
+        function resetDemo() {
+            if (confirm('Reset all demo data? This will log you out.')) {
+                MockAuth.resetDemo();
+                MockDatabase.resetDemo();
+                window.location.href = '../login.html';
+            }
+        }
+        
+        function showSuccess(msg) {
+            document.getElementById('successAlert').textContent = msg;
+            document.getElementById('successAlert').classList.add('visible');
+            document.getElementById('errorAlert').classList.remove('visible');
+            setTimeout(() => document.getElementById('successAlert').classList.remove('visible'), 3000);
+        }
+        
+        function showError(msg) {
+            document.getElementById('errorAlert').textContent = msg;
+            document.getElementById('errorAlert').classList.add('visible');
+            document.getElementById('successAlert').classList.remove('visible');
+        }
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('open');
+        }
+        
+        async function handleLogout() { await MockAuth.signOut(); window.location.href = '../login.html'; }
+    </script>
+</body>
+</html>

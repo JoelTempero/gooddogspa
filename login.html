@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Member Login | Good Dog Spa Wigram</title>
+    <meta name="description" content="Log in to your Good Dog Spa member account to manage bookings, view credits, and update your dog's profile.">
+    <link rel="canonical" href="https://gooddogspa.sidequest.nz/login.html">
+    
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: var(--color-white);
+            box-shadow: var(--shadow-md);
+            padding: var(--space-4) 0;
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--container-padding);
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        
+        .logo img { height: 50px; width: auto; }
+        
+        .login-page {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-8) var(--container-padding);
+            background: linear-gradient(135deg, var(--color-blue-light) 0%, var(--color-yellow-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-page::before {
+            content: '🐾';
+            position: absolute;
+            font-size: 30rem;
+            opacity: 0.05;
+            top: -20%;
+            left: -10%;
+            transform: rotate(-15deg);
+        }
+        
+        .login-page::after {
+            content: '🦴';
+            position: absolute;
+            font-size: 20rem;
+            opacity: 0.05;
+            bottom: -15%;
+            right: -5%;
+            transform: rotate(20deg);
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-card {
+            background: var(--color-white);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+        }
+        
+        .login-header {
+            background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal));
+            padding: var(--space-8);
+            text-align: center;
+            color: var(--color-white);
+        }
+        
+        .login-header h1 {
+            color: var(--color-white);
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--space-2);
+        }
+        
+        .login-header p {
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .login-icon {
+            font-size: 3rem;
+            margin-bottom: var(--space-3);
+        }
+        
+        .login-body {
+            padding: var(--space-8);
+        }
+        
+        /* Demo Mode Banner */
+        .demo-banner {
+            background: linear-gradient(135deg, var(--color-yellow-primary), var(--color-yellow-dark));
+            padding: var(--space-4);
+            margin: calc(var(--space-4) * -1);
+            margin-bottom: var(--space-6);
+            border-radius: var(--radius-lg);
+            text-align: center;
+        }
+        
+        .demo-banner h3 {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--space-2);
+        }
+        
+        .demo-banner p {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-700);
+            margin-bottom: var(--space-3);
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: var(--space-2);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .demo-btn {
+            padding: var(--space-2) var(--space-4);
+            background: var(--color-white);
+            border: 2px solid var(--color-dark);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-bold);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .demo-btn:hover {
+            background: var(--color-dark);
+            color: var(--color-white);
+        }
+        
+        .demo-btn.admin {
+            border-color: var(--color-blue-primary);
+            color: var(--color-blue-primary);
+        }
+        
+        .demo-btn.admin:hover {
+            background: var(--color-blue-primary);
+            color: var(--color-white);
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: var(--space-5);
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-2);
+            color: var(--color-gray-700);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: var(--space-4);
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            transition: all var(--transition-fast);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-blue-primary);
+            box-shadow: 0 0 0 3px var(--color-blue-light);
+        }
+        
+        .form-group input.error {
+            border-color: var(--color-coral);
+        }
+        
+        .form-error {
+            color: var(--color-coral);
+            font-size: var(--font-size-sm);
+            margin-top: var(--space-2);
+            display: none;
+        }
+        
+        .form-error.visible {
+            display: block;
+        }
+        
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            cursor: pointer;
+        }
+        
+        .remember-me input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--color-blue-primary);
+        }
+        
+        .forgot-link {
+            color: var(--color-blue-primary);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: var(--space-4);
+            background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal));
+            color: var(--color-white);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-bold);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .login-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: var(--space-2);
+        }
+        
+        .login-btn.loading .spinner {
+            display: inline-block;
+        }
+        
+        .login-btn.loading .btn-text {
+            opacity: 0.8;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Alert Messages */
+        .alert {
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-5);
+            display: none;
+        }
+        
+        .alert.visible {
+            display: block;
+        }
+        
+        .alert-error {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .alert-success {
+            background: #dcfce7;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+        
+        /* Tabs */
+        .login-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--color-gray-100);
+            margin-bottom: var(--space-6);
+        }
+        
+        .login-tab {
+            flex: 1;
+            padding: var(--space-3);
+            text-align: center;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-500);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all var(--transition-fast);
+        }
+        
+        .login-tab:hover {
+            color: var(--color-gray-700);
+        }
+        
+        .login-tab.active {
+            color: var(--color-blue-primary);
+            border-bottom-color: var(--color-blue-primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Footer Link */
+        .login-footer {
+            text-align: center;
+            padding: var(--space-6);
+            background: var(--color-gray-50);
+            border-top: 1px solid var(--color-gray-100);
+        }
+        
+        .login-footer p {
+            color: var(--color-gray-600);
+            margin: 0;
+        }
+        
+        .login-footer a {
+            color: var(--color-blue-primary);
+            font-weight: var(--font-weight-bold);
+        }
+        
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-6);
+            color: var(--color-gray-600);
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .back-link:hover {
+            color: var(--color-blue-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Simple Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa Logo" width="180" height="60">
+            </a>
+            <a href="index.html" class="back-link" style="margin: 0;">← Back to Website</a>
+        </div>
+    </header>
+    
+    <!-- Login Section -->
+    <main class="login-page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-icon">🐕</div>
+                    <h1>Member Portal</h1>
+                    <p>Manage your bookings, credits & pups!</p>
+                </div>
+                
+                <div class="login-body">
+                    <!-- Demo Mode Banner -->
+                    <div class="demo-banner">
+                        <h3>🎉 Demo Mode</h3>
+                        <p>Try out the portal with our demo accounts - no registration needed!</p>
+                        <div class="demo-buttons">
+                            <button class="demo-btn" onclick="fillDemoUser()">👤 Demo User</button>
+                            <button class="demo-btn admin" onclick="fillDemoAdmin()">🔐 Admin</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tabs -->
+                    <div class="login-tabs">
+                        <button class="login-tab active" data-tab="login">Sign In</button>
+                        <button class="login-tab" data-tab="register">Create Account</button>
+                    </div>
+                    
+                    <!-- Alert Messages -->
+                    <div class="alert alert-error" id="errorAlert"></div>
+                    <div class="alert alert-success" id="successAlert"></div>
+                    
+                    <!-- Login Form -->
+                    <div class="tab-content active" id="login-tab">
+                        <form id="loginForm" onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label for="loginEmail">Email Address</label>
+                                <input type="email" id="loginEmail" name="email" required placeholder="you@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <input type="password" id="loginPassword" name="password" required placeholder="Enter your password">
+                            </div>
+                            
+                            <div class="form-row">
+                                <label class="remember-me">
+                                    <input type="checkbox" name="remember">
+                                    Remember me
+                                </label>
+                                <a href="#" class="forgot-link" onclick="showForgotPassword(event)">Forgot password?</a>
+                            </div>
+                            
+                            <button type="submit" class="login-btn" id="loginBtn">
+                                <span class="spinner"></span>
+                                <span class="btn-text">Sign In 🐾</span>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Register Form -->
+                    <div class="tab-content" id="register-tab">
+                        <form id="registerForm" onsubmit="handleRegister(event)">
+                            <div class="form-group">
+                                <label for="registerName">Your Name</label>
+                                <input type="text" id="registerName" name="name" required placeholder="John Smith">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="registerEmail">Email Address</label>
+                                <input type="email" id="registerEmail" name="email" required placeholder="you@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="registerPassword">Password</label>
+                                <input type="password" id="registerPassword" name="password" required placeholder="At least 6 characters" minlength="6">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="registerConfirm">Confirm Password</label>
+                                <input type="password" id="registerConfirm" name="confirm" required placeholder="Re-enter your password">
+                            </div>
+                            
+                            <button type="submit" class="login-btn" id="registerBtn">
+                                <span class="spinner"></span>
+                                <span class="btn-text">Create Account 🐾</span>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Forgot Password Form (hidden by default) -->
+                    <div class="tab-content" id="forgot-tab">
+                        <p class="text-gray mb-4">Enter your email and we'll send you a reset link.</p>
+                        <form id="forgotForm" onsubmit="handleForgotPassword(event)">
+                            <div class="form-group">
+                                <label for="forgotEmail">Email Address</label>
+                                <input type="email" id="forgotEmail" name="email" required placeholder="you@example.com">
+                            </div>
+                            
+                            <button type="submit" class="login-btn" id="forgotBtn">
+                                <span class="spinner"></span>
+                                <span class="btn-text">Send Reset Link</span>
+                            </button>
+                            
+                            <p class="text-center mt-4">
+                                <a href="#" onclick="showLoginTab(event)">← Back to Sign In</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="login-footer">
+                    <p>Questions? Call us at <a href="tel:039290987">(03) 929 0987</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Scripts -->
+    <script src="js/services/mockAuth.js"></script>
+    <script src="js/services/mockDatabase.js"></script>
+    <script>
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            if (MockAuth.isLoggedIn()) {
+                const user = MockAuth.getCurrentUser();
+                if (user.role === 'admin') {
+                    window.location.href = 'portal/admin.html';
+                } else {
+                    window.location.href = 'portal/dashboard.html';
+                }
+            }
+        });
+        
+        // Tab switching
+        document.querySelectorAll('.login-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + '-tab').classList.add('active');
+                
+                hideAlerts();
+            });
+        });
+        
+        // Demo button handlers
+        function fillDemoUser() {
+            const creds = MockAuth.getDemoCredentials();
+            document.getElementById('loginEmail').value = creds.user.email;
+            document.getElementById('loginPassword').value = creds.user.password;
+            
+            // Switch to login tab
+            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-tab="login"]').classList.add('active');
+            document.getElementById('login-tab').classList.add('active');
+        }
+        
+        function fillDemoAdmin() {
+            const creds = MockAuth.getDemoCredentials();
+            document.getElementById('loginEmail').value = creds.admin.email;
+            document.getElementById('loginPassword').value = creds.admin.password;
+            
+            // Switch to login tab
+            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-tab="login"]').classList.add('active');
+            document.getElementById('login-tab').classList.add('active');
+        }
+        
+        // Alert helpers
+        function showError(message) {
+            const alert = document.getElementById('errorAlert');
+            alert.textContent = message;
+            alert.classList.add('visible');
+            document.getElementById('successAlert').classList.remove('visible');
+        }
+        
+        function showSuccess(message) {
+            const alert = document.getElementById('successAlert');
+            alert.textContent = message;
+            alert.classList.add('visible');
+            document.getElementById('errorAlert').classList.remove('visible');
+        }
+        
+        function hideAlerts() {
+            document.getElementById('errorAlert').classList.remove('visible');
+            document.getElementById('successAlert').classList.remove('visible');
+        }
+        
+        // Login handler
+        async function handleLogin(e) {
+            e.preventDefault();
+            hideAlerts();
+            
+            const btn = document.getElementById('loginBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const session = await MockAuth.signIn(email, password);
+                showSuccess('Login successful! Redirecting...');
+                
+                setTimeout(() => {
+                    if (session.user.role === 'admin') {
+                        window.location.href = 'portal/admin.html';
+                    } else {
+                        window.location.href = 'portal/dashboard.html';
+                    }
+                }, 1000);
+            } catch (error) {
+                showError(error.message);
+                btn.classList.remove('loading');
+                btn.disabled = false;
+            }
+        }
+        
+        // Register handler
+        async function handleRegister(e) {
+            e.preventDefault();
+            hideAlerts();
+            
+            const btn = document.getElementById('registerBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirm').value;
+            
+            if (password !== confirm) {
+                showError('Passwords do not match.');
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                return;
+            }
+            
+            try {
+                await MockAuth.register({ name, email, password });
+                showSuccess('Account created! Redirecting to dashboard...');
+                
+                setTimeout(() => {
+                    window.location.href = 'portal/dashboard.html';
+                }, 1000);
+            } catch (error) {
+                showError(error.message);
+                btn.classList.remove('loading');
+                btn.disabled = false;
+            }
+        }
+        
+        // Forgot password
+        function showForgotPassword(e) {
+            e.preventDefault();
+            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('forgot-tab').classList.add('active');
+            hideAlerts();
+        }
+        
+        function showLoginTab(e) {
+            e.preventDefault();
+            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-tab="login"]').classList.add('active');
+            document.getElementById('login-tab').classList.add('active');
+            hideAlerts();
+        }
+        
+        async function handleForgotPassword(e) {
+            e.preventDefault();
+            hideAlerts();
+            
+            const btn = document.getElementById('forgotBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            const email = document.getElementById('forgotEmail').value;
+            
+            try {
+                await MockAuth.requestPasswordReset(email);
+                showSuccess('Password reset link sent! (Demo: check console for details)');
+                btn.classList.remove('loading');
+                btn.disabled = false;
+            } catch (error) {
+                showError(error.message);
+                btn.classList.remove('loading');
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
