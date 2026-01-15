@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Member Login | Good Dog Spa Wigram</title>
+    <title>Doggy Portal | Good Dog Spa Wigram</title>
     <meta name="description" content="Log in to your Good Dog Spa member account to manage bookings, view credits, and update your dog's profile.">
     <link rel="canonical" href="https://gooddogspa.sidequest.nz/login.html">
     
@@ -134,40 +134,23 @@
         .demo-banner p {
             font-size: var(--font-size-sm);
             color: var(--color-gray-700);
-            margin-bottom: var(--space-3);
+            margin-bottom: var(--space-2);
         }
         
-        .demo-buttons {
-            display: flex;
-            gap: var(--space-2);
-            justify-content: center;
-            flex-wrap: wrap;
+        .demo-accounts {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.7);
+            padding: var(--space-3);
+            border-radius: var(--radius-md);
         }
         
-        .demo-btn {
-            padding: var(--space-2) var(--space-4);
-            background: var(--color-white);
-            border: 2px solid var(--color-dark);
-            border-radius: var(--radius-lg);
+        .demo-accounts p {
+            margin-bottom: var(--space-1);
             font-size: var(--font-size-sm);
-            font-weight: var(--font-weight-bold);
-            cursor: pointer;
-            transition: all var(--transition-fast);
         }
         
-        .demo-btn:hover {
-            background: var(--color-dark);
-            color: var(--color-white);
-        }
-        
-        .demo-btn.admin {
-            border-color: var(--color-blue-primary);
-            color: var(--color-blue-primary);
-        }
-        
-        .demo-btn.admin:hover {
-            background: var(--color-blue-primary);
-            color: var(--color-white);
+        .demo-accounts p:last-child {
+            margin-bottom: 0;
         }
         
         /* Form Styles */
@@ -408,10 +391,10 @@
                     <!-- Demo Mode Banner -->
                     <div class="demo-banner">
                         <h3>🎉 Demo Mode</h3>
-                        <p>Try out the portal with our demo accounts - no registration needed!</p>
-                        <div class="demo-buttons">
-                            <button class="demo-btn" onclick="fillDemoUser()">👤 Demo User</button>
-                            <button class="demo-btn admin" onclick="fillDemoAdmin()">🔐 Admin</button>
+                        <p>Try out the portal with these demo accounts:</p>
+                        <div class="demo-accounts">
+                            <p><strong>👤 User:</strong> demo@gooddogspa.co.nz / demo123</p>
+                            <p><strong>🔐 Admin:</strong> admin@gooddogspa.co.nz / admin123</p>
                         </div>
                     </div>
                     
@@ -598,11 +581,11 @@
             const password = document.getElementById('loginPassword').value;
             
             try {
-                const session = await MockAuth.signIn(email, password);
+                const user = await MockAuth.signIn(email, password);
                 showSuccess('Login successful! Redirecting...');
                 
                 setTimeout(() => {
-                    if (session.user.role === 'admin') {
+                    if (user.role === 'admin') {
                         window.location.href = 'portal/admin.html';
                     } else {
                         window.location.href = 'portal/dashboard.html';
