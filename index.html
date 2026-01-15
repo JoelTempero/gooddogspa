@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Good Dog Spa Wigram | Premium Dog Day Care, Hydrotherapy & Rehabilitation in Christchurch</title>
+    <meta name="description" content="Good Dog Spa Wigram offers premium dog day care, hydrotherapy, and rehabilitation services in Christchurch. Purpose-built facility with qualified staff. Book your FREE behaviour assessment today!">
+    <meta name="keywords" content="dog day care Christchurch, dog daycare Wigram, hydrotherapy dogs, dog rehabilitation, puppy training Christchurch, dog spa, doggy daycare, pet care Christchurch, Good Dog Spa">
+    <meta name="author" content="Good Dog Spa Wigram">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://gooddogspa.sidequest.nz/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gooddogspa.sidequest.nz/">
+    <meta property="og:title" content="Good Dog Spa Wigram | Premium Dog Day Care & Hydrotherapy">
+    <meta property="og:description" content="Your dog's home away from home! Premium day care, hydrotherapy & rehabilitation services in Christchurch. Book a FREE behaviour assessment.">
+    <meta property="og:image" content="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    <meta property="og:locale" content="en_NZ">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Good Dog Spa Wigram | Premium Dog Day Care">
+    <meta name="twitter:description" content="Your dog's home away from home! Premium day care, hydrotherapy & rehabilitation in Christchurch.">
+    <meta name="twitter:image" content="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    <link rel="apple-touch-icon" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Good Dog Spa Wigram",
+        "description": "Premium dog day care, hydrotherapy and rehabilitation services in Christchurch",
+        "url": "https://gooddogspa.sidequest.nz",
+        "telephone": "+64-3-929-0987",
+        "email": "gooddogspa@wigramvet.co.nz",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Wigram",
+            "addressRegion": "Christchurch",
+            "addressCountry": "NZ"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -43.5513,
+            "longitude": 172.5250
+        },
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "07:00",
+                "closes": "18:00"
+            }
+        ],
+        "priceRange": "$$",
+        "image": "https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png"
+    }
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    
+    <!-- Page-specific styles -->
+    <style>
+        /* Header / Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-fixed);
+            background: var(--color-white);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+        
+        .header.scrolled {
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+            padding: 0 var(--container-padding);
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .nav-desktop {
+            display: none;
+            align-items: center;
+            gap: var(--space-8);
+        }
+        
+        @media (min-width: 1024px) {
+            .nav-desktop {
+                display: flex;
+            }
+        }
+        
+        .nav-list {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+        }
+        
+        .nav-link {
+            position: relative;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            padding: var(--space-2) 0;
+            transition: color var(--transition-fast);
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--color-blue-primary);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--color-yellow-primary);
+            border-radius: var(--radius-full);
+            transition: width var(--transition-base);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            gap: 6px;
+            cursor: pointer;
+            z-index: calc(var(--z-fixed) + 10);
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--color-dark);
+            border-radius: var(--radius-full);
+            transition: all var(--transition-base);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 350px;
+            height: 100vh;
+            background: var(--color-white);
+            padding: var(--space-20) var(--space-6) var(--space-6);
+            box-shadow: var(--shadow-2xl);
+            transform: translateX(100%);
+            transition: transform var(--transition-base);
+            z-index: var(--z-fixed);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            background: var(--color-gray-100);
+            border-radius: var(--radius-full);
+            transition: all var(--transition-fast);
+        }
+        
+        .mobile-menu-close:hover {
+            background: var(--color-coral);
+            color: var(--color-white);
+        }
+        
+        .mobile-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: var(--space-4);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-gray-700);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+        }
+        
+        .mobile-nav-link:hover {
+            background: var(--color-blue-light);
+            color: var(--color-blue-primary);
+        }
+        
+        .mobile-menu-cta {
+            margin-top: var(--space-6);
+            padding-top: var(--space-6);
+            border-top: 1px solid var(--color-gray-200);
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+            z-index: calc(var(--z-fixed) - 1);
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding-top: calc(var(--header-height) + var(--space-10));
+            padding-bottom: var(--space-16);
+            background: linear-gradient(135deg, var(--color-yellow-light) 0%, var(--color-blue-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 70%;
+            height: 150%;
+            background: radial-gradient(circle, var(--color-yellow-primary) 0%, transparent 70%);
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-text h1 {
+            margin-bottom: var(--space-5);
+            line-height: 1.2;
+        }
+        
+        .hero-text h1 span {
+            color: var(--color-blue-primary);
+        }
+        
+        .hero-text p {
+            font-size: var(--font-size-xl);
+            color: var(--color-gray-600);
+            margin-bottom: var(--space-8);
+            max-width: 540px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+        
+        .hero-image {
+            position: relative;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: var(--radius-3xl);
+            box-shadow: var(--shadow-2xl);
+            border: 6px solid var(--color-white);
+        }
+        
+        .decoration {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .deco-1 { top: 15%; left: 5%; }
+        .deco-2 { top: 25%; right: 8%; font-size: 2rem; }
+        .deco-3 { bottom: 20%; left: 8%; font-size: 2rem; }
+        .deco-4 { top: 40%; left: 12%; font-size: 1.8rem; }
+        .deco-5 { bottom: 25%; right: 5%; font-size: 2rem; color: var(--color-yellow-dark); }
+        
+        .services-section { background: var(--color-white); }
+        .why-section { background: var(--color-gray-50); }
+        
+        .feature-item {
+            display: flex;
+            gap: var(--space-4);
+            align-items: flex-start;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--color-blue-light), var(--color-yellow-light));
+            border-radius: var(--radius-xl);
+        }
+        
+        .feature-content h4 { margin-bottom: var(--space-2); }
+        .feature-content p { color: var(--color-gray-600); margin-bottom: 0; }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '🐾';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.1;
+            top: -30%;
+            left: -5%;
+            pointer-events: none;
+        }
+        
+        .cta-section::after {
+            content: '🦴';
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.1;
+            bottom: -20%;
+            right: -2%;
+            pointer-events: none;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .cta-content h2 { color: var(--color-white); margin-bottom: var(--space-4); }
+        .cta-content p { color: rgba(255, 255, 255, 0.9); font-size: var(--font-size-lg); max-width: 600px; margin: 0 auto var(--space-8); }
+        
+        .contact-section { background: var(--color-gray-50); }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-8);
+        }
+        
+        @media (min-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr 1fr; }
+        }
+        
+        .contact-info, .contact-form {
+            background: var(--color-white);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: var(--space-4);
+            align-items: flex-start;
+            margin-bottom: var(--space-6);
+        }
+        
+        .contact-item:last-child { margin-bottom: 0; }
+        
+        .contact-item-icon {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--color-yellow-primary), var(--color-yellow-dark));
+            border-radius: var(--radius-full);
+        }
+        
+        .contact-item h4 { font-size: var(--font-size-base); margin-bottom: var(--space-1); }
+        .contact-item p { color: var(--color-gray-600); margin-bottom: 0; }
+        
+        .footer {
+            background: var(--color-dark);
+            color: var(--color-white);
+            padding: var(--space-16) 0 var(--space-8);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-10);
+            margin-bottom: var(--space-10);
+        }
+        
+        .footer-section h4 {
+            color: var(--color-yellow-primary);
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-5);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            display: block;
+            margin-bottom: var(--space-3);
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-section a:hover { color: var(--color-yellow-primary); }
+        
+        .footer-logo {
+            height: 50px;
+            margin-bottom: var(--space-4);
+            filter: brightness(0) invert(1);
+        }
+        
+        .footer-bottom {
+            padding-top: var(--space-8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        .footer-bottom p { color: rgba(255, 255, 255, 0.5); margin-bottom: 0; }
+        .footer-bottom-links { display: flex; gap: var(--space-6); }
+        .footer-bottom-links a { color: rgba(255, 255, 255, 0.5); font-size: var(--font-size-sm); }
+        .footer-bottom-links a:hover { color: var(--color-yellow-primary); }
+        
+        .wigram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-sm);
+            transition: all var(--transition-fast);
+        }
+        
+        .wigram-link:hover { background: rgba(255, 255, 255, 0.2); color: var(--color-white); }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: var(--space-6);
+            right: var(--space-6);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-blue-primary);
+            color: var(--color-white);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xl);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+            z-index: var(--z-sticky);
+        }
+        
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--color-blue-dark); transform: translateY(-3px); }
+        
+        @media (max-width: 767px) {
+            .hero-text { text-align: center; }
+            .hero-text p { margin-left: auto; margin-right: auto; }
+            .hero-buttons { justify-content: center; }
+            .hero-image { text-align: center; }
+            .hero-image img { margin: 0 auto; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="header-inner">
+            <a href="index.html" class="logo" aria-label="Good Dog Spa - Home">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa Logo" width="180" height="60">
+            </a>
+            
+            <nav class="nav-desktop" role="navigation" aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="daycare.html" class="nav-link">Day Care</a></li>
+                    <li><a href="rehabilitation.html" class="nav-link">Rehab & Hydro</a></li>
+                    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-primary"><span>🔐</span> Member Login</a>
+                </div>
+            </nav>
+            
+            <button class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+    
+    <div class="mobile-menu-overlay" aria-hidden="true"></div>
+    
+    <nav class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+        <button class="mobile-menu-close" aria-label="Close menu">✕</button>
+        <ul class="mobile-nav-list">
+            <li><a href="index.html" class="mobile-nav-link">🏠 Home</a></li>
+            <li><a href="services.html" class="mobile-nav-link">🎾 Services</a></li>
+            <li><a href="daycare.html" class="mobile-nav-link">🐕 Day Care</a></li>
+            <li><a href="daycare-prices.html" class="mobile-nav-link">💰 Pricing</a></li>
+            <li><a href="rehabilitation.html" class="mobile-nav-link">💧 Rehab & Hydro</a></li>
+            <li><a href="gallery.html" class="mobile-nav-link">📸 Gallery</a></li>
+            <li><a href="blog.html" class="mobile-nav-link">📝 Blog</a></li>
+            <li><a href="#contact" class="mobile-nav-link">📞 Contact</a></li>
+        </ul>
+        <div class="mobile-menu-cta">
+            <a href="login.html" class="btn btn-primary btn-block"><span>🔐</span> Member Login</a>
+        </div>
+    </nav>
+    
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="decoration deco-1 float">🐾</div>
+            <div class="decoration deco-2 float float-delay-1">🐾</div>
+            <div class="decoration deco-3 float float-delay-2">🐾</div>
+            <div class="decoration deco-4 float float-delay-3">🦴</div>
+            <div class="decoration deco-5 float float-delay-4">⭐</div>
+            
+            <div class="container">
+                <div class="hero-content grid md:grid-cols-2 gap-10 items-center">
+                    <div class="hero-text">
+                        <h1>Your Dog's <span>Happy Place</span> in Christchurch! 🐕</h1>
+                        <p>Good Dog Spa Wigram is a purpose-built facility offering premium day care, hydrotherapy, and rehabilitation services. Give your furry friend the ultimate playday experience!</p>
+                        <div class="hero-buttons">
+                            <a href="login.html" class="btn btn-primary btn-lg">Book Now 📅</a>
+                            <a href="services.html" class="btn btn-secondary btn-lg">Explore Services 🎾</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3118-450x350.jpg" alt="Happy dogs playing at Good Dog Spa Wigram" width="500" height="400" loading="eager">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Services Overview -->
+        <section class="services-section section" id="services">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">🎉 Our Services</span>
+                    <h2>Everything Your Pup Needs!</h2>
+                    <p>From playtime to pampering, we've got your furry friend covered with our range of professional services.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <article class="card service-card card-hover">
+                        <div class="service-card-icon">🏠</div>
+                        <h3 class="card-title">Dog Day Care</h3>
+                        <p class="card-text">Your dog's home away from home! Carefully scheduled days of play, activities, and rest supervised by our qualified team.</p>
+                        <a href="daycare.html" class="btn btn-outline">Learn More</a>
+                    </article>
+                    
+                    <article class="card service-card card-hover">
+                        <div class="service-card-icon">🏥</div>
+                        <h3 class="card-title">Rehabilitation</h3>
+                        <p class="card-text">Restore your dog's physical wellness with Kate's expert rehabilitation therapy programs tailored to your pet's needs.</p>
+                        <a href="rehabilitation.html" class="btn btn-outline">Learn More</a>
+                    </article>
+                    
+                    <article class="card service-card card-hover">
+                        <div class="service-card-icon">💧</div>
+                        <h3 class="card-title">Hydrotherapy</h3>
+                        <p class="card-text">Improve strength, fitness and condition with our state-of-the-art AQUATREAD underwater treadmill system.</p>
+                        <a href="rehabilitation.html#hydrotherapy" class="btn btn-outline">Learn More</a>
+                    </article>
+                </div>
+                
+                <div class="text-center mt-10">
+                    <a href="services.html" class="btn btn-secondary btn-lg">View All Services →</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why Choose Us -->
+        <section class="why-section section">
+            <div class="container">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="section-badge">🌟 Why Choose Us</span>
+                        <h2 class="mb-6">A Purpose-Built Facility for Your Best Friend</h2>
+                        <p class="text-lg text-gray mb-8">At Good Dog Spa Wigram, we provide the same high-quality care you'd expect for yourself. Our team is passionate about dogs and dedicated to their wellbeing.</p>
+                        
+                        <div class="flex flex-col gap-6">
+                            <div class="feature-item">
+                                <div class="feature-icon">👩‍⚕️</div>
+                                <div class="feature-content">
+                                    <h4>Qualified Staff</h4>
+                                    <p>Our team includes certified animal care professionals and a qualified Canine Rehabilitation Practitioner.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">🏊</div>
+                                <div class="feature-content">
+                                    <h4>State-of-the-Art Equipment</h4>
+                                    <p>AQUATREAD underwater treadmill and professional rehabilitation equipment.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">🏥</div>
+                                <div class="feature-content">
+                                    <h4>Vet Clinic On-Site</h4>
+                                    <p>Part of Wigram Vet, ensuring immediate medical support if ever needed.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3121-1024x683-450x350.jpg" alt="Dogs playing at Good Dog Spa" class="rounded-2xl shadow-lg" loading="lazy">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3127-683x1024-450x350.jpg" alt="Happy dog at daycare" class="rounded-2xl shadow-lg mt-8" loading="lazy">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3123-768x1024-450x350.jpg" alt="Dog rehabilitation session" class="rounded-2xl shadow-lg" loading="lazy">
+                        <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3128-683x1024-450x350.jpg" alt="Dogs socializing" class="rounded-2xl shadow-lg mt-8" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="cta-section section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Give Your Pup the Best Day Ever? 🎉</h2>
+                    <p>Book a FREE 15-minute behaviour assessment to see if your dog is the perfect fit for our daycare family!</p>
+                    <div class="flex justify-center gap-4 flex-wrap">
+                        <a href="login.html" class="btn btn-secondary btn-lg">Book Free Assessment 🐾</a>
+                        <a href="tel:039290987" class="btn btn-outline-light btn-lg">📞 Call (03) 929 0987</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section class="contact-section section" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">📞 Contact Us</span>
+                    <h2>Get In Touch!</h2>
+                    <p>We'd love to hear from you and your furry friend</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📍</div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Wigram, Christchurch<br>New Zealand</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📞</div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p><a href="tel:039290987">(03) 929 0987</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-item-icon">✉️</div>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:gooddogspa@wigramvet.co.nz">gooddogspa@wigramvet.co.nz</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-item-icon">🕐</div>
+                            <div>
+                                <h4>Hours</h4>
+                                <p>Monday - Friday: 7am - 6pm<br>Saturday & Sunday: Closed</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t">
+                            <p class="text-sm text-gray mb-3">Part of Wigram Vet</p>
+                            <a href="https://wigramvet.co.nz" target="_blank" rel="noopener" class="wigram-link">🏥 Visit Wigram Vet →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3 class="mb-6">Send us a message</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="name" class="form-label required">Your Name</label>
+                                <input type="text" id="name" name="name" class="form-input" placeholder="Enter your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label required">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="Enter your phone number">
+                            </div>
+                            <div class="form-group">
+                                <label for="dog-name" class="form-label">Dog's Name</label>
+                                <input type="text" id="dog-name" name="dog_name" class="form-input" placeholder="Enter your dog's name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="form-label required">Message</label>
+                                <textarea id="message" name="message" class="form-textarea" rows="4" placeholder="How can we help?" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Send Message 🐾</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="footer-logo">
+                    <p>Your dog's home away from home. Premium day care, hydrotherapy & rehabilitation in Christchurch.</p>
+                    <a href="https://wigramvet.co.nz" target="_blank" rel="noopener" class="wigram-link mt-4">🏥 Part of Wigram Vet</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <a href="daycare.html">Dog Day Care</a>
+                    <a href="rehabilitation.html">Rehabilitation</a>
+                    <a href="rehabilitation.html#hydrotherapy">Hydrotherapy</a>
+                    <a href="daycare-prices.html">Pricing</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="services.html">All Services</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="login.html">Member Portal</a>
+                    <a href="daycare-regulations.html">Regulations</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📞 <a href="tel:039290987">(03) 929 0987</a></p>
+                    <p>✉️ <a href="mailto:gooddogspa@wigramvet.co.nz">gooddogspa@wigramvet.co.nz</a></p>
+                    <p>📍 Wigram, Christchurch</p>
+                    <p>🕐 Mon-Fri: 7am - 6pm</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© <span class="current-year">2024</span> Good Dog Spa Wigram. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="terms.html">Terms & Conditions</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <button class="back-to-top" aria-label="Back to top">↑</button>
+    
+    <script src="js/components/navigation.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('contact-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            window.toast.success('Thank you for your message! We\'ll be in touch soon. 🐾');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
