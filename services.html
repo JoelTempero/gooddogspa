@@ -16,7 +16,7 @@
     <meta property="og:image" content="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png">
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -316,38 +316,46 @@
         
         .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-6);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-4);
         }
         
-        .benefit-card {
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-4);
             background: var(--color-white);
-            padding: var(--space-6);
+            padding: var(--space-5);
             border-radius: var(--radius-xl);
-            text-align: center;
             box-shadow: var(--shadow-sm);
             transition: all var(--transition-base);
         }
         
-        .benefit-card:hover {
-            transform: translateY(-3px);
+        .benefit-item:hover {
+            transform: translateX(5px);
             box-shadow: var(--shadow-md);
         }
         
-        .benefit-icon {
-            font-size: 2.5rem;
-            margin-bottom: var(--space-3);
+        .benefit-bullet {
+            width: 10px;
+            height: 10px;
+            background: var(--color-blue-primary);
+            border-radius: var(--radius-full);
+            flex-shrink: 0;
+            margin-top: 6px;
         }
         
-        .benefit-card h4 {
-            font-size: var(--font-size-lg);
-            margin-bottom: var(--space-2);
+        .benefit-content h4 {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--space-1);
+            color: var(--color-dark);
         }
         
-        .benefit-card p {
+        .benefit-content p {
             color: var(--color-gray-600);
             font-size: var(--font-size-sm);
             margin-bottom: 0;
+            line-height: 1.5;
         }
         
         /* CTA */
@@ -565,46 +573,57 @@
         <section class="benefits-section section">
             <div class="container">
                 <div class="section-header">
-                    <span class="section-badge">🌟 Who We Help</span>
                     <h2>Our Services Benefit Many Pets</h2>
                     <p>We work with a wide variety of dogs (and some cats!) to improve their mobility and quality of life.</p>
                 </div>
                 
                 <div class="benefits-grid">
-                    <div class="benefit-card">
-                        <div class="benefit-icon">🐕‍🦺</div>
-                        <h4>Senior Pets</h4>
-                        <p>Improve strength, mobility and vitality for older dogs with arthritis or age-related conditions.</p>
+                    <div class="benefit-item">
+                        <div class="benefit-bullet"></div>
+                        <div class="benefit-content">
+                            <h4>Senior Pets</h4>
+                            <p>Improve strength, mobility and vitality for older dogs with arthritis or age-related conditions.</p>
+                        </div>
                     </div>
                     
-                    <div class="benefit-card">
-                        <div class="benefit-icon">🏃</div>
-                        <h4>Agility Dogs</h4>
-                        <p>Improve strength, fitness and condition with full body assessments before events.</p>
+                    <div class="benefit-item">
+                        <div class="benefit-bullet"></div>
+                        <div class="benefit-content">
+                            <h4>Agility Dogs</h4>
+                            <p>Improve strength, fitness and condition with full body assessments before events.</p>
+                        </div>
                     </div>
                     
-                    <div class="benefit-card">
-                        <div class="benefit-icon">🐕</div>
-                        <h4>Ex-Racing Greyhounds</h4>
-                        <p>Help retired racers transition to pet life with proper rehabilitation care.</p>
+                    <div class="benefit-item">
+                        <div class="benefit-bullet"></div>
+                        <div class="benefit-content">
+                            <h4>Ex-Racing Greyhounds</h4>
+                            <p>Help retired racers transition to pet life with proper rehabilitation care.</p>
+                        </div>
                     </div>
                     
-                    <div class="benefit-card">
-                        <div class="benefit-icon">🐑</div>
-                        <h4>Working Dogs</h4>
-                        <p>Farm dogs, Search and Rescue, Police Dogs - keep them in peak condition.</p>
+                    <div class="benefit-item">
+                        <div class="benefit-bullet"></div>
+                        <div class="benefit-content">
+                            <h4>Working Dogs</h4>
+                            <p>Farm dogs, Search and Rescue, Police Dogs - keep them in peak condition.</p>
+                        </div>
                     </div>
                     
-                    <div class="benefit-card">
-                        <div class="benefit-icon">🐱</div>
-                        <h4>Cats Too!</h4>
-                        <p>We also treat cats with orthopaedic, musculo-skeletal or neurological conditions.</p>
+                    <div class="benefit-item">
+                        <div class="benefit-bullet"></div>
+                        <div class="benefit-content">
+                            <h4>Cats Too!</h4>
+                            <p>We also treat cats with orthopaedic, musculo-skeletal or neurological conditions.</p>
+                        </div>
                     </div>
                     
-                    <div class="benefit-card">
-                        <div class="benefit-icon">🩹</div>
-                        <h4>Post-Surgery Recovery</h4>
-                        <p>Vital rehabilitation following orthopedic or neurological surgery.</p>
+                    <div class="benefit-item">
+                        <div class="benefit-bullet"></div>
+                        <div class="benefit-content">
+                            <h4>Post-Surgery Recovery</h4>
+                            <p>Vital rehabilitation following orthopedic or neurological surgery.</p>
+                        </div>
                     </div>
                 </div>
             </div>
