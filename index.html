@@ -171,6 +171,61 @@
             gap: var(--space-4);
         }
         
+        /* Dropdown Menu */
+        .nav-dropdown {
+            position: relative;
+        }
+        
+        .nav-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+        
+        .nav-dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.6rem;
+            transition: transform var(--transition-base);
+        }
+        
+        .nav-dropdown:hover .nav-dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+        
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-white);
+            min-width: 180px;
+            padding: var(--space-2) 0;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+            z-index: 100;
+        }
+        
+        .nav-dropdown:hover .nav-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .nav-dropdown-menu a {
+            display: block;
+            padding: var(--space-3) var(--space-5);
+            color: var(--color-gray-700);
+            font-weight: var(--font-weight-medium);
+            transition: background var(--transition-fast);
+        }
+        
+        .nav-dropdown-menu a:hover {
+            background: var(--color-gray-50);
+            color: var(--color-blue-primary);
+        }
+        
         /* Mobile Menu Button */
         .mobile-menu-btn {
             display: flex;
@@ -299,8 +354,8 @@
             padding-bottom: var(--space-10);
             background: linear-gradient(135deg, var(--color-yellow-light) 0%, var(--color-blue-light) 100%);
             position: relative;
-            overflow: visible;
-            min-height: 90vh;
+            overflow: hidden;
+            min-height: 100vh;
         }
         
         .hero::before {
@@ -315,17 +370,26 @@
             pointer-events: none;
         }
         
+        .hero-wrapper {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 10;
             text-align: center;
-            padding: var(--space-8) 0;
+            padding: var(--space-8);
+            max-width: 650px;
         }
         
         .hero-title {
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(3rem, 10vw, 5rem);
             line-height: 1.1;
-            margin-bottom: var(--space-6);
+            margin-bottom: var(--space-5);
             color: var(--color-dark);
         }
         
@@ -334,95 +398,96 @@
             display: block;
         }
         
-        .hero-subtitle {
-            font-size: var(--font-size-xl);
-            color: var(--color-gray-600);
-            margin-bottom: var(--space-8);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
         .hero-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: var(--space-4);
             justify-content: center;
+            margin-bottom: var(--space-5);
         }
         
-        /* Polaroid Photos - Flying Animation */
+        .hero-subtitle {
+            font-size: var(--font-size-base);
+            color: var(--color-gray-600);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Polaroid Photos - Positioned around center, scroll with page */
         .polaroid {
-            position: fixed;
+            position: absolute;
             background: var(--color-white);
-            padding: 12px 12px 50px 12px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            padding: 12px 12px 45px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             cursor: grab;
-            transition: box-shadow 0.3s, transform 0.3s;
+            transition: box-shadow 0.3s;
             user-select: none;
-            z-index: 100;
+            z-index: 5;
             opacity: 0;
             animation: flyIn 0.8s ease-out forwards;
         }
         
         .polaroid:hover {
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            z-index: 20;
         }
         
         .polaroid.dragging {
             cursor: grabbing;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
             z-index: 9999 !important;
             transition: box-shadow 0.1s;
         }
         
         .polaroid img {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             object-fit: cover;
             display: block;
         }
         
         .polaroid-caption {
             position: absolute;
-            bottom: 12px;
+            bottom: 10px;
             left: 0;
             right: 0;
             text-align: center;
             font-family: 'Fredoka One', cursive;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--color-gray-600);
         }
         
-        /* Starting positions (off-screen) and ending positions */
+        /* Polaroid positions - surrounding center content */
         .polaroid:nth-child(1) { 
-            --start-x: -300px; --start-y: -200px;
-            top: 15%; left: 5%;
-            transform: rotate(-12deg);
+            --start-x: -400px; --start-y: -200px;
+            top: 8%; left: 12%;
+            transform: rotate(-6deg);
             animation-delay: 0.1s;
         }
         .polaroid:nth-child(2) { 
-            --start-x: 300px; --start-y: -300px;
-            top: 12%; right: 5%; left: auto;
-            transform: rotate(8deg);
+            --start-x: 400px; --start-y: -200px;
+            top: 6%; right: 12%; left: auto;
+            transform: rotate(5deg);
             animation-delay: 0.2s;
         }
         .polaroid:nth-child(3) { 
             --start-x: -400px; --start-y: 100px;
-            top: 50%; left: 3%;
-            transform: rotate(5deg);
+            top: 50%; left: 5%;
+            transform: rotate(4deg);
             animation-delay: 0.3s;
         }
         .polaroid:nth-child(4) { 
             --start-x: 400px; --start-y: 100px;
-            top: 48%; right: 3%; left: auto;
-            transform: rotate(-7deg);
+            top: 48%; right: 5%; left: auto;
+            transform: rotate(-4deg);
             animation-delay: 0.4s;
         }
         .polaroid:nth-child(5) { 
-            --start-x: 0px; --start-y: 400px;
-            bottom: 8%; left: 50%;
-            transform: translateX(-50%) rotate(3deg);
+            --start-x: 0px; --start-y: 300px;
+            bottom: 5%; left: 50%;
+            margin-left: -130px;
+            transform: rotate(2deg);
             animation-delay: 0.5s;
         }
         
@@ -694,7 +759,14 @@
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-link active">Home</a></li>
                     <li><a href="services.html" class="nav-link">Services</a></li>
-                    <li><a href="daycare.html" class="nav-link">Day Care</a></li>
+                    <li class="nav-dropdown">
+                        <a href="daycare.html" class="nav-link nav-dropdown-toggle">Day Care</a>
+                        <div class="nav-dropdown-menu">
+                            <a href="daycare.html">Day Care Overview</a>
+                            <a href="daycare-prices.html">Prices</a>
+                            <a href="daycare-regulations.html">Rules & Regulations</a>
+                        </div>
+                    </li>
                     <li><a href="rehabilitation.html" class="nav-link">Rehab & Hydro</a></li>
                     <li><a href="gallery.html" class="nav-link">Gallery</a></li>
                     <li><a href="blog.html" class="nav-link">Blog</a></li>
@@ -719,7 +791,8 @@
             <li><a href="index.html" class="mobile-nav-link">🏠 Home</a></li>
             <li><a href="services.html" class="mobile-nav-link">🎾 Services</a></li>
             <li><a href="daycare.html" class="mobile-nav-link">🐕 Day Care</a></li>
-            <li><a href="daycare-prices.html" class="mobile-nav-link">💰 Pricing</a></li>
+            <li><a href="daycare-prices.html" class="mobile-nav-link" style="padding-left: 2rem;">💰 Prices</a></li>
+            <li><a href="daycare-regulations.html" class="mobile-nav-link" style="padding-left: 2rem;">📋 Rules</a></li>
             <li><a href="rehabilitation.html" class="mobile-nav-link">💧 Rehab & Hydro</a></li>
             <li><a href="gallery.html" class="mobile-nav-link">📸 Gallery</a></li>
             <li><a href="blog.html" class="mobile-nav-link">📝 Blog</a></li>
@@ -731,42 +804,39 @@
     </nav>
     
     <main id="main-content">
-        <!-- Flying Polaroids (positioned fixed, outside hero) -->
-        <div class="polaroid" data-rotation="-12">
-            <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3130.jpg" alt="Happy dog at Good Dog Spa" draggable="false">
-            <span class="polaroid-caption">Play time!</span>
-        </div>
-        <div class="polaroid" data-rotation="8">
-            <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3121.jpg" alt="Dogs socializing" draggable="false">
-            <span class="polaroid-caption">Best friends</span>
-        </div>
-        <div class="polaroid" data-rotation="5">
-            <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3111.jpg" alt="Dog daycare fun" draggable="false">
-            <span class="polaroid-caption">So much fun!</span>
-        </div>
-        <div class="polaroid" data-rotation="-7">
-            <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3105.jpg" alt="Happy pup" draggable="false">
-            <span class="polaroid-caption">Living the life</span>
-        </div>
-        <div class="polaroid" data-rotation="3">
-            <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3094.jpg" alt="Dog at spa" draggable="false">
-            <span class="polaroid-caption">Spa day!</span>
-        </div>
-        
         <!-- Hero Section -->
         <section class="hero">
+            <!-- Polaroids inside hero so they scroll with page -->
+            <div class="polaroid" data-rotation="-6">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3130.jpg" alt="Happy dog at Good Dog Spa" draggable="false">
+                <span class="polaroid-caption">Play time!</span>
+            </div>
+            <div class="polaroid" data-rotation="5">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3121.jpg" alt="Dogs socializing" draggable="false">
+                <span class="polaroid-caption">Best friends</span>
+            </div>
+            <div class="polaroid" data-rotation="4">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3111.jpg" alt="Dog daycare fun" draggable="false">
+                <span class="polaroid-caption">So much fun!</span>
+            </div>
+            <div class="polaroid" data-rotation="-4">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3105.jpg" alt="Happy pup" draggable="false">
+                <span class="polaroid-caption">Living the life</span>
+            </div>
+            <div class="polaroid" data-rotation="2">
+                <img src="https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3094.jpg" alt="Dog at spa" draggable="false">
+                <span class="polaroid-caption">Spa day!</span>
+            </div>
+            
             <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title">Your Dog's <span>Happy Place</span></h1>
-                    <p class="hero-subtitle">Good Dog Spa Wigram is a purpose-built facility offering premium day care, hydrotherapy, and rehabilitation services. Give your furry friend the ultimate playday experience!</p>
-                    <div class="hero-buttons">
-                        <a href="contact.html#contactForm" class="btn btn-primary btn-lg">Book Free Assessment 📅</a>
-                        <a href="services.html" class="btn btn-secondary btn-lg">Explore Services</a>
-                    </div>
-                    
-                    <!-- Mobile polaroids grid -->
-                    <div class="polaroids-mobile">
-                        <!-- Polaroids shown here on mobile only via CSS -->
+                <div class="hero-wrapper">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Your Dog's <span>Happy Place</span></h1>
+                        <div class="hero-buttons">
+                            <a href="contact.html#contactForm" class="btn btn-primary btn-lg">Book Free Assessment 📅</a>
+                            <a href="services.html" class="btn btn-secondary btn-lg">Explore Services</a>
+                        </div>
+                        <p class="hero-subtitle">Good Dog Spa Wigram is a purpose-built facility offering premium day care, hydrotherapy, and rehabilitation services. Give your furry friend the ultimate playday experience!</p>
                     </div>
                 </div>
             </div>
@@ -906,18 +976,21 @@
                         </div>
                         
                         <div class="contact-item">
-                            <div class="contact-item-icon">🕐</div>
-                            <div>
-                                <h4>Hours</h4>
-                                <p>Monday - Friday: 7am - 6pm<br>Saturday & Sunday: Closed</p>
+                                <div class="contact-item-icon">🕐</div>
+                                <div>
+                                    <h4>Hours</h4>
+                                    <p>Monday - Friday: 7am - 6pm<br>Saturday & Sunday: Closed</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-item-icon">🏥</div>
+                                <div>
+                                    <h4>Part of Wigram Vet</h4>
+                                    <p><a href="https://wigramvet.co.nz" target="_blank" rel="noopener">Visit Wigram Vet →</a></p>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="mt-6 pt-6 border-t">
-                            <p class="text-sm text-gray mb-3">Part of Wigram Vet</p>
-                            <a href="https://wigramvet.co.nz" target="_blank" rel="noopener" class="wigram-link">🏥 Visit Wigram Vet →</a>
-                        </div>
-                    </div>
                     
                     <div class="contact-form">
                         <h3 class="mb-6">Send us a message</h3>
@@ -1007,15 +1080,15 @@
             this.reset();
         });
         
-        // Polaroid Dragging - Anywhere on page
+        // Polaroid Dragging - Within hero section
         (function() {
-            const polaroids = document.querySelectorAll('.polaroid');
-            if (polaroids.length === 0) return;
+            const hero = document.querySelector('.hero');
+            const polaroids = document.querySelectorAll('.hero .polaroid');
+            if (polaroids.length === 0 || !hero) return;
             
-            let highestZ = 200;
+            let highestZ = 50;
             let draggedEl = null;
             let offsetX, offsetY;
-            let initialLeft, initialTop;
             
             polaroids.forEach(p => {
                 p.addEventListener('mousedown', startDrag);
@@ -1030,6 +1103,7 @@
                 highestZ++;
                 draggedEl.style.zIndex = highestZ;
                 
+                const heroRect = hero.getBoundingClientRect();
                 const rect = draggedEl.getBoundingClientRect();
                 const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
                 const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
@@ -1037,15 +1111,12 @@
                 offsetX = clientX - rect.left;
                 offsetY = clientY - rect.top;
                 
-                // Store initial position
-                initialLeft = rect.left;
-                initialTop = rect.top;
-                
-                // Switch to fixed pixel positioning
-                draggedEl.style.left = rect.left + 'px';
-                draggedEl.style.top = rect.top + 'px';
+                // Convert to absolute pixel positioning within hero
+                draggedEl.style.left = (rect.left - heroRect.left) + 'px';
+                draggedEl.style.top = (rect.top - heroRect.top) + 'px';
                 draggedEl.style.right = 'auto';
                 draggedEl.style.bottom = 'auto';
+                draggedEl.style.marginLeft = '0';
                 draggedEl.style.transform = 'none';
                 
                 document.addEventListener('mousemove', drag);
@@ -1058,17 +1129,18 @@
                 if (!draggedEl) return;
                 e.preventDefault();
                 
+                const heroRect = hero.getBoundingClientRect();
                 const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
                 const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
                 
-                let newX = clientX - offsetX;
-                let newY = clientY - offsetY;
+                let newX = clientX - heroRect.left - offsetX;
+                let newY = clientY - heroRect.top - offsetY;
                 
-                // Keep mostly on screen
-                const maxX = window.innerWidth - 50;
-                const maxY = window.innerHeight - 50;
-                newX = Math.max(-50, Math.min(newX, maxX));
-                newY = Math.max(0, Math.min(newY, maxY));
+                // Keep within hero bounds
+                const maxX = heroRect.width - draggedEl.offsetWidth;
+                const maxY = heroRect.height - draggedEl.offsetHeight;
+                newX = Math.max(-20, Math.min(newX, maxX + 20));
+                newY = Math.max(-20, Math.min(newY, maxY + 20));
                 
                 draggedEl.style.left = newX + 'px';
                 draggedEl.style.top = newY + 'px';

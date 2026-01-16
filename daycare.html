@@ -77,6 +77,16 @@
         
         .nav-link:hover::after, .nav-link.active::after { width: 100%; }
         
+        /* Dropdown Menu */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle { display: flex; align-items: center; gap: var(--space-1); }
+        .nav-dropdown-toggle::after { content: '▼'; font-size: 0.6rem; transition: transform var(--transition-base); }
+        .nav-dropdown:hover .nav-dropdown-toggle::after { transform: rotate(180deg); }
+        .nav-dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--color-white); min-width: 180px; padding: var(--space-2) 0; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden; transition: all var(--transition-base); z-index: 100; }
+        .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; }
+        .nav-dropdown-menu a { display: block; padding: var(--space-3) var(--space-5); color: var(--color-gray-700); font-weight: var(--font-weight-medium); transition: background var(--transition-fast); }
+        .nav-dropdown-menu a:hover { background: var(--color-gray-50); color: var(--color-blue-primary); }
+        
         .mobile-menu-btn {
             display: flex;
             flex-direction: column;
@@ -87,6 +97,16 @@
             gap: 6px;
             cursor: pointer;
         }
+        
+        /* Dropdown Menu */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle { display: flex; align-items: center; gap: var(--space-1); }
+        .nav-dropdown-toggle::after { content: '▼'; font-size: 0.6rem; transition: transform var(--transition-base); }
+        .nav-dropdown:hover .nav-dropdown-toggle::after { transform: rotate(180deg); }
+        .nav-dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--color-white); min-width: 180px; padding: var(--space-2) 0; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden; transition: all var(--transition-base); z-index: 100; }
+        .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; }
+        .nav-dropdown-menu a { display: block; padding: var(--space-3) var(--space-5); color: var(--color-gray-700); font-weight: var(--font-weight-medium); transition: background var(--transition-fast); }
+        .nav-dropdown-menu a:hover { background: var(--color-gray-50); color: var(--color-blue-primary); }
         
         @media (min-width: 1024px) { .mobile-menu-btn { display: none; } }
         
@@ -294,8 +314,8 @@
         .schedule-body { padding: var(--space-6); }
         
         .schedule-item {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
             align-items: center;
             padding: var(--space-4);
             border-bottom: 1px dashed var(--color-gray-200);
@@ -304,11 +324,12 @@
         .schedule-item:last-child { border-bottom: none; }
         
         .schedule-day { font-weight: var(--font-weight-bold); }
-        .schedule-time { color: var(--color-gray-600); }
+        .schedule-time { color: var(--color-gray-600); text-align: center; }
         .schedule-note { 
             font-size: var(--font-size-sm); 
             color: var(--color-blue-primary);
             font-weight: var(--font-weight-bold);
+            text-align: right;
         }
         
         /* Quick Links */
@@ -446,7 +467,7 @@
             <li><a href="index.html" class="mobile-nav-link">🏠 Home</a></li>
             <li><a href="services.html" class="mobile-nav-link">🎾 Services</a></li>
             <li><a href="daycare.html" class="mobile-nav-link">🐕 Day Care</a></li>
-            <li><a href="daycare-prices.html" class="mobile-nav-link">💰 Pricing</a></li>
+            <li><a href="daycare-prices.html" class="mobile-nav-link" style="padding-left: 2rem;">💰 Prices</a></li><li><a href="daycare-regulations.html" class="mobile-nav-link" style="padding-left: 2rem;">📋 Rules</a></li>
             <li><a href="rehabilitation.html" class="mobile-nav-link">💧 Rehab & Hydro</a></li>
             <li><a href="gallery.html" class="mobile-nav-link">📸 Gallery</a></li>
             <li><a href="blog.html" class="mobile-nav-link">📝 Blog</a></li>
@@ -648,7 +669,6 @@
                     <a href="daycare-prices.html" class="quick-link">💰 Full Price List</a>
                     <a href="daycare-regulations.html" class="quick-link">📋 Daycare Rules</a>
                     <a href="gallery.html" class="quick-link">📸 Photo Gallery</a>
-                    <a href="login.html" class="quick-link">📅 Book Online</a>
                 </div>
             </div>
         </section>
