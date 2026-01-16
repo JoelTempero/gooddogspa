@@ -6,6 +6,22 @@
 const MockAuth = (function() {
     const STORAGE_KEY = 'gooddogspa_auth';
     const USERS_KEY = 'gooddogspa_users';
+    const AUTH_VERSION_KEY = 'gooddogspa_auth_version';
+    const CURRENT_VERSION = '2.0.2'; // Increment this to force user data refresh
+    
+    // Check version and reset users if needed
+    function checkVersion() {
+        const storedVersion = localStorage.getItem(AUTH_VERSION_KEY);
+        if (storedVersion !== CURRENT_VERSION) {
+            console.log('Auth version changed, resetting user data...');
+            localStorage.removeItem(USERS_KEY);
+            localStorage.removeItem(STORAGE_KEY); // Also clear current session
+            localStorage.setItem(AUTH_VERSION_KEY, CURRENT_VERSION);
+        }
+    }
+    
+    // Run version check immediately
+    checkVersion();
     
     // Demo users (pre-seeded)
     const defaultUsers = [

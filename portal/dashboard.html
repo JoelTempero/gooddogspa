@@ -782,33 +782,33 @@
         
         function updateUserInfo() {
             document.getElementById('sidebarUser').innerHTML = `
-                <div class="sidebar-user-avatar">${currentUser.name ? currentUser.name.charAt(0).toUpperCase() : '👤'}</div>
-                <div class="sidebar-user-name">${currentUser.name || 'User'}</div>
+                <div class="sidebar-user-avatar">${currentUser.displayName ? currentUser.displayName.charAt(0).toUpperCase() : '👤'}</div>
+                <div class="sidebar-user-name">${currentUser.displayName || 'User'}</div>
                 <div class="sidebar-user-email">${currentUser.email}</div>
             `;
             
-            const firstName = currentUser.name ? currentUser.name.split(' ')[0] : 'there';
+            const firstName = currentUser.displayName ? currentUser.displayName.split(' ')[0] : 'there';
             document.getElementById('welcomeMessage').textContent = `Welcome back, ${firstName}! 🐾`;
         }
         
         async function loadDashboardData() {
             try {
                 // Load dogs
-                const dogs = await MockDatabase.getDogs(currentUser.id);
+                const dogs = await MockDatabase.getDogs(currentUser.uid);
                 renderDogs(dogs);
                 document.getElementById('statDogs').textContent = dogs.length;
                 
                 // Load upcoming bookings
-                const bookings = await MockDatabase.getBookings(currentUser.id, { upcoming: true });
+                const bookings = await MockDatabase.getBookings(currentUser.uid, { upcoming: true });
                 renderBookings(bookings);
                 document.getElementById('statBookings').textContent = bookings.filter(b => b.status === 'confirmed').length;
                 
                 // Load past bookings for completed count
-                const pastBookings = await MockDatabase.getBookings(currentUser.id, { past: true });
+                const pastBookings = await MockDatabase.getBookings(currentUser.uid, { past: true });
                 document.getElementById('statCompleted').textContent = pastBookings.length;
                 
                 // Load credits
-                const credits = await MockDatabase.getCredits(currentUser.id);
+                const credits = await MockDatabase.getCredits(currentUser.uid);
                 renderCredits(credits);
                 const totalCredits = Object.values(credits).reduce((a, b) => a + b, 0);
                 document.getElementById('statCredits').textContent = totalCredits;

@@ -5,6 +5,26 @@
 
 const MockDatabase = (function() {
     const DB_PREFIX = 'gooddogspa_db_';
+    const DB_VERSION_KEY = 'gooddogspa_db_version';
+    const CURRENT_VERSION = '2.0.2'; // Increment this to force data refresh
+    
+    // Check version and reset if needed
+    function checkVersion() {
+        const storedVersion = localStorage.getItem(DB_VERSION_KEY);
+        if (storedVersion !== CURRENT_VERSION) {
+            console.log('Database version changed, resetting demo data...');
+            // Clear all old data
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('gooddogspa_db_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            localStorage.setItem(DB_VERSION_KEY, CURRENT_VERSION);
+        }
+    }
+    
+    // Run version check immediately
+    checkVersion();
     
     // Helper to generate dates
     function getFutureDate(days) {

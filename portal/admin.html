@@ -176,6 +176,7 @@
                 <a class="sidebar-link active" data-tab="overview"><span class="sidebar-link-icon">📊</span>Overview</a>
                 <a class="sidebar-link" data-tab="bookings"><span class="sidebar-link-icon">📅</span>All Bookings</a>
                 <a class="sidebar-link" data-tab="dogs"><span class="sidebar-link-icon">🐕</span>All Dogs</a>
+                <a class="sidebar-link" data-tab="members"><span class="sidebar-link-icon">👥</span>Members</a>
                 
                 <div class="sidebar-nav-label">Quick Links</div>
                 <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>Main Website</a>
@@ -317,6 +318,38 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Members Tab -->
+                <div class="tab-panel" id="tab-members">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h2>👥 All Members</h2>
+                            <div class="filters-row">
+                                <input type="text" class="filter-input" id="filterMemberSearch" placeholder="Search members...">
+                                <button class="btn btn-outline btn-sm" onclick="resetDemoData()" style="margin-left: auto;">🔄 Reset Demo Data</button>
+                            </div>
+                        </div>
+                        <div class="data-table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Member</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Dogs</th>
+                                        <th>Full Day</th>
+                                        <th>Half Day</th>
+                                        <th>3 Hour</th>
+                                        <th>Hydro 30</th>
+                                        <th>Hydro 60</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allMembersBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -440,7 +473,8 @@
         const tabTitles = {
             'overview': 'Admin Overview',
             'bookings': 'All Bookings',
-            'dogs': 'All Dogs'
+            'dogs': 'All Dogs',
+            'members': 'All Members'
         };
         
         tabLinks.forEach(link => {
@@ -712,6 +746,66 @@
             });
             renderAllDogs(filtered);
         });
+        
+        // All Members Table
+        function renderAllMembers(members) {
+            const body = document.getElementById('allMembersBody');
+            body.innerHTML = members.map(m => {
+                const credits = getCreditsForUser(m.uid);
+                const userDogs = allDogs.filter(d => d.ownerId === m.uid);
+                return `
+                    <tr>
+                        <td>
+                            <div class="item-row">
+                                <div class="item-avatar member">👤</div>
+                                <div class="item-info">
+                                    <h4>${m.displayName}</h4>
+                                    <p>Since ${new Date(m.createdAt).toLocaleDateString('en-NZ', { month: 'short', year: 'numeric' })}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${m.email}</td>
+                        <td>${m.phone || '-'}</td>
+                        <td>${userDogs.length} dog${userDogs.length !== 1 ? 's' : ''}</td>
+                        <td><strong>${credits.fullDay || 0}</strong></td>
+                        <td><strong>${credits.halfDay || 0}</strong></td>
+                        <td><strong>${credits.threeHour || 0}</strong></td>
+                        <td><strong>${credits.rehab30 || 0}</strong></td>
+                        <td><strong>${credits.rehab60 || 0}</strong></td>
+                        <td>
+                            <button class="action-btn edit" onclick="openCreditsModal('${m.uid}')">💳 Edit</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('') || '<tr><td colspan="10" class="empty-state">No members found</td></tr>';
+        }
+        
+        renderAllMembers(allUsers);
+        
+        // Members filter
+        document.getElementById('filterMemberSearch').addEventListener('input', (e) => {
+            const search = e.target.value.toLowerCase();
+            const filtered = allUsers.filter(m => 
+                m.displayName.toLowerCase().includes(search) ||
+                m.email.toLowerCase().includes(search) ||
+                (m.phone && m.phone.includes(search))
+            );
+            renderAllMembers(filtered);
+        });
+        
+        // Reset Demo Data function
+        function resetDemoData() {
+            if (confirm('This will reset all demo data to defaults. Any changes you made will be lost. Continue?')) {
+                // Clear all gooddogspa localStorage
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('gooddogspa')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                alert('Demo data reset! The page will now reload.');
+                location.reload();
+            }
+        }
         
         // Credits Modal
         let currentEditUserId = null;
