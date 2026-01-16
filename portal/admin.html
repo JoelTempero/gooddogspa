@@ -20,7 +20,7 @@
         .portal-layout { display: flex; min-height: 100vh; }
         
         /* Sidebar */
-        .sidebar { width: var(--sidebar-width); background: #1e293b; color: var(--color-white); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: var(--z-fixed); }
+        .sidebar { width: var(--sidebar-width); background: #1e293b; color: var(--color-white); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 1000; }
         @media (max-width: 1023px) { .sidebar { transform: translateX(-100%); transition: transform 0.3s; } .sidebar.open { transform: translateX(0); } }
         .sidebar-header { padding: var(--space-6); border-bottom: 1px solid rgba(255,255,255,0.1); }
         .sidebar-logo { height: 45px; filter: brightness(0) invert(1); }
@@ -35,21 +35,20 @@
         .sidebar-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.7); border-radius: var(--radius-lg); margin-bottom: var(--space-1); cursor: pointer; }
         .sidebar-link:hover { background: rgba(255,255,255,0.1); color: var(--color-white); }
         .sidebar-link.active { background: var(--color-coral); color: var(--color-white); }
-        .sidebar-link-icon { font-size: 1.2rem; }
-        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; position: absolute; bottom: 0; left: 0; right: 0; }
+        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); position: absolute; bottom: 0; left: 0; right: 0; }
         .logout-btn { display: flex; align-items: center; gap: var(--space-3); width: 100%; padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.6); border-radius: var(--radius-lg); cursor: pointer; }
         .logout-btn:hover { background: rgba(255,255,255,0.1); color: var(--color-coral); }
         
         /* Main Content */
         .portal-main { flex: 1; margin-left: var(--sidebar-width); min-height: 100vh; }
         @media (max-width: 1023px) { .portal-main { margin-left: 0; } }
-        .portal-topbar { background: var(--color-white); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: var(--z-sticky); }
+        .portal-topbar { background: var(--color-white); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 100; }
         .mobile-menu-toggle { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; font-size: 1.5rem; background: var(--color-gray-100); border-radius: var(--radius-lg); cursor: pointer; }
         @media (max-width: 1023px) { .mobile-menu-toggle { display: flex; } }
         .page-title h1 { font-size: var(--font-size-xl); margin: 0; }
         .portal-content { padding: var(--space-6); }
         @media (min-width: 768px) { .portal-content { padding: var(--space-8); } }
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: calc(var(--z-fixed) - 1); transition: all 0.3s; }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: 999; transition: all 0.3s; }
         .sidebar-overlay.open { opacity: 1; visibility: visible; }
         
         /* Tab Panels */
@@ -75,12 +74,12 @@
         
         /* Filters */
         .filters-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
-        .filter-input { padding: var(--space-2) var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); font-size: var(--font-size-sm); min-width: 150px; }
-        .filter-input:focus { border-color: var(--color-blue-primary); outline: none; }
+        .filter-input, .filter-select { padding: var(--space-2) var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); font-size: var(--font-size-sm); min-width: 140px; }
+        .filter-input:focus, .filter-select:focus { border-color: var(--color-blue-primary); outline: none; }
         
         /* Tables */
         .data-table { width: 100%; border-collapse: collapse; }
-        .data-table th, .data-table td { padding: var(--space-4); text-align: left; border-bottom: 1px solid var(--color-gray-100); }
+        .data-table th, .data-table td { padding: var(--space-3) var(--space-4); text-align: left; border-bottom: 1px solid var(--color-gray-100); }
         .data-table th { background: var(--color-gray-50); font-weight: var(--font-weight-bold); font-size: var(--font-size-sm); color: var(--color-gray-600); white-space: nowrap; }
         .data-table tr:hover { background: var(--color-gray-50); }
         .data-table-wrapper { overflow-x: auto; }
@@ -93,39 +92,74 @@
         .status-badge.pending { background: var(--color-yellow-light); color: #b45309; }
         .status-badge.active { background: #dcfce7; color: #16a34a; }
         
-        /* Member/Dog Cards */
-        .item-row { display: flex; align-items: center; gap: var(--space-4); }
-        .item-avatar { width: 45px; height: 45px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        /* Item Rows */
+        .item-row { display: flex; align-items: center; gap: var(--space-3); }
+        .item-avatar { width: 40px; height: 40px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; overflow: hidden; }
+        .item-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .item-avatar.dog { background: var(--color-yellow-light); }
         .item-avatar.member { background: var(--color-blue-light); }
-        .item-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-full); }
-        .item-info { min-width: 0; }
-        .item-info h4 { margin: 0 0 2px 0; font-size: var(--font-size-base); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .item-info p { margin: 0; font-size: var(--font-size-sm); color: var(--color-gray-500); }
+        .item-info h4 { margin: 0; font-size: var(--font-size-sm); }
+        .item-info p { margin: 0; font-size: var(--font-size-xs); color: var(--color-gray-500); }
         
-        /* Quick Actions */
-        .action-btn { padding: var(--space-2) var(--space-3); border-radius: var(--radius-lg); font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); cursor: pointer; transition: all 0.2s; }
-        .action-btn.view { background: var(--color-blue-light); color: var(--color-blue-primary); }
-        .action-btn.view:hover { background: var(--color-blue-primary); color: white; }
-        .action-btn.edit { background: var(--color-yellow-light); color: #b45309; }
-        .action-btn.edit:hover { background: var(--color-yellow-primary); color: white; }
+        /* Schedule */
+        .schedule-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-gray-100); }
+        .schedule-item:last-child { border-bottom: none; }
+        .schedule-time { font-weight: var(--font-weight-bold); color: var(--color-blue-primary); min-width: 60px; }
+        .schedule-info { flex: 1; }
+        .schedule-info h4 { margin: 0 0 2px 0; font-size: var(--font-size-sm); }
+        .schedule-info p { margin: 0; font-size: var(--font-size-xs); color: var(--color-gray-500); }
         
         /* Empty State */
-        .empty-state { padding: var(--space-10); text-align: center; color: var(--color-gray-500); }
+        .empty-state { text-align: center; padding: var(--space-8); color: var(--color-gray-500); }
         .empty-state-icon { font-size: 3rem; margin-bottom: var(--space-3); }
         
-        /* Today's Schedule */
-        .schedule-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4); border-bottom: 1px solid var(--color-gray-100); }
-        .schedule-item:last-child { border-bottom: none; }
-        .schedule-time { font-weight: var(--font-weight-bold); color: var(--color-blue-primary); min-width: 80px; }
-        .schedule-info { flex: 1; }
-        .schedule-info h4 { margin: 0 0 2px 0; }
-        .schedule-info p { margin: 0; font-size: var(--font-size-sm); color: var(--color-gray-500); }
+        /* Action Buttons */
+        .action-btn { padding: var(--space-1) var(--space-3); border-radius: var(--radius-lg); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); cursor: pointer; border: none; transition: all 0.2s; }
+        .action-btn.confirm { background: #dcfce7; color: #16a34a; }
+        .action-btn.confirm:hover { background: #16a34a; color: white; }
+        .action-btn.cancel { background: #fee2e2; color: #dc2626; }
+        .action-btn.cancel:hover { background: #dc2626; color: white; }
+        .action-btn.edit { background: var(--color-blue-light); color: var(--color-blue-primary); }
+        .action-btn.edit:hover { background: var(--color-blue-primary); color: white; }
+        
+        /* Modal */
+        .modal { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: var(--space-4); opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .modal.open { opacity: 1; visibility: visible; }
+        .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
+        .modal-content { position: relative; background: var(--color-white); border-radius: var(--radius-2xl); width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .modal-header { padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-gray-100); display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h2 { font-size: var(--font-size-xl); margin: 0; }
+        .modal-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--color-gray-100); border-radius: var(--radius-full); cursor: pointer; font-size: 1.2rem; }
+        .modal-close:hover { background: var(--color-coral); color: white; }
+        .modal-body { padding: var(--space-6); }
+        .modal-footer { padding: var(--space-4) var(--space-6); background: var(--color-gray-50); display: flex; gap: var(--space-3); justify-content: flex-end; }
+        
+        /* Form */
+        .form-group { margin-bottom: var(--space-4); }
+        .form-group label { display: block; font-weight: var(--font-weight-bold); margin-bottom: var(--space-2); font-size: var(--font-size-sm); }
+        .form-group input, .form-group select { width: 100%; padding: var(--space-3); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); font-size: var(--font-size-base); }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-blue-primary); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+        
+        /* Credits Display */
+        .credits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4); }
+        .credit-item { background: var(--color-gray-50); padding: var(--space-3); border-radius: var(--radius-lg); text-align: center; }
+        .credit-item .count { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-blue-primary); }
+        .credit-item .label { font-size: var(--font-size-xs); color: var(--color-gray-500); }
+        .credit-adjust { display: flex; align-items: center; gap: var(--space-2); }
+        .credit-adjust button { width: 32px; height: 32px; border-radius: var(--radius-full); border: none; font-size: 1.2rem; cursor: pointer; }
+        .credit-adjust .minus { background: #fee2e2; color: #dc2626; }
+        .credit-adjust .plus { background: #dcfce7; color: #16a34a; }
+        .credit-adjust input { width: 60px; text-align: center; padding: var(--space-2); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); }
+        
+        /* Grid */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
+        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="portal-layout">
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -134,18 +168,16 @@
             </div>
             <div class="sidebar-user" id="sidebarUser">
                 <div class="sidebar-user-avatar">👤</div>
-                <div class="sidebar-user-name">Loading...</div>
-                <div class="sidebar-user-email">...</div>
+                <div class="sidebar-user-name">Spa Admin</div>
+                <div class="sidebar-user-email">admin@gooddogspa.co.nz</div>
             </div>
             <nav class="sidebar-nav">
                 <div class="sidebar-nav-label">Admin Menu</div>
                 <a class="sidebar-link active" data-tab="overview"><span class="sidebar-link-icon">📊</span>Overview</a>
                 <a class="sidebar-link" data-tab="bookings"><span class="sidebar-link-icon">📅</span>All Bookings</a>
                 <a class="sidebar-link" data-tab="dogs"><span class="sidebar-link-icon">🐕</span>All Dogs</a>
-                <a class="sidebar-link" data-tab="members"><span class="sidebar-link-icon">👥</span>Members</a>
                 
                 <div class="sidebar-nav-label">Quick Links</div>
-                <a href="dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span>Member View</a>
                 <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>Main Website</a>
             </nav>
             <div class="sidebar-footer">
@@ -194,7 +226,7 @@
                         </div>
                     </div>
                     
-                    <div class="grid md:grid-cols-2 gap-6">
+                    <div class="grid-2">
                         <div class="admin-card">
                             <div class="admin-card-header">
                                 <h2>📅 Today's Schedule</h2>
@@ -210,33 +242,9 @@
                         
                         <div class="admin-card">
                             <div class="admin-card-header">
-                                <h2>🆕 Recent Activity</h2>
+                                <h2>📋 Upcoming Bookings</h2>
                             </div>
-                            <div class="admin-card-body" id="recentActivity">
-                                <!-- Populated by JS -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="admin-card">
-                        <div class="admin-card-header">
-                            <h2>📆 Upcoming Bookings</h2>
-                            <a class="action-btn view" data-tab="bookings">View All →</a>
-                        </div>
-                        <div class="data-table-wrapper">
-                            <table class="data-table" id="upcomingBookingsTable">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Dog</th>
-                                        <th>Owner</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="upcomingBookingsBody"></tbody>
-                            </table>
+                            <div class="admin-card-body" id="upcomingBookings"></div>
                         </div>
                     </div>
                 </div>
@@ -247,20 +255,20 @@
                         <div class="admin-card-header">
                             <h2>📅 All Bookings</h2>
                             <div class="filters-row">
-                                <input type="date" class="filter-input" id="filterDateFrom" placeholder="From">
-                                <input type="date" class="filter-input" id="filterDateTo" placeholder="To">
-                                <select class="filter-input" id="filterStatus">
+                                <input type="date" class="filter-input" id="filterDateFrom" title="From date">
+                                <input type="date" class="filter-input" id="filterDateTo" title="To date">
+                                <select class="filter-select" id="filterStatus">
                                     <option value="">All Status</option>
                                     <option value="confirmed">Confirmed</option>
                                     <option value="completed">Completed</option>
                                     <option value="cancelled">Cancelled</option>
                                 </select>
-                                <select class="filter-input" id="filterType">
+                                <select class="filter-select" id="filterType">
                                     <option value="">All Types</option>
                                     <option value="daycare">Daycare</option>
                                     <option value="hydrotherapy">Hydrotherapy</option>
-                                    <option value="rehabilitation">Rehabilitation</option>
                                 </select>
+                                <button class="btn btn-primary btn-sm" onclick="openAddBookingModal()">+ Add Booking</button>
                             </div>
                         </div>
                         <div class="data-table-wrapper">
@@ -272,9 +280,8 @@
                                         <th>Dog</th>
                                         <th>Owner</th>
                                         <th>Type</th>
-                                        <th>Session</th>
                                         <th>Status</th>
-                                        <th>Notes</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="allBookingsBody"></tbody>
@@ -289,7 +296,7 @@
                         <div class="admin-card-header">
                             <h2>🐕 Registered Dogs</h2>
                             <div class="filters-row">
-                                <input type="text" class="filter-input" id="filterDogSearch" placeholder="Search dogs...">
+                                <input type="text" class="filter-input" id="filterDogSearch" placeholder="Search dogs or owners...">
                             </div>
                         </div>
                         <div class="data-table-wrapper">
@@ -299,10 +306,10 @@
                                         <th>Dog</th>
                                         <th>Breed</th>
                                         <th>Age</th>
-                                        <th>Weight</th>
                                         <th>Owner</th>
+                                        <th>Owner Credits</th>
                                         <th>Assessment</th>
-                                        <th>Notes</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="allDogsBody"></tbody>
@@ -310,36 +317,116 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Edit Credits Modal -->
+    <div class="modal" id="creditsModal">
+        <div class="modal-backdrop" onclick="closeCreditsModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💳 Manage Credits</h2>
+                <button class="modal-close" onclick="closeCreditsModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="memberInfo" style="margin-bottom: var(--space-5); padding-bottom: var(--space-4); border-bottom: 2px dashed var(--color-gray-200);"></div>
                 
-                <!-- Members Tab -->
-                <div class="tab-panel" id="tab-members">
-                    <div class="admin-card">
-                        <div class="admin-card-header">
-                            <h2>👥 Members</h2>
-                            <div class="filters-row">
-                                <input type="text" class="filter-input" id="filterMemberSearch" placeholder="Search members...">
-                            </div>
-                        </div>
-                        <div class="data-table-wrapper">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Member</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Dogs</th>
-                                        <th>Credits</th>
-                                        <th>Member Since</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="allMembersBody"></tbody>
-                            </table>
-                        </div>
+                <h4 style="margin-bottom: var(--space-4);">Credit Balances</h4>
+                <div class="form-group">
+                    <label>Full Day Credits</label>
+                    <div class="credit-adjust">
+                        <button class="minus" onclick="adjustCredit('fullDay', -1)">−</button>
+                        <input type="number" id="creditFullDay" value="0" min="0">
+                        <button class="plus" onclick="adjustCredit('fullDay', 1)">+</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Half Day Credits</label>
+                    <div class="credit-adjust">
+                        <button class="minus" onclick="adjustCredit('halfDay', -1)">−</button>
+                        <input type="number" id="creditHalfDay" value="0" min="0">
+                        <button class="plus" onclick="adjustCredit('halfDay', 1)">+</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>3 Hour Credits</label>
+                    <div class="credit-adjust">
+                        <button class="minus" onclick="adjustCredit('threeHour', -1)">−</button>
+                        <input type="number" id="creditThreeHour" value="0" min="0">
+                        <button class="plus" onclick="adjustCredit('threeHour', 1)">+</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Rehab 30min Credits</label>
+                    <div class="credit-adjust">
+                        <button class="minus" onclick="adjustCredit('rehab30', -1)">−</button>
+                        <input type="number" id="creditRehab30" value="0" min="0">
+                        <button class="plus" onclick="adjustCredit('rehab30', 1)">+</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Rehab 60min Credits</label>
+                    <div class="credit-adjust">
+                        <button class="minus" onclick="adjustCredit('rehab60', -1)">−</button>
+                        <input type="number" id="creditRehab60" value="0" min="0">
+                        <button class="plus" onclick="adjustCredit('rehab60', 1)">+</button>
                     </div>
                 </div>
             </div>
-        </main>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeCreditsModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCredits()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-backdrop" onclick="closeBookingModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>➕ Add Booking</h2>
+                <button class="modal-close" onclick="closeBookingModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Select Dog</label>
+                    <select id="bookingDogSelect">
+                        <option value="">Choose a dog...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Service Type</label>
+                    <select id="bookingTypeSelect" onchange="updateSessionOptions()">
+                        <option value="daycare">Daycare</option>
+                        <option value="hydrotherapy">Hydrotherapy</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Session</label>
+                    <select id="bookingSessionSelect"></select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="bookingDateInput">
+                    </div>
+                    <div class="form-group">
+                        <label>Time</label>
+                        <input type="time" id="bookingTimeInput" value="08:00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes (optional)</label>
+                    <input type="text" id="bookingNotesInput" placeholder="Any special notes...">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeBookingModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="createBooking()">Create Booking</button>
+            </div>
+        </div>
     </div>
     
     <script src="../js/services/mockAuth.js"></script>
@@ -353,50 +440,33 @@
         const tabTitles = {
             'overview': 'Admin Overview',
             'bookings': 'All Bookings',
-            'dogs': 'Registered Dogs',
-            'members': 'Members'
+            'dogs': 'All Dogs'
         };
         
         tabLinks.forEach(link => {
             link.addEventListener('click', () => {
                 const tabId = link.dataset.tab;
-                
-                // Update active states
                 tabLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
-                
                 tabPanels.forEach(panel => {
                     panel.classList.remove('active');
-                    if (panel.id === 'tab-' + tabId) {
-                        panel.classList.add('active');
-                    }
+                    if (panel.id === 'tab-' + tabId) panel.classList.add('active');
                 });
-                
                 pageTitle.textContent = tabTitles[tabId] || 'Admin Dashboard';
-                
-                // Close mobile sidebar
                 document.getElementById('sidebar').classList.remove('open');
                 document.getElementById('sidebarOverlay').classList.remove('open');
             });
         });
         
-        // Also handle action buttons that switch tabs
-        document.querySelectorAll('[data-tab]').forEach(el => {
-            if (!el.classList.contains('sidebar-link')) {
-                el.addEventListener('click', () => {
-                    const tabId = el.dataset.tab;
-                    document.querySelector(`.sidebar-link[data-tab="${tabId}"]`).click();
-                });
-            }
-        });
-        
-        // Mobile sidebar
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('sidebarOverlay').classList.toggle('open');
         }
         
-        document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
+        function logout() {
+            MockAuth.signOut();
+            window.location.href = '../login.html';
+        }
         
         // Auth check
         const user = MockAuth.getCurrentUser();
@@ -404,7 +474,7 @@
             window.location.href = 'dashboard.html';
         }
         
-        // Populate user info
+        // Update sidebar user
         document.getElementById('sidebarUser').innerHTML = `
             <div class="sidebar-user-avatar">👤</div>
             <div class="sidebar-user-name">${user.displayName}</div>
@@ -413,17 +483,17 @@
         
         // Set current date
         const today = new Date();
-        document.getElementById('currentDate').textContent = today.toLocaleDateString('en-NZ', { 
-            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-        });
-        document.getElementById('todayDate').textContent = today.toLocaleDateString('en-NZ', { 
-            weekday: 'short', month: 'short', day: 'numeric' 
-        });
+        document.getElementById('currentDate').textContent = today.toLocaleDateString('en-NZ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('todayDate').textContent = today.toLocaleDateString('en-NZ', { weekday: 'short', month: 'short', day: 'numeric' });
         
-        // Get all data - using direct localStorage access for admin (sync)
+        // Data helpers
         function getCollection(name) {
             const key = 'gooddogspa_db_' + name;
             return JSON.parse(localStorage.getItem(key) || '[]');
+        }
+        
+        function saveCollection(name, data) {
+            localStorage.setItem('gooddogspa_db_' + name, JSON.stringify(data));
         }
         
         function getCreditsForUser(userId) {
@@ -431,24 +501,27 @@
             return credits[userId] || { fullDay: 0, halfDay: 0, threeHour: 0, rehab30: 0, rehab60: 0 };
         }
         
+        function saveCreditsForUser(userId, credits) {
+            const allCredits = JSON.parse(localStorage.getItem('gooddogspa_db_credits') || '{}');
+            allCredits[userId] = credits;
+            localStorage.setItem('gooddogspa_db_credits', JSON.stringify(allCredits));
+        }
+        
         const allUsers = JSON.parse(localStorage.getItem('gooddogspa_users') || '[]').filter(u => u.role === 'member');
         const allDogs = getCollection('dogs');
         const allBookings = getCollection('bookings');
         
-        // Helper: Get user by ID
         function getUserById(uid) {
             const users = JSON.parse(localStorage.getItem('gooddogspa_users') || '[]');
             return users.find(u => u.uid === uid) || { displayName: 'Unknown', email: '-' };
         }
         
-        // Helper: Get dog by ID
         function getDogById(id) {
             return allDogs.find(d => d.id === id) || { name: 'Unknown' };
         }
         
-        // Helper: Format date
         function formatDate(dateStr) {
-            const date = new Date(dateStr);
+            const date = new Date(dateStr + 'T00:00:00');
             return date.toLocaleDateString('en-NZ', { weekday: 'short', day: 'numeric', month: 'short' });
         }
         
@@ -474,14 +547,13 @@
             scheduleContainer.innerHTML = todayBookings.map(booking => {
                 const owner = getUserById(booking.ownerId);
                 const time = booking.dropOff || booking.time || '09:00';
-                const typeLabel = booking.type === 'daycare' ? 'Daycare' : booking.type === 'hydrotherapy' ? 'Hydro' : 'Rehab';
+                const typeLabel = booking.type === 'daycare' ? 'Daycare' : 'Hydro';
                 return `
                     <div class="schedule-item">
                         <div class="schedule-time">${time}</div>
-                        <div class="item-avatar dog">🐕</div>
                         <div class="schedule-info">
-                            <h4>${booking.dogName}</h4>
-                            <p>${typeLabel} • ${owner.displayName}</p>
+                            <h4>${booking.dogName} - ${typeLabel}</h4>
+                            <p>${owner.displayName}</p>
                         </div>
                         <span class="status-badge ${booking.status}">${booking.status}</span>
                     </div>
@@ -489,112 +561,139 @@
             }).join('');
         }
         
-        // Recent Activity
-        const recentActivity = document.getElementById('recentActivity');
-        const recentBookings = [...allBookings].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
-        recentActivity.innerHTML = recentBookings.map(booking => {
-            const owner = getUserById(booking.ownerId);
-            return `
-                <div class="schedule-item">
-                    <div class="item-avatar dog">🐕</div>
-                    <div class="schedule-info">
-                        <h4>${booking.dogName} - ${booking.type}</h4>
-                        <p>Booked by ${owner.displayName} for ${formatDate(booking.date)}</p>
-                    </div>
-                </div>
-            `;
-        }).join('') || '<div class="empty-state"><p>No recent activity</p></div>';
-        
-        // Upcoming Bookings (Overview)
-        const upcomingBody = document.getElementById('upcomingBookingsBody');
-        const upcomingBookings = allBookings
-            .filter(b => new Date(b.date) >= today && b.status !== 'cancelled')
+        // Upcoming Bookings
+        const upcoming = allBookings
+            .filter(b => b.date >= todayStr && b.status === 'confirmed')
             .sort((a, b) => new Date(a.date) - new Date(b.date))
-            .slice(0, 5);
+            .slice(0, 8);
         
-        upcomingBody.innerHTML = upcomingBookings.map(booking => {
-            const owner = getUserById(booking.ownerId);
-            const time = booking.dropOff || booking.time || '-';
-            return `
-                <tr>
-                    <td>${formatDate(booking.date)}</td>
-                    <td>${time}</td>
-                    <td><strong>${booking.dogName}</strong></td>
-                    <td>${owner.displayName}</td>
-                    <td>${booking.type}</td>
-                    <td><span class="status-badge ${booking.status}">${booking.status}</span></td>
-                </tr>
-            `;
-        }).join('') || '<tr><td colspan="6" class="empty-state">No upcoming bookings</td></tr>';
+        document.getElementById('upcomingBookings').innerHTML = upcoming.length > 0 
+            ? upcoming.map(b => {
+                const owner = getUserById(b.ownerId);
+                return `
+                    <div class="schedule-item">
+                        <div class="schedule-time">${formatDate(b.date)}</div>
+                        <div class="schedule-info">
+                            <h4>${b.dogName}</h4>
+                            <p>${owner.displayName} • ${b.type}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('')
+            : '<div class="empty-state"><p>No upcoming bookings</p></div>';
         
-        // All Bookings Tab
+        // All Bookings Table
         function renderAllBookings(bookings) {
             const body = document.getElementById('allBookingsBody');
-            body.innerHTML = bookings.map(booking => {
-                const owner = getUserById(booking.ownerId);
-                const time = booking.dropOff ? `${booking.dropOff} - ${booking.pickUp}` : booking.time || '-';
+            body.innerHTML = bookings.map(b => {
+                const owner = getUserById(b.ownerId);
+                const time = b.dropOff ? `${b.dropOff} - ${b.pickUp}` : b.time || '-';
                 return `
                     <tr>
-                        <td>${formatDate(booking.date)}</td>
+                        <td>${formatDate(b.date)}</td>
                         <td>${time}</td>
-                        <td><strong>${booking.dogName}</strong></td>
+                        <td><strong>${b.dogName}</strong></td>
                         <td>${owner.displayName}</td>
-                        <td>${booking.type}</td>
-                        <td>${booking.sessionType || '-'}</td>
-                        <td><span class="status-badge ${booking.status}">${booking.status}</span></td>
-                        <td>${booking.notes || '-'}</td>
+                        <td>${b.type === 'daycare' ? 'Daycare' : 'Hydro'}</td>
+                        <td><span class="status-badge ${b.status}">${b.status}</span></td>
+                        <td>
+                            ${b.status === 'confirmed' ? `
+                                <button class="action-btn confirm" onclick="completeBooking('${b.id}')">✓ Complete</button>
+                                <button class="action-btn cancel" onclick="cancelBooking('${b.id}')">✕ Cancel</button>
+                            ` : '-'}
+                        </td>
                     </tr>
                 `;
-            }).join('') || '<tr><td colspan="8" class="empty-state">No bookings found</td></tr>';
+            }).join('') || '<tr><td colspan="7" class="empty-state">No bookings found</td></tr>';
         }
         
         renderAllBookings(allBookings.sort((a, b) => new Date(b.date) - new Date(a.date)));
         
         // Booking filters
-        ['filterDateFrom', 'filterDateTo', 'filterStatus', 'filterType'].forEach(id => {
-            document.getElementById(id).addEventListener('change', filterBookings);
-        });
+        document.getElementById('filterDateFrom').addEventListener('change', applyBookingFilters);
+        document.getElementById('filterDateTo').addEventListener('change', applyBookingFilters);
+        document.getElementById('filterStatus').addEventListener('change', applyBookingFilters);
+        document.getElementById('filterType').addEventListener('change', applyBookingFilters);
         
-        function filterBookings() {
-            const dateFrom = document.getElementById('filterDateFrom').value;
-            const dateTo = document.getElementById('filterDateTo').value;
+        function applyBookingFilters() {
+            let filtered = [...allBookings];
+            const fromDate = document.getElementById('filterDateFrom').value;
+            const toDate = document.getElementById('filterDateTo').value;
             const status = document.getElementById('filterStatus').value;
             const type = document.getElementById('filterType').value;
             
-            let filtered = [...allBookings];
-            
-            if (dateFrom) filtered = filtered.filter(b => b.date >= dateFrom);
-            if (dateTo) filtered = filtered.filter(b => b.date <= dateTo);
+            if (fromDate) filtered = filtered.filter(b => b.date >= fromDate);
+            if (toDate) filtered = filtered.filter(b => b.date <= toDate);
             if (status) filtered = filtered.filter(b => b.status === status);
             if (type) filtered = filtered.filter(b => b.type === type);
             
             renderAllBookings(filtered.sort((a, b) => new Date(b.date) - new Date(a.date)));
         }
         
-        // All Dogs Tab
+        function completeBooking(id) {
+            if (confirm('Mark this booking as completed?')) {
+                const bookings = getCollection('bookings');
+                const idx = bookings.findIndex(b => b.id === id);
+                if (idx > -1) {
+                    bookings[idx].status = 'completed';
+                    saveCollection('bookings', bookings);
+                    location.reload();
+                }
+            }
+        }
+        
+        function cancelBooking(id) {
+            if (confirm('Cancel this booking? Credits will be refunded if applicable.')) {
+                const bookings = getCollection('bookings');
+                const idx = bookings.findIndex(b => b.id === id);
+                if (idx > -1) {
+                    const booking = bookings[idx];
+                    // Refund credits if paid with credits
+                    if (booking.paidWithCredits && booking.creditType) {
+                        const credits = getCreditsForUser(booking.ownerId);
+                        credits[booking.creditType] = (credits[booking.creditType] || 0) + 1;
+                        saveCreditsForUser(booking.ownerId, credits);
+                    }
+                    bookings[idx].status = 'cancelled';
+                    saveCollection('bookings', bookings);
+                    location.reload();
+                }
+            }
+        }
+        
+        // All Dogs Table
         function renderAllDogs(dogs) {
             const body = document.getElementById('allDogsBody');
-            body.innerHTML = dogs.map(dog => {
-                const owner = getUserById(dog.ownerId);
-                const assessmentStatus = dog.assessmentPassed ? 'Passed ✓' : 'Pending';
-                const photo = dog.photo ? `<img src="${dog.photo}" alt="${dog.name}">` : '🐕';
+            body.innerHTML = dogs.map(d => {
+                const owner = getUserById(d.ownerId);
+                const credits = getCreditsForUser(d.ownerId);
+                const totalCredits = Object.values(credits).reduce((a, b) => a + b, 0);
                 return `
                     <tr>
                         <td>
                             <div class="item-row">
-                                <div class="item-avatar dog">${photo}</div>
+                                <div class="item-avatar dog">
+                                    ${d.photo ? `<img src="${d.photo}" alt="${d.name}">` : '🐕'}
+                                </div>
                                 <div class="item-info">
-                                    <h4>${dog.name}</h4>
-                                    <p>${dog.gender}, ${dog.colour || 'N/A'}</p>
+                                    <h4>${d.name}</h4>
+                                    <p>${d.gender}, ${d.weight}kg</p>
                                 </div>
                             </div>
                         </td>
-                        <td>${dog.breed}</td>
-                        <td>${dog.age} years</td>
-                        <td>${dog.weight} kg</td>
-                        <td>${owner.displayName}</td>
-                        <td><span class="status-badge ${dog.assessmentPassed ? 'active' : 'pending'}">${assessmentStatus}</span></td>
-                        <td>${dog.medicalNotes ? dog.medicalNotes.substring(0, 30) + '...' : '-'}</td>
+                        <td>${d.breed}</td>
+                        <td>${d.age} yrs</td>
+                        <td>
+                            <div class="item-info">
+                                <h4>${owner.displayName}</h4>
+                                <p>${owner.phone || '-'}</p>
+                            </div>
+                        </td>
+                        <td><strong>${totalCredits}</strong> total</td>
+                        <td><span class="status-badge ${d.assessmentPassed ? 'confirmed' : 'pending'}">${d.assessmentPassed ? 'Passed ✓' : 'Pending'}</span></td>
+                        <td>
+                            <button class="action-btn edit" onclick="openCreditsModal('${d.ownerId}')">💳 Credits</button>
+                        </td>
                     </tr>
                 `;
             }).join('') || '<tr><td colspan="7" class="empty-state">No dogs found</td></tr>';
@@ -602,60 +701,161 @@
         
         renderAllDogs(allDogs);
         
+        // Dogs filter
         document.getElementById('filterDogSearch').addEventListener('input', (e) => {
             const search = e.target.value.toLowerCase();
-            const filtered = allDogs.filter(d => 
-                d.name.toLowerCase().includes(search) || 
-                d.breed.toLowerCase().includes(search)
-            );
+            const filtered = allDogs.filter(d => {
+                const owner = getUserById(d.ownerId);
+                return d.name.toLowerCase().includes(search) ||
+                       d.breed.toLowerCase().includes(search) ||
+                       owner.displayName.toLowerCase().includes(search);
+            });
             renderAllDogs(filtered);
         });
         
-        // All Members Tab
-        function renderAllMembers(members) {
-            const body = document.getElementById('allMembersBody');
-            body.innerHTML = members.map(member => {
-                const memberDogs = allDogs.filter(d => d.ownerId === member.uid);
-                const credits = getCreditsForUser(member.uid);
-                const totalCredits = (credits.fullDay || 0) + (credits.halfDay || 0) + (credits.rehab30 || 0) + (credits.rehab60 || 0);
-                const memberSince = new Date(member.createdAt).toLocaleDateString('en-NZ', { month: 'short', year: 'numeric' });
-                
-                return `
-                    <tr>
-                        <td>
-                            <div class="item-row">
-                                <div class="item-avatar member">👤</div>
-                                <div class="item-info">
-                                    <h4>${member.displayName}</h4>
-                                </div>
-                            </div>
-                        </td>
-                        <td>${member.email}</td>
-                        <td>${member.phone || '-'}</td>
-                        <td>${memberDogs.length} dog${memberDogs.length !== 1 ? 's' : ''}</td>
-                        <td>${totalCredits} credits</td>
-                        <td>${memberSince}</td>
-                        <td><span class="status-badge active">Active</span></td>
-                    </tr>
-                `;
-            }).join('') || '<tr><td colspan="7" class="empty-state">No members found</td></tr>';
+        // Credits Modal
+        let currentEditUserId = null;
+        
+        function openCreditsModal(userId) {
+            currentEditUserId = userId;
+            const user = getUserById(userId);
+            const credits = getCreditsForUser(userId);
+            
+            document.getElementById('memberInfo').innerHTML = `
+                <div class="item-row">
+                    <div class="item-avatar member">👤</div>
+                    <div class="item-info">
+                        <h4>${user.displayName}</h4>
+                        <p>${user.email} • ${user.phone || 'No phone'}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('creditFullDay').value = credits.fullDay || 0;
+            document.getElementById('creditHalfDay').value = credits.halfDay || 0;
+            document.getElementById('creditThreeHour').value = credits.threeHour || 0;
+            document.getElementById('creditRehab30').value = credits.rehab30 || 0;
+            document.getElementById('creditRehab60').value = credits.rehab60 || 0;
+            
+            document.getElementById('creditsModal').classList.add('open');
         }
         
-        renderAllMembers(allUsers);
+        function closeCreditsModal() {
+            document.getElementById('creditsModal').classList.remove('open');
+            currentEditUserId = null;
+        }
         
-        document.getElementById('filterMemberSearch').addEventListener('input', (e) => {
-            const search = e.target.value.toLowerCase();
-            const filtered = allUsers.filter(m => 
-                m.displayName.toLowerCase().includes(search) || 
-                m.email.toLowerCase().includes(search)
-            );
-            renderAllMembers(filtered);
-        });
+        function adjustCredit(type, delta) {
+            const input = document.getElementById('credit' + type.charAt(0).toUpperCase() + type.slice(1));
+            let val = parseInt(input.value) || 0;
+            val = Math.max(0, val + delta);
+            input.value = val;
+        }
         
-        // Logout
-        function logout() {
-            MockAuth.signOut();
-            window.location.href = '../login.html';
+        function saveCredits() {
+            if (!currentEditUserId) return;
+            
+            const credits = {
+                fullDay: parseInt(document.getElementById('creditFullDay').value) || 0,
+                halfDay: parseInt(document.getElementById('creditHalfDay').value) || 0,
+                threeHour: parseInt(document.getElementById('creditThreeHour').value) || 0,
+                rehab30: parseInt(document.getElementById('creditRehab30').value) || 0,
+                rehab60: parseInt(document.getElementById('creditRehab60').value) || 0
+            };
+            
+            saveCreditsForUser(currentEditUserId, credits);
+            closeCreditsModal();
+            alert('Credits updated successfully!');
+            renderAllDogs(allDogs);
+        }
+        
+        // Add Booking Modal
+        function openAddBookingModal() {
+            // Populate dogs dropdown
+            const select = document.getElementById('bookingDogSelect');
+            select.innerHTML = '<option value="">Choose a dog...</option>' +
+                allDogs.map(d => {
+                    const owner = getUserById(d.ownerId);
+                    return `<option value="${d.id}" data-owner="${d.ownerId}">${d.name} (${owner.displayName})</option>`;
+                }).join('');
+            
+            // Set default date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('bookingDateInput').value = tomorrow.toISOString().split('T')[0];
+            
+            updateSessionOptions();
+            document.getElementById('bookingModal').classList.add('open');
+        }
+        
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('open');
+        }
+        
+        function updateSessionOptions() {
+            const type = document.getElementById('bookingTypeSelect').value;
+            const select = document.getElementById('bookingSessionSelect');
+            
+            if (type === 'daycare') {
+                select.innerHTML = `
+                    <option value="full">Full Day (7am-6pm)</option>
+                    <option value="half-am">Half Day AM (7am-12:30pm)</option>
+                    <option value="half-pm">Half Day PM (12:30pm-6pm)</option>
+                    <option value="3hour">3 Hour Stay</option>
+                `;
+            } else {
+                select.innerHTML = `
+                    <option value="30min">30 Minute Session</option>
+                    <option value="60min">60 Minute Session</option>
+                `;
+            }
+        }
+        
+        function createBooking() {
+            const dogId = document.getElementById('bookingDogSelect').value;
+            const type = document.getElementById('bookingTypeSelect').value;
+            const session = document.getElementById('bookingSessionSelect').value;
+            const date = document.getElementById('bookingDateInput').value;
+            const time = document.getElementById('bookingTimeInput').value;
+            const notes = document.getElementById('bookingNotesInput').value;
+            
+            if (!dogId || !date) {
+                alert('Please select a dog and date');
+                return;
+            }
+            
+            const dog = getDogById(dogId);
+            const option = document.getElementById('bookingDogSelect').selectedOptions[0];
+            const ownerId = option.dataset.owner;
+            
+            const bookingData = {
+                id: 'booking-' + Date.now(),
+                ownerId: ownerId,
+                dogId: dogId,
+                dogName: dog.name,
+                type: type,
+                sessionType: session,
+                date: date,
+                status: 'confirmed',
+                notes: notes,
+                paidWithCredits: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            if (type === 'daycare') {
+                bookingData.dropOff = time || '08:00';
+                bookingData.pickUp = session === 'half-am' ? '12:30' : session === 'half-pm' ? '18:00' : '17:00';
+            } else {
+                bookingData.time = time || '10:00';
+            }
+            
+            const bookings = getCollection('bookings');
+            bookings.push(bookingData);
+            saveCollection('bookings', bookings);
+            
+            closeBookingModal();
+            alert('Booking created successfully!');
+            location.reload();
         }
     </script>
 </body>

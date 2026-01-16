@@ -9,55 +9,37 @@ const MockAuth = (function() {
     
     // Demo users (pre-seeded)
     const defaultUsers = [
-        {
-            uid: 'demo-user-001',
-            email: 'demo@gooddogspa.co.nz',
-            password: 'demo123',
-            displayName: 'Joel Tempero',
-            role: 'member',
-            phone: '0204 023 9009',
-            address: '123 Dog Lane, Wigram',
-            createdAt: '2024-06-15T10:00:00Z'
-        },
-        {
-            uid: 'demo-admin-001',
-            email: 'admin@gooddogspa.co.nz',
-            password: 'admin123',
-            displayName: 'Spa Admin',
-            role: 'admin',
-            phone: '03 929 0987',
-            createdAt: '2024-01-01T09:00:00Z'
-        },
-        {
-            uid: 'demo-user-002',
-            email: 'sarah@example.com',
-            password: 'password123',
-            displayName: 'Sarah Mitchell',
-            role: 'member',
-            phone: '027 555 1234',
-            address: '45 Puppy Place, Hornby',
-            createdAt: '2024-07-08T14:30:00Z'
-        },
-        {
-            uid: 'demo-user-003',
-            email: 'mike@example.com',
-            password: 'password123',
-            displayName: 'Mike Johnson',
-            role: 'member',
-            phone: '021 888 7777',
-            address: '78 Bark Street, Riccarton',
-            createdAt: '2024-09-25T11:00:00Z'
-        },
-        {
-            uid: 'demo-user-004',
-            email: 'emma@example.com',
-            password: 'password123',
-            displayName: 'Emma Williams',
-            role: 'member',
-            phone: '022 333 4444',
-            address: '92 Woof Way, Ilam',
-            createdAt: '2024-06-05T16:00:00Z'
-        }
+        { uid: 'demo-user-001', email: 'demo@gooddogspa.co.nz', password: 'demo123', displayName: 'Joel Tempero', role: 'member', phone: '0204 023 9009', address: '15 Dogtrot Lane, Wigram', createdAt: '2024-06-15T10:00:00Z' },
+        { uid: 'demo-admin-001', email: 'admin@gooddogspa.co.nz', password: 'admin123', displayName: 'Spa Admin', role: 'admin', phone: '03 929 0987', createdAt: '2024-01-01T09:00:00Z' },
+        { uid: 'user-002', email: 'sarah.mitchell@email.com', password: 'password123', displayName: 'Sarah Mitchell', role: 'member', phone: '027 555 1234', address: '45 Puppy Place, Hornby', createdAt: '2024-07-08T14:30:00Z' },
+        { uid: 'user-003', email: 'mike.johnson@email.com', password: 'password123', displayName: 'Mike Johnson', role: 'member', phone: '021 888 7777', address: '78 Bark Street, Riccarton', createdAt: '2024-09-25T11:00:00Z' },
+        { uid: 'user-004', email: 'emma.williams@email.com', password: 'password123', displayName: 'Emma Williams', role: 'member', phone: '022 333 4444', address: '92 Woof Way, Ilam', createdAt: '2024-06-05T16:00:00Z' },
+        { uid: 'user-005', email: 'david.brown@email.com', password: 'password123', displayName: 'David Brown', role: 'member', phone: '027 111 2222', address: '12 Fetch Road, Papanui', createdAt: '2024-05-20T09:00:00Z' },
+        { uid: 'user-006', email: 'lisa.taylor@email.com', password: 'password123', displayName: 'Lisa Taylor', role: 'member', phone: '021 333 4444', address: '88 Collar Close, Merivale', createdAt: '2024-08-12T11:30:00Z' },
+        { uid: 'user-007', email: 'james.wilson@email.com', password: 'password123', displayName: 'James Wilson', role: 'member', phone: '022 555 6666', address: '34 Paw Print Ave, Fendalton', createdAt: '2024-04-18T14:00:00Z' },
+        { uid: 'user-008', email: 'rachel.davis@email.com', password: 'password123', displayName: 'Rachel Davis', role: 'member', phone: '027 777 8888', address: '67 Bone Boulevard, Halswell', createdAt: '2024-07-22T10:15:00Z' },
+        { uid: 'user-009', email: 'chris.martin@email.com', password: 'password123', displayName: 'Chris Martin', role: 'member', phone: '021 999 0000', address: '23 Leash Lane, Burnside', createdAt: '2024-03-10T16:45:00Z' },
+        { uid: 'user-010', email: 'amanda.white@email.com', password: 'password123', displayName: 'Amanda White', role: 'member', phone: '022 111 3333', address: '56 Kennel Court, Cashmere', createdAt: '2024-09-05T08:30:00Z' },
+        { uid: 'user-011', email: 'tom.harris@email.com', password: 'password123', displayName: 'Tom Harris', role: 'member', phone: '027 444 5555', address: '91 Tail Wag Terrace, St Albans', createdAt: '2024-06-28T13:00:00Z' },
+        { uid: 'user-012', email: 'nicole.clark@email.com', password: 'password123', displayName: 'Nicole Clark', role: 'member', phone: '021 666 7777', address: '15 Sniff Street, Addington', createdAt: '2024-08-30T15:20:00Z' },
+        { uid: 'user-013', email: 'ben.anderson@email.com', password: 'password123', displayName: 'Ben Anderson', role: 'member', phone: '022 888 9999', address: '42 Howl Highway, Sockburn', createdAt: '2024-05-14T11:00:00Z' },
+        { uid: 'user-014', email: 'kate.robinson@email.com', password: 'password123', displayName: 'Kate Robinson', role: 'member', phone: '027 222 3333', address: '73 Sit Stay Road, Spreydon', createdAt: '2024-07-01T09:45:00Z' },
+        { uid: 'user-015', email: 'peter.lee@email.com', password: 'password123', displayName: 'Peter Lee', role: 'member', phone: '021 444 5556', address: '28 Good Boy Grove, Sydenham', createdAt: '2024-04-25T14:30:00Z' },
+        { uid: 'user-016', email: 'jenny.thompson@email.com', password: 'password123', displayName: 'Jenny Thompson', role: 'member', phone: '022 666 7778', address: '84 Treat Trail, Linwood', createdAt: '2024-09-18T10:00:00Z' },
+        { uid: 'user-017', email: 'mark.scott@email.com', password: 'password123', displayName: 'Mark Scott', role: 'member', phone: '027 888 9990', address: '19 Walkies Way, Avonhead', createdAt: '2024-06-10T16:15:00Z' },
+        { uid: 'user-018', email: 'helen.king@email.com', password: 'password123', displayName: 'Helen King', role: 'member', phone: '021 111 2223', address: '51 Roll Over Road, Bishopdale', createdAt: '2024-08-05T12:30:00Z' },
+        { uid: 'user-019', email: 'steve.wright@email.com', password: 'password123', displayName: 'Steve Wright', role: 'member', phone: '022 333 4445', address: '37 Belly Rub Blvd, Bryndwr', createdAt: '2024-03-28T08:00:00Z' },
+        { uid: 'user-020', email: 'olivia.green@email.com', password: 'password123', displayName: 'Olivia Green', role: 'member', phone: '027 555 6667', address: '62 Fetch Circle, Casebrook', createdAt: '2024-07-15T11:45:00Z' },
+        { uid: 'user-021', email: 'daniel.baker@email.com', password: 'password123', displayName: 'Daniel Baker', role: 'member', phone: '021 777 8889', address: '95 Pawsome Place, Northwood', createdAt: '2024-05-02T15:00:00Z' },
+        { uid: 'user-022', email: 'michelle.hill@email.com', password: 'password123', displayName: 'Michelle Hill', role: 'member', phone: '022 999 0001', address: '11 Biscuit Bay, Belfast', createdAt: '2024-09-28T09:30:00Z' },
+        { uid: 'user-023', email: 'andrew.moore@email.com', password: 'password123', displayName: 'Andrew Moore', role: 'member', phone: '027 111 2224', address: '46 Zoomies Zone, Redwood', createdAt: '2024-04-08T13:15:00Z' },
+        { uid: 'user-024', email: 'sophie.young@email.com', password: 'password123', displayName: 'Sophie Young', role: 'member', phone: '021 333 4446', address: '79 Pupper Path, Northcote', createdAt: '2024-08-20T10:45:00Z' },
+        { uid: 'user-025', email: 'ryan.allen@email.com', password: 'password123', displayName: 'Ryan Allen', role: 'member', phone: '022 555 6668', address: '24 Furry Friend Ave, Mairehau', createdAt: '2024-06-22T14:00:00Z' },
+        { uid: 'user-026', email: 'megan.hall@email.com', password: 'password123', displayName: 'Megan Hall', role: 'member', phone: '027 777 8890', address: '58 Wag Lane, Shirley', createdAt: '2024-05-30T11:30:00Z' },
+        { uid: 'user-027', email: 'paul.walker@email.com', password: 'password123', displayName: 'Paul Walker', role: 'member', phone: '021 999 0002', address: '83 Canine Court, Richmond', createdAt: '2024-07-28T08:15:00Z' },
+        { uid: 'user-028', email: 'anna.turner@email.com', password: 'password123', displayName: 'Anna Turner', role: 'member', phone: '022 111 2225', address: '16 Pup Paradise, Dallington', createdAt: '2024-04-15T16:30:00Z' },
+        { uid: 'user-029', email: 'jason.cooper@email.com', password: 'password123', displayName: 'Jason Cooper', role: 'member', phone: '027 333 4447', address: '49 Doggo Drive, Aranui', createdAt: '2024-09-10T12:00:00Z' },
+        { uid: 'user-030', email: 'claire.evans@email.com', password: 'password123', displayName: 'Claire Evans', role: 'member', phone: '021 555 6669', address: '72 Woofer Way, Bromley', createdAt: '2024-06-05T09:45:00Z' }
     ];
     
     // Initialize users in localStorage if not present

@@ -271,7 +271,7 @@
         .modal {
             position: fixed;
             inset: 0;
-            z-index: var(--z-modal);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -296,12 +296,17 @@
             position: relative;
             background: var(--color-white);
             border-radius: var(--radius-2xl);
-            width: 100%;
-            max-width: 900px;
+            width: 90%;
+            max-width: 1000px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: var(--shadow-2xl);
-            margin: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.open .modal-content {
+            transform: scale(1);
         }
         
         .modal-header {
@@ -310,6 +315,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
         }
         
         .modal-header h2 {
@@ -344,6 +353,8 @@
             display: flex;
             gap: var(--space-3);
             justify-content: flex-end;
+            position: sticky;
+            bottom: 0;
         }
         
         /* Form */

@@ -26,177 +26,136 @@ const MockDatabase = (function() {
     // Default demo data
     const defaultData = {
         dogs: [
-            {
-                id: 'dog-001',
-                ownerId: 'demo-user-001',
-                name: 'Sidon',
-                breed: 'Golden Retriever',
-                age: 1.5,
-                weight: 38,
-                gender: 'male',
-                colour: 'Golden',
-                vaccinated: true,
-                desexed: true,
-                microchipped: true,
-                vetName: 'Wigram Vet',
-                vetPhone: '03 929 0987',
-                medicalNotes: 'Healthy pup, no issues.',
-                behaviourNotes: 'Very friendly, loves other dogs and people. Good recall. Enjoys swimming and fetch.',
-                emergencyContact: 'Joel Tempero - 0204 023 9009',
-                photo: 'https://tempero.nz/assets/images/slideshow10-ff574a56.jpg?v=4a5a960a',
-                assessmentPassed: true,
-                assessmentDate: '2024-08-20',
-                size: 'large',
-                createdAt: '2024-08-15T10:00:00Z'
-            },
-            {
-                id: 'dog-002',
-                ownerId: 'demo-user-002',
-                name: 'Bella',
-                breed: 'Labrador',
-                age: 3,
-                weight: 28,
-                gender: 'female',
-                colour: 'Chocolate',
-                vaccinated: true,
-                desexed: true,
-                microchipped: true,
-                vetName: 'Wigram Vet',
-                vetPhone: '03 929 0987',
-                medicalNotes: 'Mild hip dysplasia - benefits from hydrotherapy.',
-                behaviourNotes: 'Very social, loves water. Plays well with all sizes.',
-                emergencyContact: 'Sarah Mitchell - 027 555 1234',
-                photo: null,
-                assessmentPassed: true,
-                assessmentDate: '2024-07-15',
-                size: 'large',
-                createdAt: '2024-07-10T09:00:00Z'
-            },
-            {
-                id: 'dog-003',
-                ownerId: 'demo-user-002',
-                name: 'Max',
-                breed: 'French Bulldog',
-                age: 4,
-                weight: 12,
-                gender: 'male',
-                colour: 'Fawn',
-                vaccinated: true,
-                desexed: false,
-                microchipped: true,
-                vetName: 'Wigram Vet',
-                vetPhone: '03 929 0987',
-                medicalNotes: 'Brachycephalic - monitor in warm weather. Prone to overheating.',
-                behaviourNotes: 'Prefers small dogs. Monday daycare only. Gentle temperament.',
-                emergencyContact: 'Sarah Mitchell - 027 555 1234',
-                photo: null,
-                assessmentPassed: true,
-                assessmentDate: '2024-09-25',
-                size: 'small',
-                createdAt: '2024-09-22T09:00:00Z'
-            },
-            {
-                id: 'dog-004',
-                ownerId: 'demo-user-003',
-                name: 'Charlie',
-                breed: 'Border Collie',
-                age: 2,
-                weight: 20,
-                gender: 'male',
-                colour: 'Black & White',
-                vaccinated: true,
-                desexed: true,
-                microchipped: true,
-                vetName: 'Riccarton Vet',
-                vetPhone: '03 348 9728',
-                medicalNotes: 'No issues. High energy.',
-                behaviourNotes: 'Very active, needs lots of stimulation. Good with other dogs.',
-                emergencyContact: 'Mike Johnson - 021 888 7777',
-                photo: null,
-                assessmentPassed: true,
-                assessmentDate: '2024-10-01',
-                size: 'medium',
-                createdAt: '2024-09-28T14:00:00Z'
-            },
-            {
-                id: 'dog-005',
-                ownerId: 'demo-user-003',
-                name: 'Luna',
-                breed: 'Cavapoo',
-                age: 1,
-                weight: 7,
-                gender: 'female',
-                colour: 'Apricot',
-                vaccinated: true,
-                desexed: true,
-                microchipped: true,
-                vetName: 'Riccarton Vet',
-                vetPhone: '03 348 9728',
-                medicalNotes: 'None.',
-                behaviourNotes: 'Sweet natured, a bit shy at first. Loves cuddles.',
-                emergencyContact: 'Mike Johnson - 021 888 7777',
-                photo: null,
-                assessmentPassed: true,
-                assessmentDate: '2024-10-05',
-                size: 'small',
-                createdAt: '2024-10-02T11:00:00Z'
-            },
-            {
-                id: 'dog-006',
-                ownerId: 'demo-user-004',
-                name: 'Cooper',
-                breed: 'Australian Shepherd',
-                age: 4,
-                weight: 25,
-                gender: 'male',
-                colour: 'Blue Merle',
-                vaccinated: true,
-                desexed: true,
-                microchipped: true,
-                vetName: 'Wigram Vet',
-                vetPhone: '03 929 0987',
-                medicalNotes: 'ACL surgery recovery - regular hydro sessions recommended.',
-                behaviourNotes: 'Friendly but can be protective. Good with familiar dogs.',
-                emergencyContact: 'Emma Williams - 022 333 4444',
-                photo: null,
-                assessmentPassed: true,
-                assessmentDate: '2024-06-15',
-                size: 'medium',
-                createdAt: '2024-06-10T10:00:00Z'
-            }
+            // Joel Tempero's dog - FIRST
+            { id: 'dog-001', ownerId: 'demo-user-001', name: 'Sidon', breed: 'Golden Retriever', age: 1.5, weight: 38, gender: 'male', colour: 'Golden', vaccinated: true, desexed: true, microchipped: true, vetName: 'Wigram Vet', vetPhone: '03 929 0987', medicalNotes: 'Healthy pup, no issues.', behaviourNotes: 'Very friendly, loves other dogs and people. Good recall. Enjoys swimming and fetch.', emergencyContact: 'Joel Tempero - 0204 023 9009', photo: 'https://tempero.nz/assets/images/slideshow10-ff574a56.jpg?v=4a5a960a', assessmentPassed: true, assessmentDate: '2024-08-20', size: 'large', createdAt: '2024-08-15T10:00:00Z' },
+            
+            // Sarah Mitchell's dogs
+            { id: 'dog-002', ownerId: 'user-002', name: 'Bella', breed: 'Labrador', age: 3, weight: 28, gender: 'female', colour: 'Chocolate', vaccinated: true, desexed: true, microchipped: true, vetName: 'Wigram Vet', vetPhone: '03 929 0987', medicalNotes: 'Mild hip dysplasia - benefits from hydrotherapy.', behaviourNotes: 'Very social, loves water.', emergencyContact: 'Sarah Mitchell - 027 555 1234', photo: null, assessmentPassed: true, assessmentDate: '2024-07-15', size: 'large', createdAt: '2024-07-10T09:00:00Z' },
+            { id: 'dog-003', ownerId: 'user-002', name: 'Max', breed: 'French Bulldog', age: 4, weight: 12, gender: 'male', colour: 'Fawn', vaccinated: true, desexed: false, microchipped: true, vetName: 'Wigram Vet', vetPhone: '03 929 0987', medicalNotes: 'Brachycephalic - monitor in warm weather.', behaviourNotes: 'Prefers small dogs. Monday daycare only.', emergencyContact: 'Sarah Mitchell - 027 555 1234', photo: null, assessmentPassed: true, assessmentDate: '2024-09-25', size: 'small', createdAt: '2024-09-22T09:00:00Z' },
+            
+            // Mike Johnson's dogs
+            { id: 'dog-004', ownerId: 'user-003', name: 'Charlie', breed: 'Border Collie', age: 2, weight: 20, gender: 'male', colour: 'Black & White', vaccinated: true, desexed: true, microchipped: true, vetName: 'Riccarton Vet', vetPhone: '03 348 9728', medicalNotes: 'High energy, no health issues.', behaviourNotes: 'Very active, needs stimulation.', emergencyContact: 'Mike Johnson - 021 888 7777', photo: null, assessmentPassed: true, assessmentDate: '2024-10-01', size: 'medium', createdAt: '2024-09-28T14:00:00Z' },
+            { id: 'dog-005', ownerId: 'user-003', name: 'Luna', breed: 'Cavapoo', age: 1, weight: 7, gender: 'female', colour: 'Apricot', vaccinated: true, desexed: true, microchipped: true, vetName: 'Riccarton Vet', vetPhone: '03 348 9728', medicalNotes: 'None.', behaviourNotes: 'Sweet natured, bit shy at first.', emergencyContact: 'Mike Johnson - 021 888 7777', photo: null, assessmentPassed: true, assessmentDate: '2024-10-05', size: 'small', createdAt: '2024-10-02T11:00:00Z' },
+            
+            // Emma Williams' dog
+            { id: 'dog-006', ownerId: 'user-004', name: 'Cooper', breed: 'Australian Shepherd', age: 4, weight: 25, gender: 'male', colour: 'Blue Merle', vaccinated: true, desexed: true, microchipped: true, vetName: 'Wigram Vet', vetPhone: '03 929 0987', medicalNotes: 'ACL surgery recovery - hydro recommended.', behaviourNotes: 'Friendly but can be protective.', emergencyContact: 'Emma Williams - 022 333 4444', photo: null, assessmentPassed: true, assessmentDate: '2024-06-15', size: 'medium', createdAt: '2024-06-10T10:00:00Z' },
+            
+            // David Brown's dogs
+            { id: 'dog-007', ownerId: 'user-005', name: 'Rocky', breed: 'Rottweiler', age: 5, weight: 45, gender: 'male', colour: 'Black & Tan', vaccinated: true, desexed: true, microchipped: true, vetName: 'Papanui Vet', vetPhone: '03 352 1234', medicalNotes: 'Joint supplements recommended.', behaviourNotes: 'Gentle giant, great with all dogs.', emergencyContact: 'David Brown - 027 111 2222', photo: null, assessmentPassed: true, assessmentDate: '2024-05-25', size: 'large', createdAt: '2024-05-22T10:00:00Z' },
+            
+            // Lisa Taylor's dog
+            { id: 'dog-008', ownerId: 'user-006', name: 'Daisy', breed: 'Cocker Spaniel', age: 3, weight: 14, gender: 'female', colour: 'Golden', vaccinated: true, desexed: true, microchipped: true, vetName: 'Merivale Vet', vetPhone: '03 355 5678', medicalNotes: 'Ear infections - keep ears dry.', behaviourNotes: 'Very playful, loves fetch.', emergencyContact: 'Lisa Taylor - 021 333 4444', photo: null, assessmentPassed: true, assessmentDate: '2024-08-18', size: 'medium', createdAt: '2024-08-15T11:00:00Z' },
+            
+            // James Wilson's dogs
+            { id: 'dog-009', ownerId: 'user-007', name: 'Zeus', breed: 'German Shepherd', age: 4, weight: 38, gender: 'male', colour: 'Black & Tan', vaccinated: true, desexed: true, microchipped: true, vetName: 'Fendalton Vet', vetPhone: '03 351 2345', medicalNotes: 'None.', behaviourNotes: 'Well trained, excellent recall.', emergencyContact: 'James Wilson - 022 555 6666', photo: null, assessmentPassed: true, assessmentDate: '2024-04-20', size: 'large', createdAt: '2024-04-18T14:30:00Z' },
+            { id: 'dog-010', ownerId: 'user-007', name: 'Athena', breed: 'German Shepherd', age: 3, weight: 32, gender: 'female', colour: 'Sable', vaccinated: true, desexed: true, microchipped: true, vetName: 'Fendalton Vet', vetPhone: '03 351 2345', medicalNotes: 'None.', behaviourNotes: 'Playful, bonds well with Zeus.', emergencyContact: 'James Wilson - 022 555 6666', photo: null, assessmentPassed: true, assessmentDate: '2024-04-20', size: 'large', createdAt: '2024-04-18T14:30:00Z' },
+            
+            // Rachel Davis' dog
+            { id: 'dog-011', ownerId: 'user-008', name: 'Coco', breed: 'Poodle', age: 2, weight: 5, gender: 'female', colour: 'White', vaccinated: true, desexed: true, microchipped: true, vetName: 'Halswell Vet', vetPhone: '03 322 1234', medicalNotes: 'None.', behaviourNotes: 'Small breed friendly only.', emergencyContact: 'Rachel Davis - 027 777 8888', photo: null, assessmentPassed: true, assessmentDate: '2024-07-28', size: 'small', createdAt: '2024-07-25T10:00:00Z' },
+            
+            // Chris Martin's dog
+            { id: 'dog-012', ownerId: 'user-009', name: 'Duke', breed: 'Boxer', age: 3, weight: 30, gender: 'male', colour: 'Brindle', vaccinated: true, desexed: true, microchipped: true, vetName: 'Burnside Vet', vetPhone: '03 358 9012', medicalNotes: 'None.', behaviourNotes: 'High energy, loves to play.', emergencyContact: 'Chris Martin - 021 999 0000', photo: null, assessmentPassed: true, assessmentDate: '2024-03-15', size: 'large', createdAt: '2024-03-12T16:00:00Z' },
+            
+            // Amanda White's dogs
+            { id: 'dog-013', ownerId: 'user-010', name: 'Milo', breed: 'Beagle', age: 4, weight: 12, gender: 'male', colour: 'Tricolour', vaccinated: true, desexed: true, microchipped: true, vetName: 'Cashmere Vet', vetPhone: '03 332 5678', medicalNotes: 'Prone to weight gain - monitor food.', behaviourNotes: 'Follows his nose, good with all dogs.', emergencyContact: 'Amanda White - 022 111 3333', photo: null, assessmentPassed: true, assessmentDate: '2024-09-10', size: 'medium', createdAt: '2024-09-08T08:30:00Z' },
+            { id: 'dog-014', ownerId: 'user-010', name: 'Penny', breed: 'Beagle', age: 3, weight: 10, gender: 'female', colour: 'Lemon', vaccinated: true, desexed: true, microchipped: true, vetName: 'Cashmere Vet', vetPhone: '03 332 5678', medicalNotes: 'None.', behaviourNotes: 'Milo sister, very bonded.', emergencyContact: 'Amanda White - 022 111 3333', photo: null, assessmentPassed: true, assessmentDate: '2024-09-10', size: 'medium', createdAt: '2024-09-08T08:30:00Z' },
+            
+            // Tom Harris' dog
+            { id: 'dog-015', ownerId: 'user-011', name: 'Archie', breed: 'Schnauzer', age: 5, weight: 8, gender: 'male', colour: 'Salt & Pepper', vaccinated: true, desexed: true, microchipped: true, vetName: 'St Albans Vet', vetPhone: '03 356 7890', medicalNotes: 'Regular grooming needed.', behaviourNotes: 'Confident, good with all sizes.', emergencyContact: 'Tom Harris - 027 444 5555', photo: null, assessmentPassed: true, assessmentDate: '2024-07-01', size: 'small', createdAt: '2024-06-28T13:00:00Z' },
+            
+            // Nicole Clark's dog
+            { id: 'dog-016', ownerId: 'user-012', name: 'Ruby', breed: 'Cavalier King Charles', age: 2, weight: 6, gender: 'female', colour: 'Blenheim', vaccinated: true, desexed: true, microchipped: true, vetName: 'Addington Vet', vetPhone: '03 338 1234', medicalNotes: 'Heart murmur - monitored annually.', behaviourNotes: 'Very gentle, loves cuddles.', emergencyContact: 'Nicole Clark - 021 666 7777', photo: null, assessmentPassed: true, assessmentDate: '2024-09-02', size: 'small', createdAt: '2024-08-30T15:00:00Z' },
+            
+            // Ben Anderson's dogs
+            { id: 'dog-017', ownerId: 'user-013', name: 'Tank', breed: 'Bullmastiff', age: 4, weight: 55, gender: 'male', colour: 'Fawn', vaccinated: true, desexed: true, microchipped: true, vetName: 'Sockburn Vet', vetPhone: '03 341 2345', medicalNotes: 'Joint care supplements.', behaviourNotes: 'Gentle despite size, calm.', emergencyContact: 'Ben Anderson - 022 888 9999', photo: null, assessmentPassed: true, assessmentDate: '2024-05-18', size: 'large', createdAt: '2024-05-15T11:00:00Z' },
+            
+            // Kate Robinson's dog
+            { id: 'dog-018', ownerId: 'user-014', name: 'Willow', breed: 'Whippet', age: 3, weight: 12, gender: 'female', colour: 'Fawn', vaccinated: true, desexed: true, microchipped: true, vetName: 'Spreydon Vet', vetPhone: '03 337 5678', medicalNotes: 'None.', behaviourNotes: 'Fast runner, loves zoomies.', emergencyContact: 'Kate Robinson - 027 222 3333', photo: null, assessmentPassed: true, assessmentDate: '2024-07-05', size: 'medium', createdAt: '2024-07-02T09:45:00Z' },
+            
+            // Peter Lee's dog
+            { id: 'dog-019', ownerId: 'user-015', name: 'Buster', breed: 'Jack Russell', age: 6, weight: 7, gender: 'male', colour: 'White & Tan', vaccinated: true, desexed: true, microchipped: true, vetName: 'Sydenham Vet', vetPhone: '03 366 9012', medicalNotes: 'None.', behaviourNotes: 'Energetic, loves balls.', emergencyContact: 'Peter Lee - 021 444 5556', photo: null, assessmentPassed: true, assessmentDate: '2024-04-28', size: 'small', createdAt: '2024-04-25T14:30:00Z' },
+            
+            // Jenny Thompson's dogs
+            { id: 'dog-020', ownerId: 'user-016', name: 'Rosie', breed: 'Shih Tzu', age: 4, weight: 6, gender: 'female', colour: 'Gold & White', vaccinated: true, desexed: true, microchipped: true, vetName: 'Linwood Vet', vetPhone: '03 381 2345', medicalNotes: 'Eye drops daily.', behaviourNotes: 'Small breed only, bit nervous.', emergencyContact: 'Jenny Thompson - 022 666 7778', photo: null, assessmentPassed: true, assessmentDate: '2024-09-22', size: 'small', createdAt: '2024-09-18T10:00:00Z' },
+            { id: 'dog-021', ownerId: 'user-016', name: 'Teddy', breed: 'Maltese', age: 2, weight: 4, gender: 'male', colour: 'White', vaccinated: true, desexed: true, microchipped: true, vetName: 'Linwood Vet', vetPhone: '03 381 2345', medicalNotes: 'None.', behaviourNotes: 'Playful, good with Rosie.', emergencyContact: 'Jenny Thompson - 022 666 7778', photo: null, assessmentPassed: true, assessmentDate: '2024-09-22', size: 'small', createdAt: '2024-09-18T10:00:00Z' },
+            
+            // Mark Scott's dog
+            { id: 'dog-022', ownerId: 'user-017', name: 'Scout', breed: 'Vizsla', age: 2, weight: 25, gender: 'male', colour: 'Rust', vaccinated: true, desexed: true, microchipped: true, vetName: 'Avonhead Vet', vetPhone: '03 358 5678', medicalNotes: 'None.', behaviourNotes: 'Very active, needs exercise.', emergencyContact: 'Mark Scott - 027 888 9990', photo: null, assessmentPassed: true, assessmentDate: '2024-06-15', size: 'large', createdAt: '2024-06-12T16:15:00Z' },
+            
+            // Helen King's dog
+            { id: 'dog-023', ownerId: 'user-018', name: 'Ginger', breed: 'Irish Setter', age: 5, weight: 28, gender: 'female', colour: 'Red', vaccinated: true, desexed: true, microchipped: true, vetName: 'Bishopdale Vet', vetPhone: '03 359 9012', medicalNotes: 'None.', behaviourNotes: 'Friendly, loves everyone.', emergencyContact: 'Helen King - 021 111 2223', photo: null, assessmentPassed: true, assessmentDate: '2024-08-08', size: 'large', createdAt: '2024-08-05T12:30:00Z' },
+            
+            // Steve Wright's dogs
+            { id: 'dog-024', ownerId: 'user-019', name: 'Bruno', breed: 'Doberman', age: 3, weight: 40, gender: 'male', colour: 'Black & Rust', vaccinated: true, desexed: true, microchipped: true, vetName: 'Bryndwr Vet', vetPhone: '03 351 2346', medicalNotes: 'None.', behaviourNotes: 'Well trained, obedient.', emergencyContact: 'Steve Wright - 022 333 4445', photo: null, assessmentPassed: true, assessmentDate: '2024-04-01', size: 'large', createdAt: '2024-03-28T08:00:00Z' },
+            
+            // Olivia Green's dog
+            { id: 'dog-025', ownerId: 'user-020', name: 'Poppy', breed: 'Cockapoo', age: 1, weight: 8, gender: 'female', colour: 'Cream', vaccinated: true, desexed: true, microchipped: true, vetName: 'Casebrook Vet', vetPhone: '03 359 3456', medicalNotes: 'None.', behaviourNotes: 'Puppy energy, very social.', emergencyContact: 'Olivia Green - 027 555 6667', photo: null, assessmentPassed: true, assessmentDate: '2024-07-20', size: 'small', createdAt: '2024-07-15T11:45:00Z' },
+            
+            // Daniel Baker's dog
+            { id: 'dog-026', ownerId: 'user-021', name: 'Rex', breed: 'Weimaraner', age: 4, weight: 35, gender: 'male', colour: 'Silver', vaccinated: true, desexed: true, microchipped: true, vetName: 'Northwood Vet', vetPhone: '03 323 5678', medicalNotes: 'Separation anxiety - working on it.', behaviourNotes: 'Loves daycare, high energy.', emergencyContact: 'Daniel Baker - 021 777 8889', photo: null, assessmentPassed: true, assessmentDate: '2024-05-08', size: 'large', createdAt: '2024-05-02T15:00:00Z' },
+            
+            // Michelle Hill's dog
+            { id: 'dog-027', ownerId: 'user-022', name: 'Lola', breed: 'Pug', age: 3, weight: 8, gender: 'female', colour: 'Black', vaccinated: true, desexed: true, microchipped: true, vetName: 'Belfast Vet', vetPhone: '03 323 9012', medicalNotes: 'Brachycephalic - monitor heat.', behaviourNotes: 'Small breed only, loves naps.', emergencyContact: 'Michelle Hill - 022 999 0001', photo: null, assessmentPassed: true, assessmentDate: '2024-10-01', size: 'small', createdAt: '2024-09-28T09:30:00Z' },
+            
+            // Andrew Moore's dogs
+            { id: 'dog-028', ownerId: 'user-023', name: 'Finn', breed: 'Husky', age: 3, weight: 25, gender: 'male', colour: 'Grey & White', vaccinated: true, desexed: true, microchipped: true, vetName: 'Redwood Vet', vetPhone: '03 354 2345', medicalNotes: 'Needs shade in summer.', behaviourNotes: 'Vocal, loves to run.', emergencyContact: 'Andrew Moore - 027 111 2224', photo: null, assessmentPassed: true, assessmentDate: '2024-04-12', size: 'large', createdAt: '2024-04-08T13:15:00Z' },
+            { id: 'dog-029', ownerId: 'user-023', name: 'Nova', breed: 'Husky', age: 2, weight: 22, gender: 'female', colour: 'Black & White', vaccinated: true, desexed: true, microchipped: true, vetName: 'Redwood Vet', vetPhone: '03 354 2345', medicalNotes: 'Needs shade in summer.', behaviourNotes: 'Finn sister, very bonded.', emergencyContact: 'Andrew Moore - 027 111 2224', photo: null, assessmentPassed: true, assessmentDate: '2024-04-12', size: 'large', createdAt: '2024-04-08T13:15:00Z' },
+            
+            // Sophie Young's dog
+            { id: 'dog-030', ownerId: 'user-024', name: 'Chester', breed: 'Corgi', age: 4, weight: 13, gender: 'male', colour: 'Red & White', vaccinated: true, desexed: true, microchipped: true, vetName: 'Northcote Vet', vetPhone: '03 352 5678', medicalNotes: 'Watch weight, back issues possible.', behaviourNotes: 'Confident, herds other dogs!', emergencyContact: 'Sophie Young - 021 333 4446', photo: null, assessmentPassed: true, assessmentDate: '2024-08-25', size: 'small', createdAt: '2024-08-20T10:45:00Z' },
+            
+            // Ryan Allen's dog
+            { id: 'dog-031', ownerId: 'user-025', name: 'Ziggy', breed: 'Dachshund', age: 5, weight: 9, gender: 'male', colour: 'Black & Tan', vaccinated: true, desexed: true, microchipped: true, vetName: 'Mairehau Vet', vetPhone: '03 385 9012', medicalNotes: 'Back care - no jumping.', behaviourNotes: 'Loves tunnels, small breed only.', emergencyContact: 'Ryan Allen - 022 555 6668', photo: null, assessmentPassed: true, assessmentDate: '2024-06-25', size: 'small', createdAt: '2024-06-22T14:00:00Z' },
+            
+            // Megan Hall's dogs
+            { id: 'dog-032', ownerId: 'user-026', name: 'Shadow', breed: 'Kelpie', age: 3, weight: 18, gender: 'male', colour: 'Black', vaccinated: true, desexed: true, microchipped: true, vetName: 'Shirley Vet', vetPhone: '03 385 2345', medicalNotes: 'None.', behaviourNotes: 'Working dog energy, needs jobs.', emergencyContact: 'Megan Hall - 027 777 8890', photo: null, assessmentPassed: true, assessmentDate: '2024-06-02', size: 'medium', createdAt: '2024-05-30T11:30:00Z' },
+            
+            // Paul Walker's dog
+            { id: 'dog-033', ownerId: 'user-027', name: 'Thor', breed: 'Great Dane', age: 2, weight: 60, gender: 'male', colour: 'Harlequin', vaccinated: true, desexed: true, microchipped: true, vetName: 'Richmond Vet', vetPhone: '03 389 5678', medicalNotes: 'Joint supplements recommended.', behaviourNotes: 'Gentle giant, thinks he small.', emergencyContact: 'Paul Walker - 021 999 0002', photo: null, assessmentPassed: true, assessmentDate: '2024-08-01', size: 'large', createdAt: '2024-07-28T08:15:00Z' },
+            
+            // Anna Turner's dogs
+            { id: 'dog-034', ownerId: 'user-028', name: 'Pepper', breed: 'Border Terrier', age: 6, weight: 7, gender: 'female', colour: 'Grizzle', vaccinated: true, desexed: true, microchipped: true, vetName: 'Dallington Vet', vetPhone: '03 389 9012', medicalNotes: 'Arthritis - on medication.', behaviourNotes: 'Feisty but friendly.', emergencyContact: 'Anna Turner - 022 111 2225', photo: null, assessmentPassed: true, assessmentDate: '2024-04-18', size: 'small', createdAt: '2024-04-15T16:30:00Z' },
+            
+            // Jason Cooper's dog
+            { id: 'dog-035', ownerId: 'user-029', name: 'Diesel', breed: 'Staffy', age: 4, weight: 22, gender: 'male', colour: 'Blue', vaccinated: true, desexed: true, microchipped: true, vetName: 'Aranui Vet', vetPhone: '03 388 2345', medicalNotes: 'None.', behaviourNotes: 'Super friendly, loves pats.', emergencyContact: 'Jason Cooper - 027 333 4447', photo: null, assessmentPassed: true, assessmentDate: '2024-09-15', size: 'medium', createdAt: '2024-09-10T12:00:00Z' },
+            
+            // Claire Evans' dog
+            { id: 'dog-036', ownerId: 'user-030', name: 'Honey', breed: 'Goldendoodle', age: 2, weight: 25, gender: 'female', colour: 'Apricot', vaccinated: true, desexed: true, microchipped: true, vetName: 'Bromley Vet', vetPhone: '03 388 5678', medicalNotes: 'None.', behaviourNotes: 'Loves everyone, great temperament.', emergencyContact: 'Claire Evans - 021 555 6669', photo: null, assessmentPassed: true, assessmentDate: '2024-06-08', size: 'large', createdAt: '2024-06-05T09:45:00Z' }
         ],
         
         bookings: [], // Will be populated dynamically
         
         credits: {
-            'demo-user-001': {
-                fullDay: 7,
-                halfDay: 3,
-                threeHour: 2,
-                rehab30: 2,
-                rehab60: 1
-            },
-            'demo-user-002': {
-                fullDay: 12,
-                halfDay: 5,
-                threeHour: 0,
-                rehab30: 3,
-                rehab60: 0
-            },
-            'demo-user-003': {
-                fullDay: 3,
-                halfDay: 2,
-                threeHour: 4,
-                rehab30: 0,
-                rehab60: 0
-            },
-            'demo-user-004': {
-                fullDay: 0,
-                halfDay: 0,
-                threeHour: 0,
-                rehab30: 8,
-                rehab60: 2
-            }
+            'demo-user-001': { fullDay: 7, halfDay: 3, threeHour: 2, rehab30: 2, rehab60: 1 },
+            'user-002': { fullDay: 12, halfDay: 5, threeHour: 0, rehab30: 3, rehab60: 0 },
+            'user-003': { fullDay: 3, halfDay: 2, threeHour: 4, rehab30: 0, rehab60: 0 },
+            'user-004': { fullDay: 0, halfDay: 0, threeHour: 0, rehab30: 8, rehab60: 2 },
+            'user-005': { fullDay: 15, halfDay: 0, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-006': { fullDay: 8, halfDay: 4, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-007': { fullDay: 20, halfDay: 0, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-008': { fullDay: 5, halfDay: 0, threeHour: 3, rehab30: 0, rehab60: 0 },
+            'user-009': { fullDay: 10, halfDay: 5, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-010': { fullDay: 6, halfDay: 2, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-011': { fullDay: 4, halfDay: 0, threeHour: 2, rehab30: 0, rehab60: 0 },
+            'user-012': { fullDay: 3, halfDay: 5, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-013': { fullDay: 18, halfDay: 0, threeHour: 0, rehab30: 5, rehab60: 0 },
+            'user-014': { fullDay: 7, halfDay: 3, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-015': { fullDay: 2, halfDay: 0, threeHour: 5, rehab30: 0, rehab60: 0 },
+            'user-016': { fullDay: 0, halfDay: 8, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-017': { fullDay: 12, halfDay: 0, threeHour: 0, rehab30: 3, rehab60: 1 },
+            'user-018': { fullDay: 9, halfDay: 2, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-019': { fullDay: 14, halfDay: 0, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-020': { fullDay: 5, halfDay: 3, threeHour: 2, rehab30: 0, rehab60: 0 },
+            'user-021': { fullDay: 11, halfDay: 0, threeHour: 0, rehab30: 2, rehab60: 0 },
+            'user-022': { fullDay: 0, halfDay: 6, threeHour: 4, rehab30: 0, rehab60: 0 },
+            'user-023': { fullDay: 16, halfDay: 0, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-024': { fullDay: 4, halfDay: 2, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-025': { fullDay: 0, halfDay: 5, threeHour: 3, rehab30: 0, rehab60: 0 },
+            'user-026': { fullDay: 8, halfDay: 0, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-027': { fullDay: 13, halfDay: 0, threeHour: 0, rehab30: 4, rehab60: 2 },
+            'user-028': { fullDay: 2, halfDay: 3, threeHour: 0, rehab30: 5, rehab60: 0 },
+            'user-029': { fullDay: 6, halfDay: 2, threeHour: 0, rehab30: 0, rehab60: 0 },
+            'user-030': { fullDay: 10, halfDay: 4, threeHour: 0, rehab30: 0, rehab60: 0 }
         },
         
         transactions: [
