@@ -498,8 +498,9 @@
         }
         
         function logout() {
-            MockAuth.signOut();
-            window.location.href = '../login.html';
+            MockAuth.signOut().then(() => {
+                window.location.href = '../login.html';
+            });
         }
         
         // Auth check
@@ -520,10 +521,10 @@
         document.getElementById('currentDate').textContent = today.toLocaleDateString('en-NZ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         document.getElementById('todayDate').textContent = today.toLocaleDateString('en-NZ', { weekday: 'short', month: 'short', day: 'numeric' });
         
-        // Data helpers
+        // Data helpers - use MockDatabase to ensure initialization
         function getCollection(name) {
-            const key = 'gooddogspa_db_' + name;
-            return JSON.parse(localStorage.getItem(key) || '[]');
+            // This ensures MockDatabase initializes the collection first
+            return MockDatabase.getCollectionSync(name);
         }
         
         function saveCollection(name, data) {
@@ -540,6 +541,9 @@
             allCredits[userId] = credits;
             localStorage.setItem('gooddogspa_db_credits', JSON.stringify(allCredits));
         }
+        
+        // Initialize data through MockDatabase
+        MockDatabase.initAllCollections();
         
         const allUsers = JSON.parse(localStorage.getItem('gooddogspa_users') || '[]').filter(u => u.role === 'member');
         const allDogs = getCollection('dogs');

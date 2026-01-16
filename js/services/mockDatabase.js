@@ -6,7 +6,7 @@
 const MockDatabase = (function() {
     const DB_PREFIX = 'gooddogspa_db_';
     const DB_VERSION_KEY = 'gooddogspa_db_version';
-    const CURRENT_VERSION = '2.0.2'; // Increment this to force data refresh
+    const CURRENT_VERSION = '2.0.3'; // Increment this to force data refresh
     
     // Check version and reset if needed
     function checkVersion() {
@@ -603,6 +603,23 @@ const MockDatabase = (function() {
     
     // Public API
     return {
+        // =========== INITIALIZATION HELPERS ===========
+        
+        /**
+         * Initialize all collections (for admin panel)
+         */
+        initAllCollections: function() {
+            ['dogs', 'bookings', 'credits', 'transactions'].forEach(name => initCollection(name));
+        },
+        
+        /**
+         * Get collection synchronously (for admin panel)
+         */
+        getCollectionSync: function(name) {
+            initCollection(name);
+            return JSON.parse(localStorage.getItem(DB_PREFIX + name) || '[]');
+        },
+        
         // =========== DOGS ===========
         
         /**

@@ -16,13 +16,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/utilities.css">
     
+    <!-- Fallback inline styles if external CSS fails -->
     <style>
+        :root {
+            --color-yellow-light: #FFF8E7;
+            --color-blue-light: #E8F4FD;
+            --color-blue-primary: #2563eb;
+            --color-yellow-primary: #F7C35F;
+            --color-gray-600: #4B5563;
+            --font-display: 'Fredoka One', cursive;
+            --font-size-3xl: 1.875rem;
+            --font-size-lg: 1.125rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+        }
+        body { font-family: 'Nunito', sans-serif; margin: 0; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.75rem; border-radius: 50px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+        .btn-primary { background: var(--color-blue-primary); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+        .btn-secondary { background: white; color: var(--color-blue-primary); border: 2px solid var(--color-blue-primary); }
+        .btn-secondary:hover { background: var(--color-blue-light); }
+        .btn-lg { padding: 1rem 2rem; font-size: 1.1rem; }
         .error-page {
             min-height: 100vh;
             display: flex;
