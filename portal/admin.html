@@ -18,8 +18,10 @@
         :root { --sidebar-width: 260px; }
         body { min-height: 100vh; background: var(--color-gray-50); }
         .portal-layout { display: flex; min-height: 100vh; }
+        
+        /* Sidebar */
         .sidebar { width: var(--sidebar-width); background: #1e293b; color: var(--color-white); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: var(--z-fixed); }
-        @media (max-width: 1023px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } }
+        @media (max-width: 1023px) { .sidebar { transform: translateX(-100%); transition: transform 0.3s; } .sidebar.open { transform: translateX(0); } }
         .sidebar-header { padding: var(--space-6); border-bottom: 1px solid rgba(255,255,255,0.1); }
         .sidebar-logo { height: 45px; filter: brightness(0) invert(1); }
         .admin-badge { display: inline-block; background: var(--color-coral); color: white; font-size: var(--font-size-xs); padding: 2px 8px; border-radius: var(--radius-full); margin-left: var(--space-2); }
@@ -30,13 +32,15 @@
         .sidebar-nav { padding: var(--space-4); }
         .sidebar-nav-label { font-size: var(--font-size-xs); text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: var(--space-3) var(--space-4); margin-top: var(--space-4); }
         .sidebar-nav-label:first-child { margin-top: 0; }
-        .sidebar-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.7); border-radius: var(--radius-lg); margin-bottom: var(--space-1); }
+        .sidebar-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.7); border-radius: var(--radius-lg); margin-bottom: var(--space-1); cursor: pointer; }
         .sidebar-link:hover { background: rgba(255,255,255,0.1); color: var(--color-white); }
         .sidebar-link.active { background: var(--color-coral); color: var(--color-white); }
         .sidebar-link-icon { font-size: 1.2rem; }
-        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
-        .logout-btn { display: flex; align-items: center; gap: var(--space-3); width: 100%; padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.6); border-radius: var(--radius-lg); }
+        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; position: absolute; bottom: 0; left: 0; right: 0; }
+        .logout-btn { display: flex; align-items: center; gap: var(--space-3); width: 100%; padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.6); border-radius: var(--radius-lg); cursor: pointer; }
         .logout-btn:hover { background: rgba(255,255,255,0.1); color: var(--color-coral); }
+        
+        /* Main Content */
         .portal-main { flex: 1; margin-left: var(--sidebar-width); min-height: 100vh; }
         @media (max-width: 1023px) { .portal-main { margin-left: 0; } }
         .portal-topbar { background: var(--color-white); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: var(--z-sticky); }
@@ -45,8 +49,12 @@
         .page-title h1 { font-size: var(--font-size-xl); margin: 0; }
         .portal-content { padding: var(--space-6); }
         @media (min-width: 768px) { .portal-content { padding: var(--space-8); } }
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: calc(var(--z-fixed) - 1); }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: calc(var(--z-fixed) - 1); transition: all 0.3s; }
         .sidebar-overlay.open { opacity: 1; visibility: visible; }
+        
+        /* Tab Panels */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
         
         /* Stats */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-5); margin-bottom: var(--space-8); }
@@ -55,121 +63,279 @@
         .stat-icon.blue { background: var(--color-blue-light); }
         .stat-icon.yellow { background: var(--color-yellow-light); }
         .stat-icon.green { background: #dcfce7; }
-        .stat-icon.red { background: #fee2e2; }
+        .stat-icon.coral { background: #fee2e2; }
         .stat-info h3 { font-size: var(--font-size-2xl); margin-bottom: 0; }
         .stat-info p { color: var(--color-gray-500); font-size: var(--font-size-sm); margin: 0; }
         
-        /* Date Picker */
-        .date-picker { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6); }
-        .date-picker input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); font-size: var(--font-size-base); }
+        /* Cards */
+        .admin-card { background: var(--color-white); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: var(--space-6); }
+        .admin-card-header { padding: var(--space-5); border-bottom: 1px solid var(--color-gray-100); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3); }
+        .admin-card-header h2 { margin: 0; font-size: var(--font-size-lg); }
+        .admin-card-body { padding: var(--space-5); }
         
-        /* Bookings Table */
-        .bookings-card { background: var(--color-white); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); overflow: hidden; }
-        .bookings-header { padding: var(--space-5); border-bottom: 1px solid var(--color-gray-100); display: flex; justify-content: space-between; align-items: center; }
-        .bookings-header h2 { margin: 0; font-size: var(--font-size-lg); }
-        .bookings-table { width: 100%; border-collapse: collapse; }
-        .bookings-table th, .bookings-table td { padding: var(--space-4); text-align: left; border-bottom: 1px solid var(--color-gray-100); }
-        .bookings-table th { background: var(--color-gray-50); font-weight: var(--font-weight-bold); font-size: var(--font-size-sm); color: var(--color-gray-600); }
-        .bookings-table tr:hover { background: var(--color-gray-50); }
+        /* Filters */
+        .filters-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+        .filter-input { padding: var(--space-2) var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); font-size: var(--font-size-sm); min-width: 150px; }
+        .filter-input:focus { border-color: var(--color-blue-primary); outline: none; }
+        
+        /* Tables */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th, .data-table td { padding: var(--space-4); text-align: left; border-bottom: 1px solid var(--color-gray-100); }
+        .data-table th { background: var(--color-gray-50); font-weight: var(--font-weight-bold); font-size: var(--font-size-sm); color: var(--color-gray-600); white-space: nowrap; }
+        .data-table tr:hover { background: var(--color-gray-50); }
+        .data-table-wrapper { overflow-x: auto; }
+        
+        /* Status Badges */
         .status-badge { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
         .status-badge.confirmed { background: #dcfce7; color: #16a34a; }
         .status-badge.completed { background: var(--color-blue-light); color: var(--color-blue-primary); }
         .status-badge.cancelled { background: #fee2e2; color: #dc2626; }
+        .status-badge.pending { background: var(--color-yellow-light); color: #b45309; }
+        .status-badge.active { background: #dcfce7; color: #16a34a; }
         
+        /* Member/Dog Cards */
+        .item-row { display: flex; align-items: center; gap: var(--space-4); }
+        .item-avatar { width: 45px; height: 45px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .item-avatar.dog { background: var(--color-yellow-light); }
+        .item-avatar.member { background: var(--color-blue-light); }
+        .item-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-full); }
+        .item-info { min-width: 0; }
+        .item-info h4 { margin: 0 0 2px 0; font-size: var(--font-size-base); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .item-info p { margin: 0; font-size: var(--font-size-sm); color: var(--color-gray-500); }
+        
+        /* Quick Actions */
+        .action-btn { padding: var(--space-2) var(--space-3); border-radius: var(--radius-lg); font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); cursor: pointer; transition: all 0.2s; }
+        .action-btn.view { background: var(--color-blue-light); color: var(--color-blue-primary); }
+        .action-btn.view:hover { background: var(--color-blue-primary); color: white; }
+        .action-btn.edit { background: var(--color-yellow-light); color: #b45309; }
+        .action-btn.edit:hover { background: var(--color-yellow-primary); color: white; }
+        
+        /* Empty State */
         .empty-state { padding: var(--space-10); text-align: center; color: var(--color-gray-500); }
         .empty-state-icon { font-size: 3rem; margin-bottom: var(--space-3); }
         
-        @media (max-width: 768px) {
-            .bookings-table { display: block; overflow-x: auto; }
-        }
+        /* Today's Schedule */
+        .schedule-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4); border-bottom: 1px solid var(--color-gray-100); }
+        .schedule-item:last-child { border-bottom: none; }
+        .schedule-time { font-weight: var(--font-weight-bold); color: var(--color-blue-primary); min-width: 80px; }
+        .schedule-info { flex: 1; }
+        .schedule-info h4 { margin: 0 0 2px 0; }
+        .schedule-info p { margin: 0; font-size: var(--font-size-sm); color: var(--color-gray-500); }
     </style>
 </head>
 <body>
     <div class="portal-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <a href="../index.html"><img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="sidebar-logo"></a>
                 <span class="admin-badge">ADMIN</span>
             </div>
-            <div class="sidebar-user" id="sidebarUser"><div class="sidebar-user-avatar">👤</div><div class="sidebar-user-name">Loading...</div><div class="sidebar-user-email">...</div></div>
+            <div class="sidebar-user" id="sidebarUser">
+                <div class="sidebar-user-avatar">👤</div>
+                <div class="sidebar-user-name">Loading...</div>
+                <div class="sidebar-user-email">...</div>
+            </div>
             <nav class="sidebar-nav">
                 <div class="sidebar-nav-label">Admin Menu</div>
-                <a href="admin.html" class="sidebar-link active"><span class="sidebar-link-icon">📊</span>Dashboard</a>
-                <a href="#" class="sidebar-link" onclick="alert('Coming soon!')"><span class="sidebar-link-icon">📅</span>All Bookings</a>
-                <a href="#" class="sidebar-link" onclick="alert('Coming soon!')"><span class="sidebar-link-icon">🐕</span>All Dogs</a>
-                <a href="#" class="sidebar-link" onclick="alert('Coming soon!')"><span class="sidebar-link-icon">👥</span>Members</a>
+                <a class="sidebar-link active" data-tab="overview"><span class="sidebar-link-icon">📊</span>Overview</a>
+                <a class="sidebar-link" data-tab="bookings"><span class="sidebar-link-icon">📅</span>All Bookings</a>
+                <a class="sidebar-link" data-tab="dogs"><span class="sidebar-link-icon">🐕</span>All Dogs</a>
+                <a class="sidebar-link" data-tab="members"><span class="sidebar-link-icon">👥</span>Members</a>
+                
                 <div class="sidebar-nav-label">Quick Links</div>
-                <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>View Website</a>
+                <a href="dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span>Member View</a>
+                <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>Main Website</a>
             </nav>
-            <div class="sidebar-footer"><button class="logout-btn" onclick="handleLogout()"><span>🚪</span>Sign Out</button></div>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()"><span>🚪</span> Sign Out</button>
+            </div>
         </aside>
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         
         <main class="portal-main">
             <div class="portal-topbar">
                 <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
-                <div class="page-title"><h1>📊 Admin Dashboard</h1></div>
-                <div class="topbar-actions"></div>
+                <div class="page-title"><h1 id="pageTitle">Admin Overview</h1></div>
+                <div class="topbar-date" id="currentDate"></div>
             </div>
             
             <div class="portal-content">
-                <!-- Stats -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon blue">📅</div>
-                        <div class="stat-info">
-                            <h3 id="statToday">-</h3>
-                            <p>Today's Bookings</p>
+                <!-- Overview Tab -->
+                <div class="tab-panel active" id="tab-overview">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">📅</div>
+                            <div class="stat-info">
+                                <h3 id="statTodayBookings">0</h3>
+                                <p>Today's Bookings</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon yellow">🐕</div>
+                            <div class="stat-info">
+                                <h3 id="statTotalDogs">0</h3>
+                                <p>Registered Dogs</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green">👥</div>
+                            <div class="stat-info">
+                                <h3 id="statTotalMembers">0</h3>
+                                <p>Active Members</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon coral">📆</div>
+                            <div class="stat-info">
+                                <h3 id="statWeekBookings">0</h3>
+                                <p>This Week</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon yellow">📆</div>
-                        <div class="stat-info">
-                            <h3 id="statUpcoming">-</h3>
-                            <p>Upcoming Bookings</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="admin-card">
+                            <div class="admin-card-header">
+                                <h2>📅 Today's Schedule</h2>
+                                <span id="todayDate"></span>
+                            </div>
+                            <div class="admin-card-body" id="todaySchedule">
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">📭</div>
+                                    <p>No bookings today</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-card">
+                            <div class="admin-card-header">
+                                <h2>🆕 Recent Activity</h2>
+                            </div>
+                            <div class="admin-card-body" id="recentActivity">
+                                <!-- Populated by JS -->
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon green">🐕</div>
-                        <div class="stat-info">
-                            <h3 id="statDogs">-</h3>
-                            <p>Registered Dogs</p>
+                    
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h2>📆 Upcoming Bookings</h2>
+                            <a class="action-btn view" data-tab="bookings">View All →</a>
                         </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon red">✅</div>
-                        <div class="stat-info">
-                            <h3 id="statCompleted">-</h3>
-                            <p>Completed This Month</p>
+                        <div class="data-table-wrapper">
+                            <table class="data-table" id="upcomingBookingsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Dog</th>
+                                        <th>Owner</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="upcomingBookingsBody"></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Date Picker -->
-                <div class="date-picker">
-                    <label><strong>View bookings for:</strong></label>
-                    <input type="date" id="bookingDate" onchange="loadBookingsForDate()">
-                    <button class="btn btn-outline btn-sm" onclick="goToToday()">Today</button>
+                <!-- Bookings Tab -->
+                <div class="tab-panel" id="tab-bookings">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h2>📅 All Bookings</h2>
+                            <div class="filters-row">
+                                <input type="date" class="filter-input" id="filterDateFrom" placeholder="From">
+                                <input type="date" class="filter-input" id="filterDateTo" placeholder="To">
+                                <select class="filter-input" id="filterStatus">
+                                    <option value="">All Status</option>
+                                    <option value="confirmed">Confirmed</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                                <select class="filter-input" id="filterType">
+                                    <option value="">All Types</option>
+                                    <option value="daycare">Daycare</option>
+                                    <option value="hydrotherapy">Hydrotherapy</option>
+                                    <option value="rehabilitation">Rehabilitation</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="data-table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Dog</th>
+                                        <th>Owner</th>
+                                        <th>Type</th>
+                                        <th>Session</th>
+                                        <th>Status</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allBookingsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- Bookings Table -->
-                <div class="bookings-card">
-                    <div class="bookings-header">
-                        <h2 id="bookingsTitle">📅 Bookings</h2>
+                <!-- Dogs Tab -->
+                <div class="tab-panel" id="tab-dogs">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h2>🐕 Registered Dogs</h2>
+                            <div class="filters-row">
+                                <input type="text" class="filter-input" id="filterDogSearch" placeholder="Search dogs...">
+                            </div>
+                        </div>
+                        <div class="data-table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Dog</th>
+                                        <th>Breed</th>
+                                        <th>Age</th>
+                                        <th>Weight</th>
+                                        <th>Owner</th>
+                                        <th>Assessment</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allDogsBody"></tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div id="bookingsContent">
-                        <table class="bookings-table">
-                            <thead>
-                                <tr>
-                                    <th>Time</th>
-                                    <th>Dog</th>
-                                    <th>Service</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bookingsBody"></tbody>
-                        </table>
+                </div>
+                
+                <!-- Members Tab -->
+                <div class="tab-panel" id="tab-members">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h2>👥 Members</h2>
+                            <div class="filters-row">
+                                <input type="text" class="filter-input" id="filterMemberSearch" placeholder="Search members...">
+                            </div>
+                        </div>
+                        <div class="data-table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Member</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Dogs</th>
+                                        <th>Credits</th>
+                                        <th>Member Since</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allMembersBody"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -179,112 +345,318 @@
     <script src="../js/services/mockAuth.js"></script>
     <script src="../js/services/mockDatabase.js"></script>
     <script>
-        let currentUser = null;
+        // Tab Navigation
+        const tabLinks = document.querySelectorAll('.sidebar-link[data-tab]');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+        const pageTitle = document.getElementById('pageTitle');
         
-        document.addEventListener('DOMContentLoaded', async function() {
-            currentUser = MockAuth.getCurrentUser();
-            if (!currentUser) { window.location.href = '../login.html'; return; }
-            if (currentUser.role !== 'admin') { window.location.href = 'dashboard.html'; return; }
-            
-            updateUserInfo();
-            
-            // Set date to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('bookingDate').value = today;
-            
-            await loadStats();
-            await loadBookingsForDate();
+        const tabTitles = {
+            'overview': 'Admin Overview',
+            'bookings': 'All Bookings',
+            'dogs': 'Registered Dogs',
+            'members': 'Members'
+        };
+        
+        tabLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const tabId = link.dataset.tab;
+                
+                // Update active states
+                tabLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                tabPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                    if (panel.id === 'tab-' + tabId) {
+                        panel.classList.add('active');
+                    }
+                });
+                
+                pageTitle.textContent = tabTitles[tabId] || 'Admin Dashboard';
+                
+                // Close mobile sidebar
+                document.getElementById('sidebar').classList.remove('open');
+                document.getElementById('sidebarOverlay').classList.remove('open');
+            });
         });
         
-        function updateUserInfo() {
-            document.getElementById('sidebarUser').innerHTML = `
-                <div class="sidebar-user-avatar">${currentUser.displayName?.charAt(0).toUpperCase() || '👤'}</div>
-                <div class="sidebar-user-name">${currentUser.displayName || 'Admin'}</div>
-                <div class="sidebar-user-email">${currentUser.email}</div>
-            `;
-        }
-        
-        async function loadStats() {
-            const today = new Date().toISOString().split('T')[0];
-            const allBookings = await MockDatabase.getAllBookings();
-            const allDogs = await MockDatabase.getAllDogs();
-            
-            const todayBookings = allBookings.filter(b => b.date === today && b.status !== 'cancelled');
-            const upcomingBookings = allBookings.filter(b => b.date >= today && b.status === 'confirmed');
-            const completedThisMonth = allBookings.filter(b => {
-                const bookingDate = new Date(b.date);
-                const now = new Date();
-                return bookingDate.getMonth() === now.getMonth() && 
-                       bookingDate.getFullYear() === now.getFullYear() && 
-                       b.status === 'completed';
-            });
-            
-            document.getElementById('statToday').textContent = todayBookings.length;
-            document.getElementById('statUpcoming').textContent = upcomingBookings.length;
-            document.getElementById('statDogs').textContent = allDogs.length;
-            document.getElementById('statCompleted').textContent = completedThisMonth.length;
-        }
-        
-        async function loadBookingsForDate() {
-            const date = document.getElementById('bookingDate').value;
-            const dateObj = new Date(date);
-            const formatted = dateObj.toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-            
-            document.getElementById('bookingsTitle').textContent = `📅 Bookings for ${formatted}`;
-            
-            const bookings = await MockDatabase.getAllBookings({ date });
-            const tbody = document.getElementById('bookingsBody');
-            
-            if (bookings.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">📅</div><p>No bookings for this date</p></div></td></tr>`;
-                return;
+        // Also handle action buttons that switch tabs
+        document.querySelectorAll('[data-tab]').forEach(el => {
+            if (!el.classList.contains('sidebar-link')) {
+                el.addEventListener('click', () => {
+                    const tabId = el.dataset.tab;
+                    document.querySelector(`.sidebar-link[data-tab="${tabId}"]`).click();
+                });
             }
-            
-            tbody.innerHTML = bookings.map(b => {
-                const time = b.type === 'daycare' ? `${b.dropOff} - ${b.pickUp}` : b.time;
-                const service = b.type === 'daycare' ? `Day Care (${b.sessionType})` : `Hydrotherapy (${b.sessionType})`;
-                return `
-                    <tr>
-                        <td><strong>${time}</strong></td>
-                        <td>${b.dogName}</td>
-                        <td>${service}</td>
-                        <td><span class="status-badge ${b.status}">${b.status}</span></td>
-                        <td>
-                            ${b.status === 'confirmed' ? `
-                                <button class="btn btn-sm btn-outline" onclick="markComplete('${b.id}')">Complete</button>
-                                <button class="btn btn-sm btn-outline" onclick="cancelBooking('${b.id}')" style="color: var(--color-coral); border-color: var(--color-coral);">Cancel</button>
-                            ` : '-'}
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
+        });
         
-        function goToToday() {
-            document.getElementById('bookingDate').value = new Date().toISOString().split('T')[0];
-            loadBookingsForDate();
-        }
-        
-        async function markComplete(bookingId) {
-            await MockDatabase.updateBooking(bookingId, { status: 'completed' });
-            await loadStats();
-            await loadBookingsForDate();
-        }
-        
-        async function cancelBooking(bookingId) {
-            if (confirm('Cancel this booking?')) {
-                await MockDatabase.cancelBooking(bookingId);
-                await loadStats();
-                await loadBookingsForDate();
-            }
-        }
-        
+        // Mobile sidebar
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('sidebarOverlay').classList.toggle('open');
         }
         
-        async function handleLogout() { await MockAuth.signOut(); window.location.href = '../login.html'; }
+        document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
+        
+        // Auth check
+        const user = MockAuth.getCurrentUser();
+        if (!user || user.role !== 'admin') {
+            window.location.href = 'dashboard.html';
+        }
+        
+        // Populate user info
+        document.getElementById('sidebarUser').innerHTML = `
+            <div class="sidebar-user-avatar">👤</div>
+            <div class="sidebar-user-name">${user.displayName}</div>
+            <div class="sidebar-user-email">${user.email}</div>
+        `;
+        
+        // Set current date
+        const today = new Date();
+        document.getElementById('currentDate').textContent = today.toLocaleDateString('en-NZ', { 
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+        });
+        document.getElementById('todayDate').textContent = today.toLocaleDateString('en-NZ', { 
+            weekday: 'short', month: 'short', day: 'numeric' 
+        });
+        
+        // Get all data - using direct localStorage access for admin (sync)
+        function getCollection(name) {
+            const key = 'gooddogspa_db_' + name;
+            return JSON.parse(localStorage.getItem(key) || '[]');
+        }
+        
+        function getCreditsForUser(userId) {
+            const credits = JSON.parse(localStorage.getItem('gooddogspa_db_credits') || '{}');
+            return credits[userId] || { fullDay: 0, halfDay: 0, threeHour: 0, rehab30: 0, rehab60: 0 };
+        }
+        
+        const allUsers = JSON.parse(localStorage.getItem('gooddogspa_users') || '[]').filter(u => u.role === 'member');
+        const allDogs = getCollection('dogs');
+        const allBookings = getCollection('bookings');
+        
+        // Helper: Get user by ID
+        function getUserById(uid) {
+            const users = JSON.parse(localStorage.getItem('gooddogspa_users') || '[]');
+            return users.find(u => u.uid === uid) || { displayName: 'Unknown', email: '-' };
+        }
+        
+        // Helper: Get dog by ID
+        function getDogById(id) {
+            return allDogs.find(d => d.id === id) || { name: 'Unknown' };
+        }
+        
+        // Helper: Format date
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-NZ', { weekday: 'short', day: 'numeric', month: 'short' });
+        }
+        
+        // Calculate stats
+        const todayStr = today.toISOString().split('T')[0];
+        const todayBookings = allBookings.filter(b => b.date === todayStr && b.status !== 'cancelled');
+        
+        const weekFromNow = new Date(today);
+        weekFromNow.setDate(weekFromNow.getDate() + 7);
+        const weekBookings = allBookings.filter(b => {
+            const bookingDate = new Date(b.date);
+            return bookingDate >= today && bookingDate <= weekFromNow && b.status !== 'cancelled';
+        });
+        
+        document.getElementById('statTodayBookings').textContent = todayBookings.length;
+        document.getElementById('statTotalDogs').textContent = allDogs.length;
+        document.getElementById('statTotalMembers').textContent = allUsers.length;
+        document.getElementById('statWeekBookings').textContent = weekBookings.length;
+        
+        // Today's Schedule
+        const scheduleContainer = document.getElementById('todaySchedule');
+        if (todayBookings.length > 0) {
+            scheduleContainer.innerHTML = todayBookings.map(booking => {
+                const owner = getUserById(booking.ownerId);
+                const time = booking.dropOff || booking.time || '09:00';
+                const typeLabel = booking.type === 'daycare' ? 'Daycare' : booking.type === 'hydrotherapy' ? 'Hydro' : 'Rehab';
+                return `
+                    <div class="schedule-item">
+                        <div class="schedule-time">${time}</div>
+                        <div class="item-avatar dog">🐕</div>
+                        <div class="schedule-info">
+                            <h4>${booking.dogName}</h4>
+                            <p>${typeLabel} • ${owner.displayName}</p>
+                        </div>
+                        <span class="status-badge ${booking.status}">${booking.status}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Recent Activity
+        const recentActivity = document.getElementById('recentActivity');
+        const recentBookings = [...allBookings].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+        recentActivity.innerHTML = recentBookings.map(booking => {
+            const owner = getUserById(booking.ownerId);
+            return `
+                <div class="schedule-item">
+                    <div class="item-avatar dog">🐕</div>
+                    <div class="schedule-info">
+                        <h4>${booking.dogName} - ${booking.type}</h4>
+                        <p>Booked by ${owner.displayName} for ${formatDate(booking.date)}</p>
+                    </div>
+                </div>
+            `;
+        }).join('') || '<div class="empty-state"><p>No recent activity</p></div>';
+        
+        // Upcoming Bookings (Overview)
+        const upcomingBody = document.getElementById('upcomingBookingsBody');
+        const upcomingBookings = allBookings
+            .filter(b => new Date(b.date) >= today && b.status !== 'cancelled')
+            .sort((a, b) => new Date(a.date) - new Date(b.date))
+            .slice(0, 5);
+        
+        upcomingBody.innerHTML = upcomingBookings.map(booking => {
+            const owner = getUserById(booking.ownerId);
+            const time = booking.dropOff || booking.time || '-';
+            return `
+                <tr>
+                    <td>${formatDate(booking.date)}</td>
+                    <td>${time}</td>
+                    <td><strong>${booking.dogName}</strong></td>
+                    <td>${owner.displayName}</td>
+                    <td>${booking.type}</td>
+                    <td><span class="status-badge ${booking.status}">${booking.status}</span></td>
+                </tr>
+            `;
+        }).join('') || '<tr><td colspan="6" class="empty-state">No upcoming bookings</td></tr>';
+        
+        // All Bookings Tab
+        function renderAllBookings(bookings) {
+            const body = document.getElementById('allBookingsBody');
+            body.innerHTML = bookings.map(booking => {
+                const owner = getUserById(booking.ownerId);
+                const time = booking.dropOff ? `${booking.dropOff} - ${booking.pickUp}` : booking.time || '-';
+                return `
+                    <tr>
+                        <td>${formatDate(booking.date)}</td>
+                        <td>${time}</td>
+                        <td><strong>${booking.dogName}</strong></td>
+                        <td>${owner.displayName}</td>
+                        <td>${booking.type}</td>
+                        <td>${booking.sessionType || '-'}</td>
+                        <td><span class="status-badge ${booking.status}">${booking.status}</span></td>
+                        <td>${booking.notes || '-'}</td>
+                    </tr>
+                `;
+            }).join('') || '<tr><td colspan="8" class="empty-state">No bookings found</td></tr>';
+        }
+        
+        renderAllBookings(allBookings.sort((a, b) => new Date(b.date) - new Date(a.date)));
+        
+        // Booking filters
+        ['filterDateFrom', 'filterDateTo', 'filterStatus', 'filterType'].forEach(id => {
+            document.getElementById(id).addEventListener('change', filterBookings);
+        });
+        
+        function filterBookings() {
+            const dateFrom = document.getElementById('filterDateFrom').value;
+            const dateTo = document.getElementById('filterDateTo').value;
+            const status = document.getElementById('filterStatus').value;
+            const type = document.getElementById('filterType').value;
+            
+            let filtered = [...allBookings];
+            
+            if (dateFrom) filtered = filtered.filter(b => b.date >= dateFrom);
+            if (dateTo) filtered = filtered.filter(b => b.date <= dateTo);
+            if (status) filtered = filtered.filter(b => b.status === status);
+            if (type) filtered = filtered.filter(b => b.type === type);
+            
+            renderAllBookings(filtered.sort((a, b) => new Date(b.date) - new Date(a.date)));
+        }
+        
+        // All Dogs Tab
+        function renderAllDogs(dogs) {
+            const body = document.getElementById('allDogsBody');
+            body.innerHTML = dogs.map(dog => {
+                const owner = getUserById(dog.ownerId);
+                const assessmentStatus = dog.assessmentPassed ? 'Passed ✓' : 'Pending';
+                const photo = dog.photo ? `<img src="${dog.photo}" alt="${dog.name}">` : '🐕';
+                return `
+                    <tr>
+                        <td>
+                            <div class="item-row">
+                                <div class="item-avatar dog">${photo}</div>
+                                <div class="item-info">
+                                    <h4>${dog.name}</h4>
+                                    <p>${dog.gender}, ${dog.colour || 'N/A'}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${dog.breed}</td>
+                        <td>${dog.age} years</td>
+                        <td>${dog.weight} kg</td>
+                        <td>${owner.displayName}</td>
+                        <td><span class="status-badge ${dog.assessmentPassed ? 'active' : 'pending'}">${assessmentStatus}</span></td>
+                        <td>${dog.medicalNotes ? dog.medicalNotes.substring(0, 30) + '...' : '-'}</td>
+                    </tr>
+                `;
+            }).join('') || '<tr><td colspan="7" class="empty-state">No dogs found</td></tr>';
+        }
+        
+        renderAllDogs(allDogs);
+        
+        document.getElementById('filterDogSearch').addEventListener('input', (e) => {
+            const search = e.target.value.toLowerCase();
+            const filtered = allDogs.filter(d => 
+                d.name.toLowerCase().includes(search) || 
+                d.breed.toLowerCase().includes(search)
+            );
+            renderAllDogs(filtered);
+        });
+        
+        // All Members Tab
+        function renderAllMembers(members) {
+            const body = document.getElementById('allMembersBody');
+            body.innerHTML = members.map(member => {
+                const memberDogs = allDogs.filter(d => d.ownerId === member.uid);
+                const credits = getCreditsForUser(member.uid);
+                const totalCredits = (credits.fullDay || 0) + (credits.halfDay || 0) + (credits.rehab30 || 0) + (credits.rehab60 || 0);
+                const memberSince = new Date(member.createdAt).toLocaleDateString('en-NZ', { month: 'short', year: 'numeric' });
+                
+                return `
+                    <tr>
+                        <td>
+                            <div class="item-row">
+                                <div class="item-avatar member">👤</div>
+                                <div class="item-info">
+                                    <h4>${member.displayName}</h4>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${member.email}</td>
+                        <td>${member.phone || '-'}</td>
+                        <td>${memberDogs.length} dog${memberDogs.length !== 1 ? 's' : ''}</td>
+                        <td>${totalCredits} credits</td>
+                        <td>${memberSince}</td>
+                        <td><span class="status-badge active">Active</span></td>
+                    </tr>
+                `;
+            }).join('') || '<tr><td colspan="7" class="empty-state">No members found</td></tr>';
+        }
+        
+        renderAllMembers(allUsers);
+        
+        document.getElementById('filterMemberSearch').addEventListener('input', (e) => {
+            const search = e.target.value.toLowerCase();
+            const filtered = allUsers.filter(m => 
+                m.displayName.toLowerCase().includes(search) || 
+                m.email.toLowerCase().includes(search)
+            );
+            renderAllMembers(filtered);
+        });
+        
+        // Logout
+        function logout() {
+            MockAuth.signOut();
+            window.location.href = '../login.html';
+        }
     </script>
 </body>
 </html>

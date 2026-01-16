@@ -16,6 +16,7 @@ const MockAuth = (function() {
             displayName: 'Joel Tempero',
             role: 'member',
             phone: '0204 023 9009',
+            address: '123 Dog Lane, Wigram',
             createdAt: '2024-06-15T10:00:00Z'
         },
         {
@@ -29,12 +30,33 @@ const MockAuth = (function() {
         },
         {
             uid: 'demo-user-002',
-            email: 'john@example.com',
+            email: 'sarah@example.com',
             password: 'password123',
-            displayName: 'John Wilson',
+            displayName: 'Sarah Mitchell',
             role: 'member',
-            phone: '027 888 9999',
-            createdAt: '2024-09-20T14:30:00Z'
+            phone: '027 555 1234',
+            address: '45 Puppy Place, Hornby',
+            createdAt: '2024-07-08T14:30:00Z'
+        },
+        {
+            uid: 'demo-user-003',
+            email: 'mike@example.com',
+            password: 'password123',
+            displayName: 'Mike Johnson',
+            role: 'member',
+            phone: '021 888 7777',
+            address: '78 Bark Street, Riccarton',
+            createdAt: '2024-09-25T11:00:00Z'
+        },
+        {
+            uid: 'demo-user-004',
+            email: 'emma@example.com',
+            password: 'password123',
+            displayName: 'Emma Williams',
+            role: 'member',
+            phone: '022 333 4444',
+            address: '92 Woof Way, Ilam',
+            createdAt: '2024-06-05T16:00:00Z'
         }
     ];
     

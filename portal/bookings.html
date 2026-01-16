@@ -23,18 +23,18 @@
         .sidebar-header { padding: var(--space-6); border-bottom: 1px solid rgba(255,255,255,0.1); }
         .sidebar-logo { height: 45px; filter: brightness(0) invert(1); }
         .sidebar-user { padding: var(--space-5); background: rgba(255,255,255,0.05); margin: var(--space-4); border-radius: var(--radius-xl); }
-        .sidebar-user-avatar { width: 50px; height: 50px; background: linear-gradient(135deg, var(--color-yellow-primary), var(--color-yellow-dark)); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: var(--space-3); }
+        .sidebar-user-avatar { width: 50px; height: 50px; background: linear-gradient(135deg, var(--color-yellow-primary), var(--color-yellow-dark)); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: var(--space-3); overflow: hidden; }
+        .sidebar-user-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .sidebar-user-name { font-weight: var(--font-weight-bold); margin-bottom: var(--space-1); }
         .sidebar-user-email { font-size: var(--font-size-sm); color: rgba(255,255,255,0.6); }
         .sidebar-nav { padding: var(--space-4); }
         .sidebar-nav-label { font-size: var(--font-size-xs); text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: var(--space-3) var(--space-4); margin-top: var(--space-4); }
-        .sidebar-nav-label:first-child { margin-top: 0; }
-        .sidebar-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.7); border-radius: var(--radius-lg); margin-bottom: var(--space-1); transition: all var(--transition-fast); }
+        .sidebar-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.7); border-radius: var(--radius-lg); margin-bottom: var(--space-1); }
         .sidebar-link:hover { background: rgba(255,255,255,0.1); color: var(--color-white); }
         .sidebar-link.active { background: var(--color-blue-primary); color: var(--color-white); }
         .sidebar-link-icon { font-size: 1.2rem; }
-        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
-        .logout-btn { display: flex; align-items: center; gap: var(--space-3); width: 100%; padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.6); border-radius: var(--radius-lg); }
+        .sidebar-footer { padding: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); position: absolute; bottom: 0; left: 0; right: 0; }
+        .logout-btn { display: flex; align-items: center; gap: var(--space-3); width: 100%; padding: var(--space-3) var(--space-4); color: rgba(255,255,255,0.6); border-radius: var(--radius-lg); cursor: pointer; }
         .logout-btn:hover { background: rgba(255,255,255,0.1); color: var(--color-coral); }
         .portal-main { flex: 1; margin-left: var(--sidebar-width); min-height: 100vh; }
         @media (max-width: 1023px) { .portal-main { margin-left: 0; } }
@@ -44,143 +44,251 @@
         .page-title h1 { font-size: var(--font-size-xl); margin: 0; }
         .portal-content { padding: var(--space-6); }
         @media (min-width: 768px) { .portal-content { padding: var(--space-8); } }
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: calc(var(--z-fixed) - 1); }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: calc(var(--z-fixed) - 1); transition: all 0.3s; }
         .sidebar-overlay.open { opacity: 1; visibility: visible; }
         
-        /* Booking specific styles */
+        /* Tabs */
         .booking-tabs { display: flex; gap: var(--space-2); margin-bottom: var(--space-6); background: var(--color-white); padding: var(--space-2); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); }
         .booking-tab { flex: 1; padding: var(--space-3); text-align: center; border-radius: var(--radius-lg); font-weight: var(--font-weight-bold); color: var(--color-gray-600); cursor: pointer; transition: all var(--transition-fast); }
         .booking-tab:hover { background: var(--color-gray-100); }
         .booking-tab.active { background: var(--color-blue-primary); color: var(--color-white); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
         
-        .booking-card { background: var(--color-white); border-radius: var(--radius-xl); padding: var(--space-5); margin-bottom: var(--space-4); box-shadow: var(--shadow-sm); display: flex; gap: var(--space-5); align-items: center; }
+        /* Booking Card */
+        .booking-card { background: var(--color-white); border-radius: var(--radius-xl); padding: var(--space-5); margin-bottom: var(--space-4); box-shadow: var(--shadow-sm); display: flex; gap: var(--space-5); align-items: center; flex-wrap: wrap; }
         .booking-card-date { min-width: 70px; text-align: center; padding: var(--space-3); background: var(--color-blue-light); border-radius: var(--radius-lg); }
         .booking-card-date .day { font-size: var(--font-size-2xl); font-weight: var(--font-weight-extrabold); color: var(--color-blue-primary); }
         .booking-card-date .month { font-size: var(--font-size-xs); color: var(--color-gray-500); text-transform: uppercase; }
-        .booking-card-info { flex: 1; }
+        .booking-card-info { flex: 1; min-width: 200px; }
         .booking-card-info h3 { font-size: var(--font-size-lg); margin-bottom: var(--space-1); }
         .booking-card-info p { color: var(--color-gray-500); font-size: var(--font-size-sm); margin: 0; }
         .booking-card-badge { padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); }
         .booking-card-badge.confirmed { background: #dcfce7; color: #16a34a; }
         .booking-card-badge.completed { background: var(--color-gray-100); color: var(--color-gray-600); }
         .booking-card-badge.cancelled { background: #fee2e2; color: #dc2626; }
-        .booking-card-actions { display: flex; gap: var(--space-2); }
         
+        /* New Booking Form */
         .new-booking-form { background: var(--color-white); border-radius: var(--radius-xl); padding: var(--space-6); box-shadow: var(--shadow-sm); }
         .form-section { margin-bottom: var(--space-6); }
-        .form-section h3 { font-size: var(--font-size-lg); margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 2px dashed var(--color-gray-200); }
+        .form-section-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 2px dashed var(--color-gray-200); }
+        .form-section-header .step { width: 32px; height: 32px; background: var(--color-blue-primary); color: white; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .form-section-header h3 { margin: 0; }
+        
         .form-group { margin-bottom: var(--space-4); }
         .form-group label { display: block; font-weight: var(--font-weight-bold); margin-bottom: var(--space-2); }
-        .form-group input, .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); font-size: var(--font-size-base); }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-blue-primary); }
+        .form-group select, .form-group input { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); font-size: var(--font-size-base); }
+        .form-group select:focus, .form-group input:focus { outline: none; border-color: var(--color-blue-primary); }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
         
-        .session-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-3); }
-        .session-option { padding: var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); text-align: center; cursor: pointer; transition: all var(--transition-fast); }
+        /* Service Options */
+        .service-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-3); }
+        .service-option { padding: var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); text-align: center; cursor: pointer; transition: all var(--transition-fast); }
+        .service-option:hover { border-color: var(--color-blue-primary); background: var(--color-blue-light); }
+        .service-option.selected { border-color: var(--color-blue-primary); background: var(--color-blue-light); }
+        .service-option-icon { font-size: 2rem; margin-bottom: var(--space-2); }
+        .service-option h4 { margin: 0 0 var(--space-1) 0; font-size: var(--font-size-base); }
+        .service-option p { font-size: var(--font-size-sm); color: var(--color-gray-500); margin: 0; }
+        
+        /* Session Options */
+        .session-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-3); }
+        .session-option { padding: var(--space-4); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); cursor: pointer; transition: all var(--transition-fast); position: relative; }
         .session-option:hover { border-color: var(--color-blue-primary); }
         .session-option.selected { border-color: var(--color-blue-primary); background: var(--color-blue-light); }
-        .session-option h4 { margin-bottom: var(--space-1); }
-        .session-option p { font-size: var(--font-size-sm); color: var(--color-gray-500); margin: 0; }
+        .session-option.disabled { opacity: 0.5; cursor: not-allowed; }
+        .session-option h4 { margin: 0 0 var(--space-1) 0; }
+        .session-option .time { font-size: var(--font-size-sm); color: var(--color-gray-500); margin-bottom: var(--space-2); }
         .session-option .price { font-weight: var(--font-weight-bold); color: var(--color-blue-primary); }
+        .session-option .credits { font-size: var(--font-size-xs); color: var(--color-gray-500); margin-top: var(--space-1); }
+        .session-option .credit-badge { position: absolute; top: -8px; right: -8px; background: var(--color-green); color: white; font-size: var(--font-size-xs); padding: 2px 8px; border-radius: var(--radius-full); }
         
+        /* Time Selection */
+        .time-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: var(--space-2); }
+        .time-slot { padding: var(--space-3); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); text-align: center; cursor: pointer; font-weight: var(--font-weight-medium); transition: all var(--transition-fast); }
+        .time-slot:hover { border-color: var(--color-blue-primary); }
+        .time-slot.selected { border-color: var(--color-blue-primary); background: var(--color-blue-primary); color: white; }
+        
+        /* Credits Display */
+        .credits-summary { background: linear-gradient(135deg, var(--color-blue-primary), var(--color-teal)); color: white; padding: var(--space-4); border-radius: var(--radius-lg); margin-bottom: var(--space-4); }
+        .credits-summary h4 { color: white; margin: 0 0 var(--space-2) 0; font-size: var(--font-size-base); }
+        .credits-row { display: flex; justify-content: space-between; font-size: var(--font-size-sm); opacity: 0.9; }
+        
+        /* Booking Summary */
         .booking-summary { background: var(--color-gray-50); border-radius: var(--radius-lg); padding: var(--space-5); margin-top: var(--space-6); }
         .booking-summary h4 { margin-bottom: var(--space-4); }
         .summary-row { display: flex; justify-content: space-between; padding: var(--space-2) 0; }
-        .summary-row.total { font-weight: var(--font-weight-bold); border-top: 2px solid var(--color-gray-300); margin-top: var(--space-3); padding-top: var(--space-3); }
+        .summary-row.total { font-weight: var(--font-weight-bold); border-top: 2px solid var(--color-gray-300); margin-top: var(--space-3); padding-top: var(--space-3); font-size: var(--font-size-lg); }
+        .summary-row.credit-payment { color: var(--color-green); }
         
+        /* Pay Method Toggle */
+        .pay-toggle { display: flex; gap: var(--space-2); margin-top: var(--space-4); }
+        .pay-toggle-option { flex: 1; padding: var(--space-3); border: 2px solid var(--color-gray-200); border-radius: var(--radius-lg); text-align: center; cursor: pointer; transition: all var(--transition-fast); }
+        .pay-toggle-option:hover { border-color: var(--color-blue-primary); }
+        .pay-toggle-option.selected { border-color: var(--color-blue-primary); background: var(--color-blue-light); }
+        .pay-toggle-option.disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Warning/Info Messages */
+        .info-message { background: var(--color-yellow-light); padding: var(--space-4); border-radius: var(--radius-lg); margin-bottom: var(--space-4); display: flex; gap: var(--space-3); align-items: flex-start; }
+        .info-message.error { background: #fee2e2; }
+        .info-message-icon { font-size: 1.2rem; }
+        .info-message p { margin: 0; font-size: var(--font-size-sm); }
+        
+        /* Empty State */
         .empty-state { text-align: center; padding: var(--space-10); color: var(--color-gray-500); }
         .empty-state-icon { font-size: 4rem; margin-bottom: var(--space-4); }
     </style>
 </head>
 <body>
     <div class="portal-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header"><a href="../index.html"><img src="https://wigramvet.co.nz/wp-content/uploads/2019/01/gooddogspa-2.png" alt="Good Dog Spa" class="sidebar-logo"></a></div>
             <div class="sidebar-user" id="sidebarUser"><div class="sidebar-user-avatar">👤</div><div class="sidebar-user-name">Loading...</div><div class="sidebar-user-email">...</div></div>
             <nav class="sidebar-nav">
-                <div class="sidebar-nav-label">Main Menu</div>
+                <div class="sidebar-nav-label">Menu</div>
                 <a href="dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span>Dashboard</a>
-                <a href="dogs.html" class="sidebar-link"><span class="sidebar-link-icon">🐕</span>My Dogs</a>
                 <a href="bookings.html" class="sidebar-link active"><span class="sidebar-link-icon">📅</span>Bookings</a>
-                <a href="credits.html" class="sidebar-link"><span class="sidebar-link-icon">💳</span>Credits & Packages</a>
-                <div class="sidebar-nav-label">Account</div>
-                <a href="profile.html" class="sidebar-link"><span class="sidebar-link-icon">👤</span>My Profile</a>
-                <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>Back to Website</a>
+                <a href="dogs.html" class="sidebar-link"><span class="sidebar-link-icon">🐕</span>My Dogs</a>
+                <a href="credits.html" class="sidebar-link"><span class="sidebar-link-icon">💳</span>Credits</a>
+                <a href="profile.html" class="sidebar-link"><span class="sidebar-link-icon">👤</span>Profile</a>
             </nav>
-            <div class="sidebar-footer"><button class="logout-btn" onclick="handleLogout()"><span>🚪</span>Sign Out</button></div>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="handleLogout()"><span>🚪</span> Sign Out</button>
+            </div>
         </aside>
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         
         <main class="portal-main">
             <div class="portal-topbar">
                 <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
                 <div class="page-title"><h1>📅 Bookings</h1></div>
-                <div class="topbar-actions"></div>
+                <div></div>
             </div>
             
             <div class="portal-content">
                 <div class="booking-tabs">
-                    <button class="booking-tab active" onclick="showTab('upcoming')">Upcoming</button>
-                    <button class="booking-tab" onclick="showTab('new')">+ New Booking</button>
-                    <button class="booking-tab" onclick="showTab('history')">History</button>
+                    <div class="booking-tab active" onclick="showTab('upcoming')">📅 Upcoming</div>
+                    <div class="booking-tab" onclick="showTab('new')">➕ New Booking</div>
+                    <div class="booking-tab" onclick="showTab('history')">📋 History</div>
                 </div>
                 
                 <!-- Upcoming Bookings -->
-                <div id="upcoming-tab" class="tab-content">
+                <div id="upcoming-tab" class="tab-content active">
                     <div id="upcomingList"></div>
                 </div>
                 
-                <!-- New Booking Form -->
-                <div id="new-tab" class="tab-content" style="display:none;">
+                <!-- New Booking -->
+                <div id="new-tab" class="tab-content">
                     <div class="new-booking-form">
+                        <!-- Credits Summary -->
+                        <div class="credits-summary" id="creditsSummary">
+                            <h4>💳 Your Credits</h4>
+                            <div id="creditsDisplay"></div>
+                        </div>
+                        
+                        <!-- Step 1: Select Dog -->
                         <div class="form-section">
-                            <h3>1️⃣ Select Dog</h3>
+                            <div class="form-section-header">
+                                <span class="step">1</span>
+                                <h3>Select Your Dog</h3>
+                            </div>
                             <div class="form-group">
-                                <select id="bookingDog" onchange="updateSummary()">
+                                <select id="bookingDog" onchange="onDogChange()">
                                     <option value="">Choose a dog...</option>
                                 </select>
                             </div>
+                            <div id="dogWarning" class="info-message" style="display:none;">
+                                <span class="info-message-icon">⚠️</span>
+                                <p id="dogWarningText"></p>
+                            </div>
                         </div>
                         
+                        <!-- Step 2: Select Service -->
                         <div class="form-section">
-                            <h3>2️⃣ Select Service</h3>
-                            <div class="session-options" id="serviceOptions">
-                                <div class="session-option" data-service="daycare" onclick="selectService('daycare')">
-                                    <h4>🏠 Day Care</h4>
+                            <div class="form-section-header">
+                                <span class="step">2</span>
+                                <h3>Select Service</h3>
+                            </div>
+                            <div class="service-options" id="serviceOptions">
+                                <div class="service-option" data-service="daycare" onclick="selectService('daycare')">
+                                    <div class="service-option-icon">🏠</div>
+                                    <h4>Day Care</h4>
                                     <p>Play & socialisation</p>
                                 </div>
-                                <div class="session-option" data-service="hydro" onclick="selectService('hydro')">
-                                    <h4>💧 Hydrotherapy</h4>
+                                <div class="service-option" data-service="hydro" onclick="selectService('hydro')">
+                                    <div class="service-option-icon">💧</div>
+                                    <h4>Hydrotherapy</h4>
                                     <p>Rehab sessions</p>
                                 </div>
                             </div>
                         </div>
                         
+                        <!-- Step 3: Select Session Type -->
                         <div class="form-section" id="sessionSection" style="display:none;">
-                            <h3>3️⃣ Select Session Type</h3>
+                            <div class="form-section-header">
+                                <span class="step">3</span>
+                                <h3>Select Session Type</h3>
+                            </div>
                             <div class="session-options" id="sessionOptions"></div>
                         </div>
                         
-                        <div class="form-section">
-                            <h3>4️⃣ Select Date</h3>
+                        <!-- Step 4: Select Date -->
+                        <div class="form-section" id="dateSection" style="display:none;">
+                            <div class="form-section-header">
+                                <span class="step">4</span>
+                                <h3>Select Date</h3>
+                            </div>
+                            <div class="form-group">
+                                <input type="date" id="bookingDate" onchange="onDateChange()">
+                            </div>
+                            <div id="dateWarning" class="info-message" style="display:none;">
+                                <span class="info-message-icon">ℹ️</span>
+                                <p id="dateWarningText"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 5: Select Time (for daycare) -->
+                        <div class="form-section" id="timeSection" style="display:none;">
+                            <div class="form-section-header">
+                                <span class="step">5</span>
+                                <h3>Select Times</h3>
+                            </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label>Date</label>
-                                    <input type="date" id="bookingDate" min="" onchange="updateSummary()">
+                                    <label>Drop-off Time</label>
+                                    <div class="time-grid" id="dropOffTimes"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Pick-up Time</label>
+                                    <div class="time-grid" id="pickUpTimes"></div>
                                 </div>
                             </div>
                         </div>
                         
+                        <!-- Booking Summary -->
                         <div class="booking-summary" id="bookingSummary" style="display:none;">
                             <h4>📋 Booking Summary</h4>
                             <div id="summaryContent"></div>
-                            <button class="btn btn-primary btn-block mt-4" onclick="confirmBooking()">Confirm Booking 🐾</button>
+                            
+                            <div class="pay-toggle" id="payToggle">
+                                <div class="pay-toggle-option selected" data-method="credits" onclick="selectPayMethod('credits')">
+                                    <strong>💳 Use Credits</strong>
+                                    <div id="creditAvailability" style="font-size: 0.8rem; margin-top: 4px;"></div>
+                                </div>
+                                <div class="pay-toggle-option" data-method="card" onclick="selectPayMethod('card')">
+                                    <strong>💵 Pay Now</strong>
+                                    <div style="font-size: 0.8rem; margin-top: 4px;">Credit/Debit Card</div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary btn-block mt-4" id="confirmBtn" onclick="confirmBooking()">Confirm Booking 🐾</button>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Booking History -->
-                <div id="history-tab" class="tab-content" style="display:none;">
+                <div id="history-tab" class="tab-content">
                     <div id="historyList"></div>
                 </div>
             </div>
@@ -192,33 +300,46 @@
     <script>
         let currentUser = null;
         let userDogs = [];
+        let userCredits = {};
         let selectedService = null;
         let selectedSession = null;
+        let selectedDate = null;
+        let selectedDropOff = null;
+        let selectedPickUp = null;
+        let selectedDog = null;
+        let payMethod = 'credits';
         
         const daycareOptions = [
-            { id: 'full', name: 'Full Day', time: '7am - 6pm', price: 50.50, creditType: 'fullDay' },
+            { id: 'full', name: 'Full Day', time: '7am - 6pm (up to 11 hrs)', price: 50.50, creditType: 'fullDay' },
             { id: 'half-am', name: 'Half Day (AM)', time: '7am - 12:30pm', price: 38.50, creditType: 'halfDay' },
             { id: 'half-pm', name: 'Half Day (PM)', time: '12:30pm - 6pm', price: 38.50, creditType: 'halfDay' },
-            { id: '3hour', name: '3 Hour Stay', time: 'Flexible', price: 26.50, creditType: 'threeHour' }
+            { id: '3hour', name: '3 Hour Stay', time: 'Flexible times', price: 26.50, creditType: 'threeHour' }
         ];
         
         const hydroOptions = [
-            { id: '30min', name: '30 Min Session', time: '30 minutes', price: 70, creditType: 'rehab30' },
-            { id: '60min', name: '1 Hour Session', time: '60 minutes', price: 125, creditType: 'rehab60' }
+            { id: '30min', name: '30 Min Session', time: '30 minutes', price: 70.00, creditType: 'rehab30' },
+            { id: '60min', name: '1 Hour Session', time: '60 minutes', price: 125.00, creditType: 'rehab60' }
         ];
+        
+        const dropOffTimes = ['07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00'];
+        const pickUpTimes = ['14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'];
         
         document.addEventListener('DOMContentLoaded', async function() {
             currentUser = MockAuth.getCurrentUser();
             if (!currentUser) { window.location.href = '../login.html'; return; }
             updateUserInfo();
             
-            // Set min date to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('bookingDate').min = today;
-            document.getElementById('bookingDate').value = today;
+            // Set min date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('bookingDate').min = tomorrow.toISOString().split('T')[0];
+            document.getElementById('bookingDate').value = tomorrow.toISOString().split('T')[0];
             
             userDogs = await MockDatabase.getDogs(currentUser.uid);
+            userCredits = await MockDatabase.getCredits(currentUser.uid);
+            
             populateDogSelect();
+            displayCredits();
             await loadBookings();
         });
         
@@ -230,68 +351,68 @@
             `;
         }
         
+        function displayCredits() {
+            const labels = { fullDay: 'Full Day', halfDay: 'Half Day', threeHour: '3 Hour', rehab30: 'Rehab 30m', rehab60: 'Rehab 1hr' };
+            let html = '';
+            for (const [key, label] of Object.entries(labels)) {
+                const count = userCredits[key] || 0;
+                if (count > 0) {
+                    html += `<div class="credits-row"><span>${label}</span><strong>${count}</strong></div>`;
+                }
+            }
+            document.getElementById('creditsDisplay').innerHTML = html || '<div class="credits-row"><span>No credits</span><a href="credits.html" style="color:white;">Buy some →</a></div>';
+        }
+        
         function populateDogSelect() {
             const select = document.getElementById('bookingDog');
-            select.innerHTML = '<option value="">Choose a dog...</option>' + 
-                userDogs.map(d => `<option value="${d.id}">${d.name} (${d.breed})</option>`).join('');
+            if (userDogs.length === 0) {
+                select.innerHTML = '<option value="">No dogs registered - add one first</option>';
+            } else {
+                select.innerHTML = '<option value="">Choose a dog...</option>' + 
+                    userDogs.map(d => `<option value="${d.id}">${d.name} (${d.breed})</option>`).join('');
+            }
         }
         
-        async function loadBookings() {
-            const upcoming = await MockDatabase.getUpcomingBookings(currentUser.uid);
-            const past = await MockDatabase.getPastBookings(currentUser.uid);
+        function onDogChange() {
+            const dogId = document.getElementById('bookingDog').value;
+            selectedDog = userDogs.find(d => d.id === dogId);
             
-            renderBookingList('upcomingList', upcoming.filter(b => b.status === 'confirmed'), true);
-            renderBookingList('historyList', past, false);
-        }
-        
-        function renderBookingList(containerId, bookings, showCancel) {
-            const container = document.getElementById(containerId);
-            if (bookings.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📅</div><p>No bookings found</p></div>`;
-                return;
+            // Check for warnings
+            const warning = document.getElementById('dogWarning');
+            if (selectedDog && !selectedDog.assessmentPassed) {
+                document.getElementById('dogWarningText').textContent = `${selectedDog.name} hasn't passed their assessment yet. Please book a free assessment first.`;
+                warning.style.display = 'flex';
+            } else {
+                warning.style.display = 'none';
             }
             
-            container.innerHTML = bookings.map(b => {
-                const date = new Date(b.date);
-                return `
-                    <div class="booking-card">
-                        <div class="booking-card-date">
-                            <div class="day">${date.getDate()}</div>
-                            <div class="month">${date.toLocaleDateString('en-NZ', { month: 'short' })}</div>
-                        </div>
-                        <div class="booking-card-info">
-                            <h3>${b.dogName} - ${b.type === 'daycare' ? 'Day Care' : 'Hydrotherapy'}</h3>
-                            <p>${b.type === 'daycare' ? `${b.dropOffTime} - ${b.pickUpTime}` : b.time}</p>
-                        </div>
-                        <span class="booking-card-badge ${b.status}">${b.status}</span>
-                        ${showCancel ? `<button class="btn btn-outline btn-sm" onclick="cancelBooking('${b.id}')">Cancel</button>` : ''}
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        function showTab(tab) {
-            document.querySelectorAll('.booking-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-            document.querySelector(`[onclick="showTab('${tab}')"]`).classList.add('active');
-            document.getElementById(tab + '-tab').style.display = 'block';
+            updateSummary();
         }
         
         function selectService(service) {
             selectedService = service;
             selectedSession = null;
-            document.querySelectorAll('#serviceOptions .session-option').forEach(o => o.classList.remove('selected'));
+            
+            document.querySelectorAll('#serviceOptions .service-option').forEach(o => o.classList.remove('selected'));
             document.querySelector(`[data-service="${service}"]`).classList.add('selected');
             
             const options = service === 'daycare' ? daycareOptions : hydroOptions;
-            document.getElementById('sessionOptions').innerHTML = options.map(o => `
-                <div class="session-option" data-session="${o.id}" onclick="selectSession('${o.id}')">
-                    <h4>${o.name}</h4>
-                    <p>${o.time}</p>
-                    <p class="price">$${o.price.toFixed(2)}</p>
-                </div>
-            `).join('');
+            document.getElementById('sessionOptions').innerHTML = options.map(o => {
+                const hasCredits = (userCredits[o.creditType] || 0) > 0;
+                return `
+                    <div class="session-option" data-session="${o.id}" onclick="selectSession('${o.id}')">
+                        ${hasCredits ? '<span class="credit-badge">✓ Have Credits</span>' : ''}
+                        <h4>${o.name}</h4>
+                        <div class="time">${o.time}</div>
+                        <div class="price">$${o.price.toFixed(2)}</div>
+                        <div class="credits">${userCredits[o.creditType] || 0} credits available</div>
+                    </div>
+                `;
+            }).join('');
+            
             document.getElementById('sessionSection').style.display = 'block';
+            document.getElementById('dateSection').style.display = 'none';
+            document.getElementById('timeSection').style.display = 'none';
             updateSummary();
         }
         
@@ -299,7 +420,120 @@
             selectedSession = session;
             document.querySelectorAll('#sessionOptions .session-option').forEach(o => o.classList.remove('selected'));
             document.querySelector(`[data-session="${session}"]`).classList.add('selected');
+            
+            document.getElementById('dateSection').style.display = 'block';
+            onDateChange(); // Check date validity
             updateSummary();
+        }
+        
+        function onDateChange() {
+            selectedDate = document.getElementById('bookingDate').value;
+            const dateObj = new Date(selectedDate + 'T00:00:00');
+            const dayOfWeek = dateObj.getDay(); // 0 = Sunday, 1 = Monday, etc.
+            const isMonday = dayOfWeek === 1;
+            
+            const warning = document.getElementById('dateWarning');
+            
+            // Check for Monday restriction with large dogs
+            if (selectedService === 'daycare' && selectedDog) {
+                if (isMonday && selectedDog.size !== 'small') {
+                    document.getElementById('dateWarningText').textContent = `⚠️ Mondays are reserved for small breeds only. ${selectedDog.name} is ${selectedDog.size || 'not classified as small'} - please select a different day.`;
+                    warning.style.display = 'flex';
+                    warning.classList.add('error');
+                    document.getElementById('timeSection').style.display = 'none';
+                    return;
+                } else if (isMonday && selectedDog.size === 'small') {
+                    document.getElementById('dateWarningText').textContent = `✓ Monday is small breeds day - perfect for ${selectedDog.name}!`;
+                    warning.style.display = 'flex';
+                    warning.classList.remove('error');
+                } else {
+                    warning.style.display = 'none';
+                }
+            }
+            
+            // Weekend check
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                document.getElementById('dateWarningText').textContent = '⚠️ We are closed on weekends. Please select a weekday.';
+                warning.style.display = 'flex';
+                warning.classList.add('error');
+                document.getElementById('timeSection').style.display = 'none';
+                return;
+            }
+            
+            // Show time selection for daycare
+            if (selectedService === 'daycare' && selectedSession) {
+                renderTimeSlots();
+                document.getElementById('timeSection').style.display = 'block';
+            } else {
+                document.getElementById('timeSection').style.display = 'none';
+            }
+            
+            updateSummary();
+        }
+        
+        function renderTimeSlots() {
+            // Drop-off times
+            let dropOffHtml = '';
+            let availableDropOffs = dropOffTimes;
+            
+            if (selectedSession === 'half-pm') {
+                availableDropOffs = ['12:30', '13:00'];
+            }
+            
+            dropOffHtml = availableDropOffs.map(t => `
+                <div class="time-slot ${selectedDropOff === t ? 'selected' : ''}" onclick="selectDropOff('${t}')">${t}</div>
+            `).join('');
+            document.getElementById('dropOffTimes').innerHTML = dropOffHtml;
+            
+            // Pick-up times
+            let pickUpHtml = '';
+            let availablePickUps = pickUpTimes;
+            
+            if (selectedSession === 'half-am') {
+                availablePickUps = ['12:00', '12:30'];
+            } else if (selectedSession === '3hour') {
+                // 3 hour - show based on drop-off time
+                if (selectedDropOff) {
+                    const dropOffHour = parseInt(selectedDropOff.split(':')[0]);
+                    availablePickUps = pickUpTimes.filter(t => {
+                        const pickUpHour = parseInt(t.split(':')[0]);
+                        return pickUpHour >= dropOffHour + 3 && pickUpHour <= dropOffHour + 4;
+                    });
+                    if (availablePickUps.length === 0) {
+                        availablePickUps = ['10:00', '11:00', '12:00', '13:00'];
+                    }
+                }
+            }
+            
+            pickUpHtml = availablePickUps.map(t => `
+                <div class="time-slot ${selectedPickUp === t ? 'selected' : ''}" onclick="selectPickUp('${t}')">${t}</div>
+            `).join('');
+            document.getElementById('pickUpTimes').innerHTML = pickUpHtml;
+        }
+        
+        function selectDropOff(time) {
+            selectedDropOff = time;
+            renderTimeSlots();
+            updateSummary();
+        }
+        
+        function selectPickUp(time) {
+            selectedPickUp = time;
+            renderTimeSlots();
+            updateSummary();
+        }
+        
+        function selectPayMethod(method) {
+            const options = selectedService === 'daycare' ? daycareOptions : hydroOptions;
+            const session = options.find(o => o.id === selectedSession);
+            
+            if (method === 'credits' && (userCredits[session?.creditType] || 0) < 1) {
+                return; // Can't select credits if none available
+            }
+            
+            payMethod = method;
+            document.querySelectorAll('.pay-toggle-option').forEach(o => o.classList.remove('selected'));
+            document.querySelector(`[data-method="${method}"]`).classList.add('selected');
         }
         
         function updateSummary() {
@@ -311,18 +545,61 @@
                 return;
             }
             
+            // For daycare, need times
+            if (selectedService === 'daycare') {
+                if (!selectedDropOff || !selectedPickUp) {
+                    document.getElementById('bookingSummary').style.display = 'none';
+                    return;
+                }
+            }
+            
             const dog = userDogs.find(d => d.id === dogId);
             const options = selectedService === 'daycare' ? daycareOptions : hydroOptions;
             const session = options.find(o => o.id === selectedSession);
-            const dateObj = new Date(date);
+            const dateObj = new Date(date + 'T00:00:00');
+            const hasCredits = (userCredits[session.creditType] || 0) > 0;
             
-            document.getElementById('summaryContent').innerHTML = `
+            let timeDisplay = selectedService === 'daycare' 
+                ? `${selectedDropOff} - ${selectedPickUp}`
+                : session.time;
+            
+            let summaryHtml = `
                 <div class="summary-row"><span>Dog</span><span>${dog.name}</span></div>
                 <div class="summary-row"><span>Service</span><span>${selectedService === 'daycare' ? 'Day Care' : 'Hydrotherapy'}</span></div>
                 <div class="summary-row"><span>Session</span><span>${session.name}</span></div>
                 <div class="summary-row"><span>Date</span><span>${dateObj.toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long' })}</span></div>
-                <div class="summary-row total"><span>Total</span><span>$${session.price.toFixed(2)}</span></div>
+                <div class="summary-row"><span>Time</span><span>${timeDisplay}</span></div>
             `;
+            
+            if (payMethod === 'credits' && hasCredits) {
+                summaryHtml += `
+                    <div class="summary-row credit-payment"><span>Payment</span><span>1 ${session.name} Credit</span></div>
+                    <div class="summary-row total"><span>Total</span><span>$0.00</span></div>
+                `;
+            } else {
+                summaryHtml += `
+                    <div class="summary-row total"><span>Total</span><span>$${session.price.toFixed(2)}</span></div>
+                `;
+            }
+            
+            document.getElementById('summaryContent').innerHTML = summaryHtml;
+            
+            // Update credit availability display
+            document.getElementById('creditAvailability').innerHTML = hasCredits 
+                ? `<span style="color: var(--color-green);">✓ ${userCredits[session.creditType]} available</span>`
+                : `<span style="color: var(--color-gray-500);">No credits</span>`;
+            
+            // Disable credits option if none available
+            const creditsOption = document.querySelector('[data-method="credits"]');
+            if (!hasCredits) {
+                creditsOption.classList.add('disabled');
+                payMethod = 'card';
+                document.querySelector('[data-method="card"]').classList.add('selected');
+                creditsOption.classList.remove('selected');
+            } else {
+                creditsOption.classList.remove('disabled');
+            }
+            
             document.getElementById('bookingSummary').style.display = 'block';
         }
         
@@ -333,6 +610,12 @@
             const options = selectedService === 'daycare' ? daycareOptions : hydroOptions;
             const session = options.find(o => o.id === selectedSession);
             
+            // Validation
+            if (!dog.assessmentPassed) {
+                alert('Please complete a free assessment for ' + dog.name + ' first.');
+                return;
+            }
+            
             const bookingData = {
                 ownerId: currentUser.uid,
                 dogId: dogId,
@@ -340,17 +623,51 @@
                 type: selectedService === 'daycare' ? 'daycare' : 'hydrotherapy',
                 sessionType: selectedSession,
                 date: date,
-                ...(selectedService === 'daycare' ? {
-                    dropOffTime: session.id === 'half-pm' ? '12:30' : '07:00',
-                    pickUpTime: session.id === 'half-am' ? '12:30' : '18:00'
-                } : { time: session.time }),
                 price: session.price,
-                paid: false
+                paidWithCredits: payMethod === 'credits',
+                creditType: session.creditType
             };
             
+            if (selectedService === 'daycare') {
+                bookingData.dropOff = selectedDropOff;
+                bookingData.pickUp = selectedPickUp;
+            } else {
+                bookingData.time = '10:00'; // Default time for hydro
+            }
+            
             try {
+                // If paying with credits, deduct them
+                if (payMethod === 'credits') {
+                    await MockDatabase.useCredits(currentUser.uid, session.creditType, 1);
+                    userCredits = await MockDatabase.getCredits(currentUser.uid);
+                    displayCredits();
+                }
+                
                 await MockDatabase.createBooking(bookingData);
+                
+                // Record transaction
+                await MockDatabase.addTransaction({
+                    userId: currentUser.uid,
+                    type: 'usage',
+                    description: `${selectedService === 'daycare' ? 'Daycare' : 'Hydrotherapy'} - ${dog.name} (${session.name})`,
+                    credits: -1,
+                    creditType: session.creditType,
+                    bookingId: bookingData.id
+                });
+                
                 alert('Booking confirmed! 🐾');
+                
+                // Reset form
+                selectedService = null;
+                selectedSession = null;
+                selectedDropOff = null;
+                selectedPickUp = null;
+                document.querySelectorAll('.service-option, .session-option').forEach(o => o.classList.remove('selected'));
+                document.getElementById('sessionSection').style.display = 'none';
+                document.getElementById('dateSection').style.display = 'none';
+                document.getElementById('timeSection').style.display = 'none';
+                document.getElementById('bookingSummary').style.display = 'none';
+                
                 showTab('upcoming');
                 await loadBookings();
             } catch (error) {
@@ -358,17 +675,79 @@
             }
         }
         
+        async function loadBookings() {
+            const upcoming = await MockDatabase.getUpcomingBookings(currentUser.uid);
+            const past = await MockDatabase.getPastBookings(currentUser.uid);
+            
+            renderBookingList('upcomingList', upcoming, true);
+            renderBookingList('historyList', past, false);
+        }
+        
+        function renderBookingList(containerId, bookings, showCancel) {
+            const container = document.getElementById(containerId);
+            if (bookings.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📅</div>
+                        <p>${showCancel ? 'No upcoming bookings' : 'No past bookings'}</p>
+                        ${showCancel ? '<button class="btn btn-primary mt-4" onclick="showTab(\'new\')">Make a Booking</button>' : ''}
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = bookings.map(b => {
+                const date = new Date(b.date + 'T00:00:00');
+                const timeDisplay = b.dropOff ? `${b.dropOff} - ${b.pickUp}` : b.time || '';
+                return `
+                    <div class="booking-card">
+                        <div class="booking-card-date">
+                            <div class="day">${date.getDate()}</div>
+                            <div class="month">${date.toLocaleDateString('en-NZ', { month: 'short' })}</div>
+                        </div>
+                        <div class="booking-card-info">
+                            <h3>${b.dogName} - ${b.type === 'daycare' ? 'Day Care' : 'Hydrotherapy'}</h3>
+                            <p>${timeDisplay} • ${b.sessionType || ''}</p>
+                            ${b.notes ? `<p style="font-style: italic; margin-top: 4px;">"${b.notes}"</p>` : ''}
+                        </div>
+                        <span class="booking-card-badge ${b.status}">${b.status}</span>
+                        ${showCancel && b.status === 'confirmed' ? `<button class="btn btn-outline btn-sm" onclick="cancelBooking('${b.id}')">Cancel</button>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
         async function cancelBooking(bookingId) {
-            if (confirm('Are you sure you want to cancel this booking?')) {
+            if (confirm('Are you sure you want to cancel this booking? Your credit will be refunded.')) {
+                const bookings = await MockDatabase.getBookings(currentUser.uid);
+                const booking = bookings.find(b => b.id === bookingId);
+                
+                // Refund credit if paid with credits
+                if (booking && booking.paidWithCredits && booking.creditType) {
+                    await MockDatabase.addCredits(currentUser.uid, booking.creditType, 1);
+                    userCredits = await MockDatabase.getCredits(currentUser.uid);
+                    displayCredits();
+                }
+                
                 await MockDatabase.cancelBooking(bookingId);
                 await loadBookings();
+                alert('Booking cancelled. Credit refunded.');
             }
+        }
+        
+        function showTab(tab) {
+            document.querySelectorAll('.booking-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.booking-tab:nth-child(${tab === 'upcoming' ? 1 : tab === 'new' ? 2 : 3})`).classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
         }
         
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('sidebarOverlay').classList.toggle('open');
         }
+        
+        document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
         
         async function handleLogout() { await MockAuth.signOut(); window.location.href = '../login.html'; }
     </script>
