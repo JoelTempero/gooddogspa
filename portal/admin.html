@@ -123,10 +123,10 @@
         .action-btn.edit:hover { background: var(--color-blue-primary); color: white; }
         
         /* Modal */
-        .modal { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: var(--space-4); opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: var(--space-4); opacity: 0; visibility: hidden; transition: all 0.3s; }
         .modal.open { opacity: 1; visibility: visible; }
-        .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
-        .modal-content { position: relative; background: var(--color-white); border-radius: var(--radius-2xl); width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); margin: auto; }
+        .modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); }
+        .modal-content { position: relative; z-index: 1; background: var(--color-white); border-radius: var(--radius-2xl); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
         .modal-header { padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-gray-100); display: flex; align-items: center; justify-content: space-between; }
         .modal-header h2 { font-size: var(--font-size-xl); margin: 0; }
         .modal-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--color-gray-100); border-radius: var(--radius-full); cursor: pointer; font-size: 1.2rem; }
@@ -1302,27 +1302,67 @@
         function getBlogPosts() {
             const posts = localStorage.getItem('gooddogspa_db_blogPosts');
             if (!posts) {
-                // Initialize with sample posts
+                // Initialize with posts matching the website blog page
                 const samplePosts = [
                     {
                         id: 'post-1',
-                        title: 'Welcome to Good Dog Spa!',
-                        excerpt: 'We are thrilled to announce the opening of our new facility in Wigram.',
-                        content: 'Good Dog Spa Wigram is now open! Our purpose-built facility offers premium day care, hydrotherapy, and rehabilitation services for your furry friends. We cannot wait to meet you and your pup!',
-                        category: 'News',
-                        image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800',
+                        title: 'The Benefits of Hydrotherapy for Senior Dogs',
+                        excerpt: 'Discover how underwater treadmill therapy can help your aging companion maintain mobility and improve quality of life.',
+                        content: 'Discover how underwater treadmill therapy can help your aging companion maintain mobility, reduce joint pain, and improve quality of life. Our AQUATREAD system offers a low-impact solution for dogs with arthritis and mobility issues.',
+                        category: 'Health',
+                        image: 'https://wigramvet.co.nz/wp-content/uploads/2024/05/54dcc163.jpg',
                         published: true,
-                        createdAt: '2024-01-15T10:00:00Z'
+                        createdAt: '2025-01-10T10:00:00Z'
                     },
                     {
                         id: 'post-2',
-                        title: '5 Signs Your Dog Needs More Exercise',
-                        excerpt: 'Is your dog getting enough physical activity? Here are the tell-tale signs.',
-                        content: 'Dogs need regular exercise to stay healthy and happy. Watch out for these signs: destructive behavior, weight gain, restlessness, excessive barking, and hyperactivity. Our day care program ensures your pup gets plenty of exercise and socialization!',
+                        title: 'Why Socialisation is Important for Your Dog',
+                        excerpt: 'Learn how regular interaction with other dogs can improve your pet\'s behaviour and reduce anxiety.',
+                        content: 'Learn how regular interaction with other dogs can improve your pet\'s behaviour, reduce anxiety, and create a happier, more confident companion.',
                         category: 'Tips & Advice',
-                        image: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800',
+                        image: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3118-450x350.jpg',
                         published: true,
-                        createdAt: '2024-01-20T14:30:00Z'
+                        createdAt: '2025-01-05T14:30:00Z'
+                    },
+                    {
+                        id: 'post-3',
+                        title: 'Post-Surgery Recovery: What to Expect',
+                        excerpt: 'A guide to helping your dog recover after orthopaedic surgery with rehabilitation therapy.',
+                        content: 'A guide to helping your dog recover after orthopaedic surgery. Tips on rest, exercise restrictions, and how rehabilitation therapy can speed recovery.',
+                        category: 'Health',
+                        image: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3121-1024x683-450x350.jpg',
+                        published: true,
+                        createdAt: '2024-12-28T09:00:00Z'
+                    },
+                    {
+                        id: 'post-4',
+                        title: 'Preparing Your Dog for Their First Daycare Visit',
+                        excerpt: 'Nervous about your pup\'s first day? Here\'s everything you need to know.',
+                        content: 'Nervous about your pup\'s first day? Here\'s everything you need to know to set them up for success at doggy daycare.',
+                        category: 'Tips & Advice',
+                        image: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3123-768x1024-450x350.jpg',
+                        published: true,
+                        createdAt: '2024-12-20T11:00:00Z'
+                    },
+                    {
+                        id: 'post-5',
+                        title: 'Mondays Now Reserved for Small Breeds!',
+                        excerpt: 'Great news for small dog owners! Mondays are now exclusively for small breeds.',
+                        content: 'Great news for small dog owners! We\'ve dedicated Mondays exclusively to small breeds, ensuring a safer and more comfortable environment for your little ones.',
+                        category: 'News',
+                        image: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3130-1024x683-450x350.jpg',
+                        published: true,
+                        createdAt: '2024-12-15T10:00:00Z'
+                    },
+                    {
+                        id: 'post-6',
+                        title: 'Understanding Canine Arthritis: Signs & Treatments',
+                        excerpt: 'Learn to recognise the signs of arthritis and discover how hydrotherapy can help.',
+                        content: 'Is your dog slowing down? Learn to recognise the signs of arthritis and discover how hydrotherapy can help manage pain and improve mobility.',
+                        category: 'Health',
+                        image: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3127-683x1024-450x350.jpg',
+                        published: true,
+                        createdAt: '2024-12-08T14:00:00Z'
                     }
                 ];
                 localStorage.setItem('gooddogspa_db_blogPosts', JSON.stringify(samplePosts));
@@ -1454,12 +1494,20 @@
         function getGalleryImages() {
             const images = localStorage.getItem('gooddogspa_db_gallery');
             if (!images) {
-                // Initialize with sample images
+                // Initialize with images matching the website gallery page
                 const sampleImages = [
-                    { id: 'img-1', url: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600', caption: 'Happy pups at daycare!', category: 'daycare', createdAt: '2024-01-10T10:00:00Z' },
-                    { id: 'img-2', url: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600', caption: 'Hydrotherapy session', category: 'hydrotherapy', createdAt: '2024-01-12T14:00:00Z' },
-                    { id: 'img-3', url: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600', caption: 'Best friends playing', category: 'daycare', createdAt: '2024-01-15T09:00:00Z' },
-                    { id: 'img-4', url: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=600', caption: 'Our facility', category: 'facility', createdAt: '2024-01-18T11:00:00Z' }
+                    { id: 'img-1', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3130.jpg', caption: 'Play Time!', category: 'daycare', createdAt: '2025-01-10T10:00:00Z' },
+                    { id: 'img-2', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3121.jpg', caption: 'Best Friends', category: 'daycare', createdAt: '2025-01-09T14:00:00Z' },
+                    { id: 'img-3', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3111.jpg', caption: 'So Much Fun', category: 'daycare', createdAt: '2025-01-08T09:00:00Z' },
+                    { id: 'img-4', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3105.jpg', caption: 'Living Life', category: 'daycare', createdAt: '2025-01-07T11:00:00Z' },
+                    { id: 'img-5', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3094.jpg', caption: 'Spa Day', category: 'daycare', createdAt: '2025-01-06T10:00:00Z' },
+                    { id: 'img-6', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3125.jpg', caption: 'Good Times', category: 'daycare', createdAt: '2025-01-05T15:00:00Z' },
+                    { id: 'img-7', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3129.jpg', caption: 'Group Play', category: 'daycare', createdAt: '2025-01-04T12:00:00Z' },
+                    { id: 'img-8', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3127.jpg', caption: 'Hydrotherapy Session', category: 'hydrotherapy', createdAt: '2025-01-03T10:00:00Z' },
+                    { id: 'img-9', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3128.jpg', caption: 'Water Work', category: 'hydrotherapy', createdAt: '2025-01-02T11:00:00Z' },
+                    { id: 'img-10', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3126.jpg', caption: 'Smiles', category: 'daycare', createdAt: '2025-01-01T14:00:00Z' },
+                    { id: 'img-11', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3123.jpg', caption: 'Playful', category: 'daycare', createdAt: '2024-12-30T09:00:00Z' },
+                    { id: 'img-12', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3118.jpg', caption: 'Daycare Fun', category: 'daycare', createdAt: '2024-12-28T16:00:00Z' }
                 ];
                 localStorage.setItem('gooddogspa_db_gallery', JSON.stringify(sampleImages));
                 return sampleImages;

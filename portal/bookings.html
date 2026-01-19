@@ -68,18 +68,39 @@
         .booking-card-badge.completed { background: var(--color-gray-100); color: var(--color-gray-600); }
         .booking-card-badge.cancelled { background: #fee2e2; color: #dc2626; }
         
-        /* New Booking Form */
+        /* New Booking Form - Wizard Style */
         .new-booking-form {
             background: var(--color-white);
             border-radius: var(--radius-xl);
             padding: var(--space-5);
             box-shadow: var(--shadow-sm);
-            max-width: 700px;
+            max-width: 550px;
         }
-        .form-section { margin-bottom: var(--space-5); }
+
+        /* Wizard Progress Steps */
+        .wizard-progress { display: flex; justify-content: space-between; margin-bottom: var(--space-6); position: relative; }
+        .wizard-progress::before { content: ''; position: absolute; top: 15px; left: 30px; right: 30px; height: 3px; background: var(--color-gray-200); z-index: 0; }
+        .wizard-step { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+        .wizard-step-number { width: 32px; height: 32px; border-radius: 50%; background: var(--color-gray-200); color: var(--color-gray-500); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: var(--font-size-sm); margin-bottom: var(--space-2); transition: all 0.3s; }
+        .wizard-step.active .wizard-step-number { background: var(--color-blue-primary); color: white; }
+        .wizard-step.completed .wizard-step-number { background: var(--color-green); color: white; }
+        .wizard-step-label { font-size: var(--font-size-xs); color: var(--color-gray-500); text-align: center; }
+        .wizard-step.active .wizard-step-label { color: var(--color-blue-primary); font-weight: bold; }
+
+        /* Wizard Step Content */
+        .wizard-content { min-height: 280px; }
+        .wizard-panel { display: none; }
+        .wizard-panel.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Wizard Navigation */
+        .wizard-nav { display: flex; justify-content: space-between; margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--color-gray-200); }
+        .wizard-nav .btn { min-width: 100px; }
+
+        .form-section { margin-bottom: var(--space-4); }
         .form-section-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); padding-bottom: var(--space-2); border-bottom: 2px dashed var(--color-gray-200); }
-        .form-section-header .step { width: 28px; height: 28px; background: var(--color-blue-primary); color: white; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: var(--font-size-sm); }
-        .form-section-header h3 { margin: 0; font-size: var(--font-size-base); }
+        .form-section-header .step { display: none; }
+        .form-section-header h3 { margin: 0; font-size: var(--font-size-lg); }
         
         .form-group { margin-bottom: var(--space-4); }
         .form-group label { display: block; font-weight: var(--font-weight-bold); margin-bottom: var(--space-2); }
@@ -242,131 +263,151 @@
                 <!-- New Booking -->
                 <div id="new-tab" class="tab-content">
                     <div class="new-booking-form">
-                        <!-- Credits Summary -->
-                        <div class="credits-summary" id="creditsSummary">
-                            <h4>💳 Your Credits</h4>
-                            <div id="creditsDisplay"></div>
+                        <!-- Wizard Progress -->
+                        <div class="wizard-progress">
+                            <div class="wizard-step active" data-step="1">
+                                <div class="wizard-step-number">1</div>
+                                <div class="wizard-step-label">Dog</div>
+                            </div>
+                            <div class="wizard-step" data-step="2">
+                                <div class="wizard-step-number">2</div>
+                                <div class="wizard-step-label">Service</div>
+                            </div>
+                            <div class="wizard-step" data-step="3">
+                                <div class="wizard-step-number">3</div>
+                                <div class="wizard-step-label">Session</div>
+                            </div>
+                            <div class="wizard-step" data-step="4">
+                                <div class="wizard-step-number">4</div>
+                                <div class="wizard-step-label">Date</div>
+                            </div>
+                            <div class="wizard-step" data-step="5">
+                                <div class="wizard-step-number">5</div>
+                                <div class="wizard-step-label">Confirm</div>
+                            </div>
                         </div>
-                        
-                        <!-- Step 1: Select Dog -->
-                        <div class="form-section">
-                            <div class="form-section-header">
-                                <span class="step">1</span>
-                                <h3>Select Your Dog</h3>
-                            </div>
-                            <div class="form-group">
-                                <select id="bookingDog" onchange="onDogChange()">
-                                    <option value="">Choose a dog...</option>
-                                </select>
-                            </div>
-                            <div id="dogWarning" class="info-message" style="display:none;">
-                                <span class="info-message-icon">⚠️</span>
-                                <p id="dogWarningText"></p>
-                            </div>
-                        </div>
-                        
-                        <!-- Step 2: Select Service -->
-                        <div class="form-section">
-                            <div class="form-section-header">
-                                <span class="step">2</span>
-                                <h3>Select Service</h3>
-                            </div>
-                            <div class="service-options" id="serviceOptions">
-                                <div class="service-option" data-service="daycare" onclick="selectService('daycare')">
-                                    <div class="service-option-icon">🏠</div>
-                                    <h4>Day Care</h4>
-                                    <p>Play & socialisation</p>
+
+                        <div class="wizard-content">
+                            <!-- Step 1: Select Dog -->
+                            <div class="wizard-panel active" data-panel="1">
+                                <div class="form-section-header">
+                                    <h3>🐕 Select Your Dog</h3>
                                 </div>
-                                <div class="service-option" data-service="hydro" onclick="selectService('hydro')">
-                                    <div class="service-option-icon">💧</div>
-                                    <h4>Hydrotherapy</h4>
-                                    <p>Rehab sessions</p>
+                                <div class="form-group">
+                                    <select id="bookingDog" onchange="onDogChange()">
+                                        <option value="">Choose a dog...</option>
+                                    </select>
+                                </div>
+                                <div id="dogWarning" class="info-message" style="display:none;">
+                                    <span class="info-message-icon">⚠️</span>
+                                    <p id="dogWarningText"></p>
+                                </div>
+                                <div class="credits-summary" id="creditsSummary" style="margin-top:var(--space-4);">
+                                    <h4>💳 Your Credits</h4>
+                                    <div id="creditsDisplay"></div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- Step 3: Select Session Type -->
-                        <div class="form-section" id="sessionSection" style="display:none;">
-                            <div class="form-section-header">
-                                <span class="step">3</span>
-                                <h3>Select Session Type</h3>
-                            </div>
-                            <div class="session-options" id="sessionOptions"></div>
-                        </div>
-                        
-                        <!-- Step 4: Select Date -->
-                        <div class="form-section" id="dateSection" style="display:none;">
-                            <div class="form-section-header">
-                                <span class="step">4</span>
-                                <h3>Select Date</h3>
-                            </div>
-                            
-                            <div class="calendar-container">
-                                <div class="calendar-header">
-                                    <h4 id="calendarMonth">January 2026</h4>
-                                    <div class="calendar-nav">
-                                        <button onclick="changeMonth(-1)">←</button>
-                                        <button onclick="changeMonth(1)">→</button>
+
+                            <!-- Step 2: Select Service -->
+                            <div class="wizard-panel" data-panel="2">
+                                <div class="form-section-header">
+                                    <h3>🎯 Select Service</h3>
+                                </div>
+                                <div class="service-options" id="serviceOptions">
+                                    <div class="service-option" data-service="daycare" onclick="selectService('daycare')">
+                                        <div class="service-option-icon">🏠</div>
+                                        <h4>Day Care</h4>
+                                        <p>Play & socialisation</p>
+                                    </div>
+                                    <div class="service-option" data-service="hydro" onclick="selectService('hydro')">
+                                        <div class="service-option-icon">💧</div>
+                                        <h4>Hydrotherapy</h4>
+                                        <p>Rehab sessions</p>
                                     </div>
                                 </div>
-                                <div class="calendar-grid" id="calendarGrid">
-                                    <div class="calendar-day-header">Mon</div>
-                                    <div class="calendar-day-header">Tue</div>
-                                    <div class="calendar-day-header">Wed</div>
-                                    <div class="calendar-day-header">Thu</div>
-                                    <div class="calendar-day-header">Fri</div>
-                                    <div class="calendar-day-header">Sat</div>
-                                    <div class="calendar-day-header">Sun</div>
+                            </div>
+
+                            <!-- Step 3: Select Session Type -->
+                            <div class="wizard-panel" data-panel="3">
+                                <div class="form-section-header">
+                                    <h3>⏱️ Select Session Type</h3>
                                 </div>
-                                <div class="calendar-legend">
-                                    <div class="calendar-legend-item"><div class="calendar-legend-dot available"></div> Available</div>
-                                    <div class="calendar-legend-item"><div class="calendar-legend-dot limited"></div> Limited spots</div>
-                                    <div class="calendar-legend-item"><div class="calendar-legend-dot unavailable"></div> Unavailable</div>
+                                <div class="session-options" id="sessionOptions"></div>
+                            </div>
+
+                            <!-- Step 4: Select Date -->
+                            <div class="wizard-panel" data-panel="4">
+                                <div class="form-section-header">
+                                    <h3>📅 Select Date</h3>
+                                </div>
+                                <div class="calendar-container">
+                                    <div class="calendar-header">
+                                        <h4 id="calendarMonth">January 2026</h4>
+                                        <div class="calendar-nav">
+                                            <button type="button" onclick="changeMonth(-1)">←</button>
+                                            <button type="button" onclick="changeMonth(1)">→</button>
+                                        </div>
+                                    </div>
+                                    <div class="calendar-grid" id="calendarGrid">
+                                        <div class="calendar-day-header">Mon</div>
+                                        <div class="calendar-day-header">Tue</div>
+                                        <div class="calendar-day-header">Wed</div>
+                                        <div class="calendar-day-header">Thu</div>
+                                        <div class="calendar-day-header">Fri</div>
+                                        <div class="calendar-day-header">Sat</div>
+                                        <div class="calendar-day-header">Sun</div>
+                                    </div>
+                                    <div class="calendar-legend">
+                                        <div class="calendar-legend-item"><div class="calendar-legend-dot available"></div> Available</div>
+                                        <div class="calendar-legend-item"><div class="calendar-legend-dot limited"></div> Limited</div>
+                                        <div class="calendar-legend-item"><div class="calendar-legend-dot unavailable"></div> Unavailable</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="bookingDate">
+                                <div id="dateWarning" class="info-message" style="display:none;margin-top:var(--space-3);">
+                                    <span class="info-message-icon">ℹ️</span>
+                                    <p id="dateWarningText"></p>
+                                </div>
+                                <!-- Time selection for daycare -->
+                                <div id="timeSection" style="display:none;margin-top:var(--space-4);">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Drop-off</label>
+                                            <div class="time-grid" id="dropOffTimes"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Pick-up</label>
+                                            <div class="time-grid" id="pickUpTimes"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <input type="hidden" id="bookingDate">
-                            <div id="dateWarning" class="info-message" style="display:none;">
-                                <span class="info-message-icon">ℹ️</span>
-                                <p id="dateWarningText"></p>
+
+                            <!-- Step 5: Confirm -->
+                            <div class="wizard-panel" data-panel="5">
+                                <div class="form-section-header">
+                                    <h3>✅ Confirm Booking</h3>
+                                </div>
+                                <div class="booking-summary" id="bookingSummary" style="display:block;margin-top:0;">
+                                    <div id="summaryContent"></div>
+                                    <div class="pay-toggle" id="payToggle" style="margin-top:var(--space-4);">
+                                        <div class="pay-toggle-option selected" data-method="credits" onclick="selectPayMethod('credits')">
+                                            <strong>💳 Use Credits</strong>
+                                            <div id="creditAvailability" style="font-size: 0.75rem; margin-top: 2px;"></div>
+                                        </div>
+                                        <div class="pay-toggle-option" data-method="card" onclick="selectPayMethod('card')">
+                                            <strong>💵 Pay Now</strong>
+                                            <div style="font-size: 0.75rem; margin-top: 2px;">Card</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Step 5: Select Time (for daycare) -->
-                        <div class="form-section" id="timeSection" style="display:none;">
-                            <div class="form-section-header">
-                                <span class="step">5</span>
-                                <h3>Select Times</h3>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Drop-off Time</label>
-                                    <div class="time-grid" id="dropOffTimes"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Pick-up Time</label>
-                                    <div class="time-grid" id="pickUpTimes"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Booking Summary -->
-                        <div class="booking-summary" id="bookingSummary" style="display:none;">
-                            <h4>📋 Booking Summary</h4>
-                            <div id="summaryContent"></div>
-                            
-                            <div class="pay-toggle" id="payToggle">
-                                <div class="pay-toggle-option selected" data-method="credits" onclick="selectPayMethod('credits')">
-                                    <strong>💳 Use Credits</strong>
-                                    <div id="creditAvailability" style="font-size: 0.8rem; margin-top: 4px;"></div>
-                                </div>
-                                <div class="pay-toggle-option" data-method="card" onclick="selectPayMethod('card')">
-                                    <strong>💵 Pay Now</strong>
-                                    <div style="font-size: 0.8rem; margin-top: 4px;">Credit/Debit Card</div>
-                                </div>
-                            </div>
-                            
-                            <button class="btn btn-primary btn-block mt-4" id="confirmBtn" onclick="confirmBooking()">Confirm Booking 🐾</button>
+
+                        <!-- Wizard Navigation -->
+                        <div class="wizard-nav">
+                            <button type="button" class="btn btn-outline" id="wizardBackBtn" onclick="wizardBack()" style="visibility:hidden;">← Back</button>
+                            <button type="button" class="btn btn-primary" id="wizardNextBtn" onclick="wizardNext()">Next →</button>
                         </div>
                     </div>
                 </div>
@@ -393,6 +434,8 @@
         let selectedDog = null;
         let payMethod = 'credits';
         let currentCalendarMonth = new Date();
+        let currentWizardStep = 1;
+        const totalWizardSteps = 5;
         
         // Demo availability data - some days full, some limited, Mondays unavailable for large dogs
         const demoAvailability = generateDemoAvailability();
@@ -599,32 +642,22 @@
         function selectDate(dateStr) {
             selectedDate = dateStr;
             document.getElementById('bookingDate').value = dateStr;
-            
+
             // Update calendar selection
             document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
             document.querySelector(`.calendar-day[data-date="${dateStr}"]`)?.classList.add('selected');
-            
-            // Show date warning if Monday for large dogs
-            const date = new Date(dateStr + 'T00:00:00');
-            const warning = document.getElementById('dateWarning');
-            
-            if (date.getDay() === 1 && selectedDog?.breed.toLowerCase().includes('retriever')) {
-                document.getElementById('dateWarningText').textContent = 'Note: Large breed dogs have dedicated Monday sessions';
-                warning.style.display = 'flex';
-            } else {
-                warning.style.display = 'none';
-            }
-            
+
+            // onDateChange handles all validation including Monday checks
             onDateChange();
         }
         
         function selectService(service) {
             selectedService = service;
             selectedSession = null;
-            
+
             document.querySelectorAll('#serviceOptions .service-option').forEach(o => o.classList.remove('selected'));
             document.querySelector(`[data-service="${service}"]`).classList.add('selected');
-            
+
             const options = service === 'daycare' ? daycareOptions : hydroOptions;
             document.getElementById('sessionOptions').innerHTML = options.map(o => {
                 const hasCredits = (userCredits[o.creditType] || 0) > 0;
@@ -638,26 +671,21 @@
                     </div>
                 `;
             }).join('');
-            
-            document.getElementById('sessionSection').style.display = 'block';
-            document.getElementById('dateSection').style.display = 'none';
-            document.getElementById('timeSection').style.display = 'none';
-            updateSummary();
         }
         
         function selectSession(session) {
             selectedSession = session;
             document.querySelectorAll('#sessionOptions .session-option').forEach(o => o.classList.remove('selected'));
             document.querySelector(`[data-session="${session}"]`).classList.add('selected');
-            
-            document.getElementById('dateSection').style.display = 'block';
-            renderCalendar(); // Render the calendar
-            updateSummary();
         }
         
         function onDateChange() {
             selectedDate = document.getElementById('bookingDate').value;
-            const dateObj = new Date(selectedDate + 'T00:00:00');
+            if (!selectedDate) return;
+
+            // Parse date parts to avoid timezone issues
+            const [year, month, day] = selectedDate.split('-').map(Number);
+            const dateObj = new Date(year, month - 1, day); // month is 0-indexed
             const dayOfWeek = dateObj.getDay(); // 0 = Sunday, 1 = Monday, etc.
             const isMonday = dayOfWeek === 1;
             
@@ -768,30 +796,29 @@
         function updateSummary() {
             const dogId = document.getElementById('bookingDog').value;
             const date = document.getElementById('bookingDate').value;
-            
+
+            // Check if we have all required data
             if (!dogId || !selectedService || !selectedSession || !date) {
-                document.getElementById('bookingSummary').style.display = 'none';
+                document.getElementById('summaryContent').innerHTML = '<p style="color:var(--color-gray-500);">Please complete all previous steps.</p>';
                 return;
             }
-            
+
             // For daycare, need times
-            if (selectedService === 'daycare') {
-                if (!selectedDropOff || !selectedPickUp) {
-                    document.getElementById('bookingSummary').style.display = 'none';
-                    return;
-                }
+            if (selectedService === 'daycare' && (!selectedDropOff || !selectedPickUp)) {
+                document.getElementById('summaryContent').innerHTML = '<p style="color:var(--color-gray-500);">Please select drop-off and pick-up times.</p>';
+                return;
             }
-            
+
             const dog = userDogs.find(d => d.id === dogId);
             const options = selectedService === 'daycare' ? daycareOptions : hydroOptions;
             const session = options.find(o => o.id === selectedSession);
             const dateObj = new Date(date + 'T00:00:00');
             const hasCredits = (userCredits[session.creditType] || 0) > 0;
-            
-            let timeDisplay = selectedService === 'daycare' 
+
+            let timeDisplay = selectedService === 'daycare'
                 ? `${selectedDropOff} - ${selectedPickUp}`
                 : session.time;
-            
+
             let summaryHtml = `
                 <div class="summary-row"><span>Dog</span><span>${dog.name}</span></div>
                 <div class="summary-row"><span>Service</span><span>${selectedService === 'daycare' ? 'Day Care' : 'Hydrotherapy'}</span></div>
@@ -799,7 +826,7 @@
                 <div class="summary-row"><span>Date</span><span>${dateObj.toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long' })}</span></div>
                 <div class="summary-row"><span>Time</span><span>${timeDisplay}</span></div>
             `;
-            
+
             if (payMethod === 'credits' && hasCredits) {
                 summaryHtml += `
                     <div class="summary-row credit-payment"><span>Payment</span><span>1 ${session.name} Credit</span></div>
@@ -810,14 +837,14 @@
                     <div class="summary-row total"><span>Total</span><span>$${session.price.toFixed(2)}</span></div>
                 `;
             }
-            
+
             document.getElementById('summaryContent').innerHTML = summaryHtml;
-            
+
             // Update credit availability display
-            document.getElementById('creditAvailability').innerHTML = hasCredits 
+            document.getElementById('creditAvailability').innerHTML = hasCredits
                 ? `<span style="color: var(--color-green);">✓ ${userCredits[session.creditType]} available</span>`
                 : `<span style="color: var(--color-gray-500);">No credits</span>`;
-            
+
             // Disable credits option if none available
             const creditsOption = document.querySelector('[data-method="credits"]');
             if (!hasCredits) {
@@ -828,8 +855,6 @@
             } else {
                 creditsOption.classList.remove('disabled');
             }
-            
-            document.getElementById('bookingSummary').style.display = 'block';
         }
         
         async function confirmBooking() {
@@ -885,18 +910,9 @@
                 });
                 
                 alert('Booking confirmed! 🐾');
-                
-                // Reset form
-                selectedService = null;
-                selectedSession = null;
-                selectedDropOff = null;
-                selectedPickUp = null;
-                document.querySelectorAll('.service-option, .session-option').forEach(o => o.classList.remove('selected'));
-                document.getElementById('sessionSection').style.display = 'none';
-                document.getElementById('dateSection').style.display = 'none';
-                document.getElementById('timeSection').style.display = 'none';
-                document.getElementById('bookingSummary').style.display = 'none';
-                
+
+                // Reset wizard and go to upcoming
+                resetWizard();
                 showTab('upcoming');
                 await loadBookings();
             } catch (error) {
@@ -979,6 +995,145 @@
         document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
         
         async function handleLogout() { await MockAuth.signOut(); window.location.href = '../login.html'; }
+
+        // Wizard Navigation Functions
+        function wizardNext() {
+            // Validate current step before proceeding
+            if (!validateWizardStep(currentWizardStep)) return;
+
+            if (currentWizardStep < totalWizardSteps) {
+                currentWizardStep++;
+                updateWizardUI();
+
+                // Auto-trigger actions when entering steps
+                if (currentWizardStep === 4) {
+                    renderCalendar();
+                }
+                if (currentWizardStep === 5) {
+                    updateSummary();
+                }
+            } else {
+                // On final step, confirm booking
+                confirmBooking();
+            }
+        }
+
+        function wizardBack() {
+            if (currentWizardStep > 1) {
+                currentWizardStep--;
+                updateWizardUI();
+            }
+        }
+
+        function validateWizardStep(step) {
+            switch(step) {
+                case 1: // Dog selection
+                    if (!selectedDog) {
+                        alert('Please select a dog to continue.');
+                        return false;
+                    }
+                    if (selectedDog && !selectedDog.assessmentPassed) {
+                        alert(`${selectedDog.name} hasn't passed their assessment yet. Please book a free assessment first.`);
+                        return false;
+                    }
+                    return true;
+
+                case 2: // Service selection
+                    if (!selectedService) {
+                        alert('Please select a service to continue.');
+                        return false;
+                    }
+                    return true;
+
+                case 3: // Session selection
+                    if (!selectedSession) {
+                        alert('Please select a session type to continue.');
+                        return false;
+                    }
+                    return true;
+
+                case 4: // Date selection
+                    if (!selectedDate) {
+                        alert('Please select a date to continue.');
+                        return false;
+                    }
+                    // Check for daycare time selection
+                    if (selectedService === 'daycare' && (!selectedDropOff || !selectedPickUp)) {
+                        alert('Please select drop-off and pick-up times.');
+                        return false;
+                    }
+                    return true;
+
+                case 5: // Confirmation - always valid
+                    return true;
+
+                default:
+                    return true;
+            }
+        }
+
+        function updateWizardUI() {
+            // Update step indicators
+            document.querySelectorAll('.wizard-step').forEach((step, index) => {
+                const stepNum = index + 1;
+                step.classList.remove('active', 'completed');
+                if (stepNum === currentWizardStep) {
+                    step.classList.add('active');
+                } else if (stepNum < currentWizardStep) {
+                    step.classList.add('completed');
+                }
+            });
+
+            // Update panels
+            document.querySelectorAll('.wizard-panel').forEach((panel, index) => {
+                const panelNum = index + 1;
+                panel.classList.remove('active');
+                if (panelNum === currentWizardStep) {
+                    panel.classList.add('active');
+                }
+            });
+
+            // Update navigation buttons
+            const backBtn = document.getElementById('wizardBackBtn');
+            const nextBtn = document.getElementById('wizardNextBtn');
+
+            backBtn.style.visibility = currentWizardStep > 1 ? 'visible' : 'hidden';
+
+            if (currentWizardStep === totalWizardSteps) {
+                nextBtn.innerHTML = '✓ Confirm Booking';
+                nextBtn.classList.remove('btn-primary');
+                nextBtn.classList.add('btn-accent');
+            } else {
+                nextBtn.innerHTML = 'Next →';
+                nextBtn.classList.add('btn-primary');
+                nextBtn.classList.remove('btn-accent');
+            }
+        }
+
+        function goToWizardStep(step) {
+            // Only allow going to completed steps or next step
+            if (step <= currentWizardStep) {
+                currentWizardStep = step;
+                updateWizardUI();
+            }
+        }
+
+        function resetWizard() {
+            currentWizardStep = 1;
+            selectedService = null;
+            selectedSession = null;
+            selectedDate = null;
+            selectedDropOff = null;
+            selectedPickUp = null;
+            payMethod = 'credits';
+
+            document.querySelectorAll('.service-option, .session-option, .time-slot').forEach(o => o.classList.remove('selected'));
+            document.getElementById('bookingDate').value = '';
+            document.getElementById('timeSection').style.display = 'none';
+            document.getElementById('dateWarning').style.display = 'none';
+
+            updateWizardUI();
+        }
     </script>
 </body>
 </html>
