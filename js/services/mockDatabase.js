@@ -6,7 +6,7 @@
 const MockDatabase = (function() {
     const DB_PREFIX = 'gooddogspa_db_';
     const DB_VERSION_KEY = 'gooddogspa_db_version';
-    const CURRENT_VERSION = '2.0.3'; // Increment this to force data refresh
+    const CURRENT_VERSION = '2.1.0'; // Increment this to force data refresh
     
     // Check version and reset if needed
     function checkVersion() {

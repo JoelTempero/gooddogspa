@@ -273,10 +273,12 @@
         }
         
         .hydro-feature {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             padding: var(--space-6);
             border-radius: var(--radius-xl);
             text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .hydro-feature-icon {
@@ -285,14 +287,16 @@
         }
         
         .hydro-feature h4 {
-            color: var(--color-yellow-primary);
-            margin-bottom: var(--space-2);
+            color: var(--color-white);
+            margin-bottom: var(--space-3);
+            font-size: var(--font-size-lg);
         }
         
         .hydro-feature p {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.85);
             margin: 0;
             font-size: var(--font-size-sm);
+            line-height: 1.6;
         }
         
         /* Kate Section */

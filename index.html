@@ -185,18 +185,13 @@
         .nav-dropdown-toggle::after {
             content: '▼';
             font-size: 0.6rem;
-            transition: transform var(--transition-base);
-        }
-        
-        .nav-dropdown:hover .nav-dropdown-toggle::after {
-            transform: rotate(180deg);
+            margin-left: 2px;
         }
         
         .nav-dropdown-menu {
             position: absolute;
             top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
             background: var(--color-white);
             min-width: 180px;
             padding: var(--space-2) 0;
@@ -382,14 +377,14 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            padding: var(--space-8);
-            max-width: 650px;
+            padding: var(--space-6);
+            max-width: 700px;
         }
         
         .hero-title {
-            font-size: clamp(3rem, 10vw, 5rem);
-            line-height: 1.1;
-            margin-bottom: var(--space-5);
+            font-size: clamp(4rem, 14vw, 8rem);
+            line-height: 1.0;
+            margin-bottom: var(--space-6);
             color: var(--color-dark);
         }
         
@@ -398,30 +393,29 @@
             display: block;
         }
         
+        .hero-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--color-gray-600);
+            max-width: 500px;
+            margin: 0 auto var(--space-6);
+            line-height: 1.7;
+        }
+        
         .hero-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: var(--space-4);
             justify-content: center;
-            margin-bottom: var(--space-5);
         }
         
-        .hero-subtitle {
-            font-size: var(--font-size-base);
-            color: var(--color-gray-600);
-            max-width: 500px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        
-        /* Polaroid Photos - Positioned around center, scroll with page */
+        /* Polaroid Photos - Much bigger, closer together, playful rotations */
         .polaroid {
             position: absolute;
             background: var(--color-white);
-            padding: 12px 12px 45px 12px;
+            padding: 16px 16px 55px 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             cursor: grab;
-            transition: box-shadow 0.3s;
+            transition: box-shadow 0.3s, transform 0.3s;
             user-select: none;
             z-index: 5;
             opacity: 0;
@@ -431,6 +425,7 @@
         .polaroid:hover {
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             z-index: 20;
+            transform: scale(1.05) rotate(0deg) !important;
         }
         
         .polaroid.dragging {
@@ -441,15 +436,15 @@
         }
         
         .polaroid img {
-            width: 220px;
-            height: 220px;
+            width: 280px;
+            height: 280px;
             object-fit: cover;
             display: block;
         }
         
         .polaroid-caption {
             position: absolute;
-            bottom: 10px;
+            bottom: 12px;
             left: 0;
             right: 0;
             text-align: center;
@@ -458,35 +453,35 @@
             color: var(--color-gray-600);
         }
         
-        /* Polaroid positions - surrounding center content */
+        /* Polaroid positions - closer to center, playful rotations */
         .polaroid:nth-child(1) { 
-            --start-x: -400px; --start-y: -200px;
-            top: 8%; left: 12%;
-            transform: rotate(-6deg);
+            --start-x: -300px; --start-y: -150px;
+            top: 10%; left: 10%;
+            transform: rotate(-7deg);
             animation-delay: 0.1s;
         }
         .polaroid:nth-child(2) { 
-            --start-x: 400px; --start-y: -200px;
-            top: 6%; right: 12%; left: auto;
-            transform: rotate(5deg);
+            --start-x: 300px; --start-y: -150px;
+            top: 6%; right: 10%; left: auto;
+            transform: rotate(6deg);
             animation-delay: 0.2s;
         }
         .polaroid:nth-child(3) { 
-            --start-x: -400px; --start-y: 100px;
-            top: 50%; left: 5%;
+            --start-x: -300px; --start-y: 80px;
+            top: 42%; left: 5%;
             transform: rotate(4deg);
             animation-delay: 0.3s;
         }
         .polaroid:nth-child(4) { 
-            --start-x: 400px; --start-y: 100px;
-            top: 48%; right: 5%; left: auto;
-            transform: rotate(-4deg);
+            --start-x: 300px; --start-y: 80px;
+            top: 38%; right: 5%; left: auto;
+            transform: rotate(-5deg);
             animation-delay: 0.4s;
         }
         .polaroid:nth-child(5) { 
-            --start-x: 0px; --start-y: 300px;
+            --start-x: 0px; --start-y: 200px;
             bottom: 5%; left: 50%;
-            margin-left: -130px;
+            margin-left: -156px;
             transform: rotate(2deg);
             animation-delay: 0.5s;
         }
@@ -502,16 +497,36 @@
             }
         }
         
+        @media (max-width: 1400px) {
+            .polaroid img { width: 220px; height: 220px; }
+            .polaroid { padding: 14px 14px 48px 14px; }
+            .polaroid:nth-child(1) { left: 5%; }
+            .polaroid:nth-child(2) { right: 5%; }
+            .polaroid:nth-child(3) { left: 2%; }
+            .polaroid:nth-child(4) { right: 2%; }
+        }
+        
+        @media (max-width: 1200px) {
+            .polaroid img { width: 180px; height: 180px; }
+            .polaroid { padding: 12px 12px 45px 12px; }
+            .polaroid-caption { font-size: 0.85rem; bottom: 12px; }
+            .polaroid:nth-child(1) { left: 2%; }
+            .polaroid:nth-child(2) { right: 2%; }
+            .polaroid:nth-child(3) { left: 0%; }
+            .polaroid:nth-child(4) { right: 0%; }
+        }
+        
         @media (max-width: 1024px) {
             .polaroid img { width: 150px; height: 150px; }
             .polaroid { padding: 10px 10px 40px 10px; }
-            .polaroid-caption { font-size: 0.85rem; bottom: 10px; }
+            .polaroid-caption { font-size: 0.8rem; bottom: 10px; }
         }
         
         @media (max-width: 768px) {
             .hero { min-height: auto; padding-bottom: var(--space-16); }
+            .hero-title { font-size: clamp(2.8rem, 12vw, 4.5rem); }
             .polaroid { position: relative; display: inline-block; margin: var(--space-2); }
-            .polaroid img { width: 120px; height: 120px; }
+            .polaroid img { width: 130px; height: 130px; }
             .polaroid { padding: 8px 8px 35px 8px; }
             .polaroid-caption { font-size: 0.75rem; bottom: 8px; }
             .polaroid:nth-child(1), .polaroid:nth-child(2), .polaroid:nth-child(3), 
@@ -832,11 +847,11 @@
                 <div class="hero-wrapper">
                     <div class="hero-content">
                         <h1 class="hero-title">Your Dog's <span>Happy Place</span></h1>
+                        <p class="hero-subtitle">Good Dog Spa Wigram is a purpose-built facility offering premium day care, hydrotherapy, and rehabilitation services. Give your furry friend the ultimate playday experience!</p>
                         <div class="hero-buttons">
                             <a href="contact.html#contactForm" class="btn btn-primary btn-lg">Book Free Assessment 📅</a>
                             <a href="services.html" class="btn btn-secondary btn-lg">Explore Services</a>
                         </div>
-                        <p class="hero-subtitle">Good Dog Spa Wigram is a purpose-built facility offering premium day care, hydrotherapy, and rehabilitation services. Give your furry friend the ultimate playday experience!</p>
                     </div>
                 </div>
             </div>

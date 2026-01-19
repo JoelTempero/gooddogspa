@@ -137,6 +137,43 @@
         /* Empty State */
         .empty-state { text-align: center; padding: var(--space-10); color: var(--color-gray-500); }
         .empty-state-icon { font-size: 4rem; margin-bottom: var(--space-4); }
+        
+        /* Calendar Styles */
+        .calendar-container { margin-bottom: var(--space-4); }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); }
+        .calendar-header h4 { margin: 0; font-size: var(--font-size-lg); }
+        .calendar-nav { display: flex; gap: var(--space-2); }
+        .calendar-nav button { width: 36px; height: 36px; border: none; background: var(--color-gray-100); border-radius: var(--radius-lg); cursor: pointer; font-size: 1rem; }
+        .calendar-nav button:hover { background: var(--color-blue-light); }
+        
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+        .calendar-day-header { text-align: center; font-weight: var(--font-weight-bold); font-size: var(--font-size-xs); color: var(--color-gray-500); padding: var(--space-2); }
+        
+        .calendar-day { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; border: 2px solid transparent; font-size: var(--font-size-sm); position: relative; }
+        .calendar-day:hover:not(.disabled):not(.past) { background: var(--color-blue-light); }
+        .calendar-day.selected { background: var(--color-blue-primary); color: white; border-color: var(--color-blue-primary); }
+        .calendar-day.today { border-color: var(--color-yellow-primary); font-weight: bold; }
+        .calendar-day.past { color: var(--color-gray-300); cursor: not-allowed; }
+        .calendar-day.disabled { background: #fee2e2; color: var(--color-gray-400); cursor: not-allowed; }
+        .calendar-day.disabled::after { content: '✕'; position: absolute; font-size: 0.6rem; bottom: 2px; color: #dc2626; }
+        .calendar-day.full { background: #fef3c7; }
+        .calendar-day.full::after { content: '●'; position: absolute; font-size: 0.5rem; bottom: 2px; color: #d97706; }
+        .calendar-day.available { background: #dcfce7; }
+        .calendar-day.other-month { color: var(--color-gray-300); }
+        
+        .calendar-legend { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-4); font-size: var(--font-size-xs); }
+        .calendar-legend-item { display: flex; align-items: center; gap: var(--space-2); }
+        .calendar-legend-dot { width: 12px; height: 12px; border-radius: var(--radius-sm); }
+        .calendar-legend-dot.available { background: #dcfce7; border: 1px solid #16a34a; }
+        .calendar-legend-dot.limited { background: #fef3c7; border: 1px solid #d97706; }
+        .calendar-legend-dot.unavailable { background: #fee2e2; border: 1px solid #dc2626; }
+        
+        /* Better Desktop Layout for Booking Cards */
+        @media (min-width: 768px) {
+            .booking-card { flex-wrap: nowrap; }
+            .booking-card-info { max-width: 300px; }
+            .booking-card-actions { margin-left: auto; }
+        }
     </style>
 </head>
 <body>
@@ -241,9 +278,32 @@
                                 <span class="step">4</span>
                                 <h3>Select Date</h3>
                             </div>
-                            <div class="form-group">
-                                <input type="date" id="bookingDate" onchange="onDateChange()">
+                            
+                            <div class="calendar-container">
+                                <div class="calendar-header">
+                                    <h4 id="calendarMonth">January 2026</h4>
+                                    <div class="calendar-nav">
+                                        <button onclick="changeMonth(-1)">←</button>
+                                        <button onclick="changeMonth(1)">→</button>
+                                    </div>
+                                </div>
+                                <div class="calendar-grid" id="calendarGrid">
+                                    <div class="calendar-day-header">Mon</div>
+                                    <div class="calendar-day-header">Tue</div>
+                                    <div class="calendar-day-header">Wed</div>
+                                    <div class="calendar-day-header">Thu</div>
+                                    <div class="calendar-day-header">Fri</div>
+                                    <div class="calendar-day-header">Sat</div>
+                                    <div class="calendar-day-header">Sun</div>
+                                </div>
+                                <div class="calendar-legend">
+                                    <div class="calendar-legend-item"><div class="calendar-legend-dot available"></div> Available</div>
+                                    <div class="calendar-legend-item"><div class="calendar-legend-dot limited"></div> Limited spots</div>
+                                    <div class="calendar-legend-item"><div class="calendar-legend-dot unavailable"></div> Unavailable</div>
+                                </div>
                             </div>
+                            
+                            <input type="hidden" id="bookingDate">
                             <div id="dateWarning" class="info-message" style="display:none;">
                                 <span class="info-message-icon">ℹ️</span>
                                 <p id="dateWarningText"></p>
@@ -310,6 +370,39 @@
         let selectedPickUp = null;
         let selectedDog = null;
         let payMethod = 'credits';
+        let currentCalendarMonth = new Date();
+        
+        // Demo availability data - some days full, some limited, Mondays unavailable for large dogs
+        const demoAvailability = generateDemoAvailability();
+        
+        function generateDemoAvailability() {
+            const availability = {};
+            const today = new Date();
+            // Generate availability for next 60 days
+            for (let i = 0; i < 60; i++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() + i);
+                const dateStr = date.toISOString().split('T')[0];
+                const dayOfWeek = date.getDay();
+                
+                // Weekends unavailable
+                if (dayOfWeek === 0 || dayOfWeek === 6) {
+                    availability[dateStr] = { status: 'closed', spots: 0 };
+                }
+                // Random availability for other days
+                else {
+                    const rand = Math.random();
+                    if (rand < 0.15) {
+                        availability[dateStr] = { status: 'full', spots: 0 };
+                    } else if (rand < 0.4) {
+                        availability[dateStr] = { status: 'limited', spots: Math.floor(Math.random() * 5) + 1 };
+                    } else {
+                        availability[dateStr] = { status: 'available', spots: Math.floor(Math.random() * 10) + 5 };
+                    }
+                }
+            }
+            return availability;
+        }
         
         const daycareOptions = [
             { id: 'full', name: 'Full Day', time: '7am - 6pm (up to 11 hrs)', price: 50.50, creditType: 'fullDay' },
@@ -330,12 +423,6 @@
             currentUser = MockAuth.getCurrentUser();
             if (!currentUser) { window.location.href = '../login.html'; return; }
             updateUserInfo();
-            
-            // Set min date to tomorrow
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            document.getElementById('bookingDate').min = tomorrow.toISOString().split('T')[0];
-            document.getElementById('bookingDate').value = tomorrow.toISOString().split('T')[0];
             
             userDogs = await MockDatabase.getDogs(currentUser.uid);
             userCredits = await MockDatabase.getCredits(currentUser.uid);
@@ -391,6 +478,124 @@
             updateSummary();
         }
         
+        // Calendar Functions
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const year = currentCalendarMonth.getFullYear();
+            const month = currentCalendarMonth.getMonth();
+            
+            // Update header
+            document.getElementById('calendarMonth').textContent = new Date(year, month).toLocaleDateString('en-NZ', { month: 'long', year: 'numeric' });
+            
+            // Clear existing days (keep headers)
+            const headers = Array.from(grid.querySelectorAll('.calendar-day-header'));
+            grid.innerHTML = '';
+            headers.forEach(h => grid.appendChild(h));
+            
+            // Get first day of month and total days
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const totalDays = lastDay.getDate();
+            
+            // Get starting day (0 = Sunday, we want Monday = 0)
+            let startDay = firstDay.getDay() - 1;
+            if (startDay < 0) startDay = 6;
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            // Check if user's dog is a large breed (Golden Retriever = Mondays unavailable)
+            const isLargeDog = selectedDog && (selectedDog.breed.toLowerCase().includes('retriever') || selectedDog.breed.toLowerCase().includes('labrador') || selectedDog.size === 'large');
+            
+            // Add empty cells for days before first of month
+            for (let i = 0; i < startDay; i++) {
+                const prevMonthDay = new Date(year, month, 0 - (startDay - i - 1));
+                const cell = document.createElement('div');
+                cell.className = 'calendar-day other-month past';
+                cell.textContent = prevMonthDay.getDate();
+                grid.appendChild(cell);
+            }
+            
+            // Add days of month
+            for (let day = 1; day <= totalDays; day++) {
+                const date = new Date(year, month, day);
+                const dateStr = date.toISOString().split('T')[0];
+                const dayOfWeek = date.getDay();
+                const isPast = date < today;
+                const isToday = date.getTime() === today.getTime();
+                const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+                const isMonday = dayOfWeek === 1;
+                
+                const availability = demoAvailability[dateStr] || { status: 'available', spots: 10 };
+                
+                const cell = document.createElement('div');
+                cell.className = 'calendar-day';
+                cell.textContent = day;
+                cell.dataset.date = dateStr;
+                
+                if (isPast) {
+                    cell.classList.add('past');
+                } else if (isWeekend) {
+                    cell.classList.add('disabled');
+                } else if (isLargeDog && isMonday) {
+                    cell.classList.add('disabled');
+                    cell.title = 'Mondays unavailable for large dogs';
+                } else if (availability.status === 'full') {
+                    cell.classList.add('disabled');
+                    cell.title = 'Fully booked';
+                } else if (availability.status === 'limited') {
+                    cell.classList.add('full');
+                    cell.title = `${availability.spots} spots left`;
+                    cell.addEventListener('click', () => selectDate(dateStr));
+                } else {
+                    cell.classList.add('available');
+                    cell.addEventListener('click', () => selectDate(dateStr));
+                }
+                
+                if (isToday) cell.classList.add('today');
+                if (selectedDate === dateStr) cell.classList.add('selected');
+                
+                grid.appendChild(cell);
+            }
+            
+            // Fill remaining cells
+            const cellsAdded = startDay + totalDays;
+            const remaining = 42 - cellsAdded; // 6 rows * 7 days
+            for (let i = 1; i <= remaining && cellsAdded + i <= 42; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'calendar-day other-month';
+                cell.textContent = i;
+                grid.appendChild(cell);
+            }
+        }
+        
+        function changeMonth(delta) {
+            currentCalendarMonth.setMonth(currentCalendarMonth.getMonth() + delta);
+            renderCalendar();
+        }
+        
+        function selectDate(dateStr) {
+            selectedDate = dateStr;
+            document.getElementById('bookingDate').value = dateStr;
+            
+            // Update calendar selection
+            document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+            document.querySelector(`.calendar-day[data-date="${dateStr}"]`)?.classList.add('selected');
+            
+            // Show date warning if Monday for large dogs
+            const date = new Date(dateStr + 'T00:00:00');
+            const warning = document.getElementById('dateWarning');
+            
+            if (date.getDay() === 1 && selectedDog?.breed.toLowerCase().includes('retriever')) {
+                document.getElementById('dateWarningText').textContent = 'Note: Large breed dogs have dedicated Monday sessions';
+                warning.style.display = 'flex';
+            } else {
+                warning.style.display = 'none';
+            }
+            
+            onDateChange();
+        }
+        
         function selectService(service) {
             selectedService = service;
             selectedSession = null;
@@ -424,7 +629,7 @@
             document.querySelector(`[data-session="${session}"]`).classList.add('selected');
             
             document.getElementById('dateSection').style.display = 'block';
-            onDateChange(); // Check date validity
+            renderCalendar(); // Render the calendar
             updateSummary();
         }
         

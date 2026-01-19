@@ -7,7 +7,7 @@ const MockAuth = (function() {
     const STORAGE_KEY = 'gooddogspa_auth';
     const USERS_KEY = 'gooddogspa_users';
     const AUTH_VERSION_KEY = 'gooddogspa_auth_version';
-    const CURRENT_VERSION = '2.0.3'; // Increment this to force user data refresh
+    const CURRENT_VERSION = '2.1.0'; // Increment this to force user data refresh
     
     // Check version and reset users if needed
     function checkVersion() {

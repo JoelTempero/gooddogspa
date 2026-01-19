@@ -260,18 +260,11 @@
         }
         
         .gallery-item-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity var(--transition-base);
-            display: flex;
-            align-items: flex-end;
-            padding: var(--space-4);
+            display: none; /* Hidden - captions only for meta/SEO purposes */
         }
         
         .gallery-item:hover .gallery-item-overlay {
-            opacity: 1;
+            display: none;
         }
         
         .gallery-item-overlay span {
