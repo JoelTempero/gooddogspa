@@ -267,8 +267,8 @@
             font-size: var(--font-size-sm);
         }
         
-        /* Modal */
-        .modal {
+        /* Modal - using portal-modal to avoid conflict with components.css */
+        .portal-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -284,12 +284,12 @@
             transition: all var(--transition-base);
         }
 
-        .modal.open {
+        .portal-modal.open {
             opacity: 1;
             visibility: visible;
         }
 
-        .modal-backdrop {
+        .portal-modal-backdrop {
             position: fixed;
             top: 0;
             left: 0;
@@ -298,7 +298,7 @@
             background: rgba(0,0,0,0.6);
         }
 
-        .modal-content {
+        .portal-modal-content {
             position: relative;
             background: var(--color-white);
             border-radius: var(--radius-2xl);
@@ -312,11 +312,11 @@
             z-index: 1;
         }
 
-        .modal.open .modal-content {
+        .portal-modal.open .portal-modal-content {
             transform: scale(1);
         }
-        
-        .modal-header {
+
+        .portal-modal-header {
             padding: var(--space-5) var(--space-6);
             border-bottom: 1px solid var(--color-gray-100);
             display: flex;
@@ -327,13 +327,13 @@
             background: white;
             z-index: 1;
         }
-        
-        .modal-header h2 {
+
+        .portal-modal-header h2 {
             font-size: var(--font-size-xl);
             margin: 0;
         }
-        
-        .modal-close {
+
+        .portal-modal-close {
             width: 36px;
             height: 36px;
             display: flex;
@@ -344,17 +344,17 @@
             font-size: var(--font-size-lg);
             cursor: pointer;
         }
-        
-        .modal-close:hover {
+
+        .portal-modal-close:hover {
             background: var(--color-coral);
             color: var(--color-white);
         }
         
-        .modal-body {
+        .portal-modal-body {
             padding: var(--space-6);
         }
-        
-        .modal-footer {
+
+        .portal-modal-footer {
             padding: var(--space-4) var(--space-6);
             background: var(--color-gray-50);
             display: flex;
@@ -491,14 +491,14 @@
     </div>
     
     <!-- Add/Edit Dog Modal -->
-    <div class="modal" id="dogModal">
-        <div class="modal-backdrop" onclick="closeModal()"></div>
-        <div class="modal-content">
-            <div class="modal-header">
+    <div class="portal-modal" id="dogModal">
+        <div class="portal-modal-backdrop" onclick="closeModal()"></div>
+        <div class="portal-modal-content">
+            <div class="portal-modal-header">
                 <h2 id="modalTitle">Add New Dog</h2>
-                <button class="modal-close" onclick="closeModal()">✕</button>
+                <button class="portal-modal-close" onclick="closeModal()">✕</button>
             </div>
-            <div class="modal-body">
+            <div class="portal-modal-body">
                 <form id="dogForm">
                     <input type="hidden" id="dogId">
                     
@@ -576,7 +576,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="portal-modal-footer">
                 <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
                 <button class="btn btn-primary" onclick="saveDog()">Save Dog</button>
             </div>

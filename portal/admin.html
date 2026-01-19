@@ -122,17 +122,17 @@
         .action-btn.edit { background: var(--color-blue-light); color: var(--color-blue-primary); }
         .action-btn.edit:hover { background: var(--color-blue-primary); color: white; }
         
-        /* Modal */
-        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: var(--space-4); opacity: 0; visibility: hidden; transition: all 0.3s; }
-        .modal.open { opacity: 1; visibility: visible; }
-        .modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); }
-        .modal-content { position: relative; z-index: 1; background: var(--color-white); border-radius: var(--radius-2xl); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
-        .modal-header { padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-gray-100); display: flex; align-items: center; justify-content: space-between; }
-        .modal-header h2 { font-size: var(--font-size-xl); margin: 0; }
-        .modal-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--color-gray-100); border-radius: var(--radius-full); cursor: pointer; font-size: 1.2rem; }
-        .modal-close:hover { background: var(--color-coral); color: white; }
-        .modal-body { padding: var(--space-6); }
-        .modal-footer { padding: var(--space-4) var(--space-6); background: var(--color-gray-50); display: flex; gap: var(--space-3); justify-content: flex-end; }
+        /* Modal - using admin-modal to avoid conflict with components.css */
+        .admin-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: var(--space-4); opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .admin-modal.open { opacity: 1; visibility: visible; }
+        .admin-modal .admin-modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); }
+        .admin-modal .admin-modal-content { position: relative; z-index: 1; background: var(--color-white); border-radius: var(--radius-2xl); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .admin-modal .admin-modal-header { padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-gray-100); display: flex; align-items: center; justify-content: space-between; }
+        .admin-modal .admin-modal-header h2 { font-size: var(--font-size-xl); margin: 0; }
+        .admin-modal .admin-modal-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--color-gray-100); border-radius: var(--radius-full); cursor: pointer; font-size: 1.2rem; }
+        .admin-modal .admin-modal-close:hover { background: var(--color-coral); color: white; }
+        .admin-modal .admin-modal-body { padding: var(--space-6); }
+        .admin-modal .admin-modal-footer { padding: var(--space-4) var(--space-6); background: var(--color-gray-50); display: flex; gap: var(--space-3); justify-content: flex-end; }
         
         /* Form */
         .form-group { margin-bottom: var(--space-4); }
@@ -483,14 +483,14 @@
     </div>
     
     <!-- Edit Credits Modal -->
-    <div class="modal" id="creditsModal">
-        <div class="modal-backdrop" onclick="closeCreditsModal()"></div>
-        <div class="modal-content">
-            <div class="modal-header">
+    <div class="admin-modal" id="creditsModal">
+        <div class="admin-modal-backdrop" onclick="closeCreditsModal()"></div>
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
                 <h2>💳 Manage Credits</h2>
-                <button class="modal-close" onclick="closeCreditsModal()">✕</button>
+                <button class="admin-modal-close" onclick="closeCreditsModal()">✕</button>
             </div>
-            <div class="modal-body">
+            <div class="admin-modal-body">
                 <div id="memberInfo" style="margin-bottom: var(--space-5); padding-bottom: var(--space-4); border-bottom: 2px dashed var(--color-gray-200);"></div>
                 
                 <h4 style="margin-bottom: var(--space-4);">Credit Balances</h4>
@@ -535,7 +535,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="admin-modal-footer">
                 <button class="btn btn-outline" onclick="closeCreditsModal()">Cancel</button>
                 <button class="btn btn-primary" onclick="saveCredits()">Save Changes</button>
             </div>
@@ -543,14 +543,14 @@
     </div>
     
     <!-- Add Booking Modal -->
-    <div class="modal" id="bookingModal">
-        <div class="modal-backdrop" onclick="closeBookingModal()"></div>
-        <div class="modal-content">
-            <div class="modal-header">
+    <div class="admin-modal" id="bookingModal">
+        <div class="admin-modal-backdrop" onclick="closeBookingModal()"></div>
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
                 <h2>➕ Add Booking</h2>
-                <button class="modal-close" onclick="closeBookingModal()">✕</button>
+                <button class="admin-modal-close" onclick="closeBookingModal()">✕</button>
             </div>
-            <div class="modal-body">
+            <div class="admin-modal-body">
                 <div class="form-group">
                     <label>Select Dog</label>
                     <select id="bookingDogSelect">
@@ -583,7 +583,7 @@
                     <input type="text" id="bookingNotesInput" placeholder="Any special notes...">
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="admin-modal-footer">
                 <button class="btn btn-outline" onclick="closeBookingModal()">Cancel</button>
                 <button class="btn btn-primary" onclick="createBooking()">Create Booking</button>
             </div>
@@ -591,31 +591,31 @@
     </div>
     
     <!-- Dog Details Modal -->
-    <div class="modal" id="dogDetailsModal">
-        <div class="modal-backdrop" onclick="closeDogDetailsModal()"></div>
-        <div class="modal-content" style="max-width: 600px;">
-            <div class="modal-header">
+    <div class="admin-modal" id="dogDetailsModal">
+        <div class="admin-modal-backdrop" onclick="closeDogDetailsModal()"></div>
+        <div class="admin-modal-content" style="max-width: 600px;">
+            <div class="admin-modal-header">
                 <h2>🐕 Dog Details</h2>
-                <button class="modal-close" onclick="closeDogDetailsModal()">✕</button>
+                <button class="admin-modal-close" onclick="closeDogDetailsModal()">✕</button>
             </div>
-            <div class="modal-body" id="dogDetailsContent">
+            <div class="admin-modal-body" id="dogDetailsContent">
                 <!-- Dog details loaded via JS -->
             </div>
-            <div class="modal-footer">
+            <div class="admin-modal-footer">
                 <button class="btn btn-outline" onclick="closeDogDetailsModal()">Close</button>
             </div>
         </div>
     </div>
 
     <!-- Blog Post Modal -->
-    <div class="modal" id="blogModal">
-        <div class="modal-backdrop" onclick="closeBlogModal()"></div>
-        <div class="modal-content" style="max-width: 700px;">
-            <div class="modal-header">
+    <div class="admin-modal" id="blogModal">
+        <div class="admin-modal-backdrop" onclick="closeBlogModal()"></div>
+        <div class="admin-modal-content" style="max-width: 700px;">
+            <div class="admin-modal-header">
                 <h2 id="blogModalTitle">New Blog Post</h2>
-                <button class="modal-close" onclick="closeBlogModal()">✕</button>
+                <button class="admin-modal-close" onclick="closeBlogModal()">✕</button>
             </div>
-            <div class="modal-body">
+            <div class="admin-modal-body">
                 <form id="blogForm">
                     <input type="hidden" id="blogPostId">
                     <div class="form-group">
@@ -652,7 +652,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="admin-modal-footer">
                 <button class="btn btn-outline" onclick="closeBlogModal()">Cancel</button>
                 <button class="btn btn-primary" onclick="saveBlogPost()">Save Post</button>
             </div>
@@ -660,14 +660,14 @@
     </div>
 
     <!-- Gallery Upload Modal -->
-    <div class="modal" id="galleryModal">
-        <div class="modal-backdrop" onclick="closeGalleryModal()"></div>
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header">
+    <div class="admin-modal" id="galleryModal">
+        <div class="admin-modal-backdrop" onclick="closeGalleryModal()"></div>
+        <div class="admin-modal-content" style="max-width: 500px;">
+            <div class="admin-modal-header">
                 <h2>📸 Add Photo</h2>
-                <button class="modal-close" onclick="closeGalleryModal()">✕</button>
+                <button class="admin-modal-close" onclick="closeGalleryModal()">✕</button>
             </div>
-            <div class="modal-body">
+            <div class="admin-modal-body">
                 <form id="galleryForm">
                     <div class="form-group">
                         <label>Image URL *</label>
@@ -688,7 +688,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="admin-modal-footer">
                 <button class="btn btn-outline" onclick="closeGalleryModal()">Cancel</button>
                 <button class="btn btn-primary" onclick="saveGalleryImage()">Add Photo</button>
             </div>
