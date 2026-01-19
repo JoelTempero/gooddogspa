@@ -1299,9 +1299,13 @@
         }
 
         // ========== BLOG MANAGEMENT ==========
+        const BLOG_DATA_VERSION = 'v2'; // Increment to force refresh of demo data
         function getBlogPosts() {
+            const version = localStorage.getItem('gooddogspa_blogVersion');
             const posts = localStorage.getItem('gooddogspa_db_blogPosts');
-            if (!posts) {
+            // Reset if no data OR if version has changed
+            if (!posts || version !== BLOG_DATA_VERSION) {
+                localStorage.setItem('gooddogspa_blogVersion', BLOG_DATA_VERSION);
                 // Initialize with posts matching the website blog page
                 const samplePosts = [
                     {
@@ -1491,9 +1495,13 @@
         }
 
         // ========== GALLERY MANAGEMENT ==========
+        const GALLERY_DATA_VERSION = 'v2'; // Increment to force refresh of demo data
         function getGalleryImages() {
+            const version = localStorage.getItem('gooddogspa_galleryVersion');
             const images = localStorage.getItem('gooddogspa_db_gallery');
-            if (!images) {
+            // Reset if no data OR if version has changed
+            if (!images || version !== GALLERY_DATA_VERSION) {
+                localStorage.setItem('gooddogspa_galleryVersion', GALLERY_DATA_VERSION);
                 // Initialize with images matching the website gallery page
                 const sampleImages = [
                     { id: 'img-1', url: 'https://wigramvet.co.nz/wp-content/uploads/2025/09/IMG_3130.jpg', caption: 'Play Time!', category: 'daycare', createdAt: '2025-01-10T10:00:00Z' },
