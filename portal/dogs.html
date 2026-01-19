@@ -270,7 +270,10 @@
         /* Modal */
         .modal {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -280,32 +283,35 @@
             visibility: hidden;
             transition: all var(--transition-base);
         }
-        
+
         .modal.open {
             opacity: 1;
             visibility: visible;
         }
-        
+
         .modal-backdrop {
-            position: absolute;
-            inset: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba(0,0,0,0.6);
         }
-        
+
         .modal-content {
             position: relative;
             background: var(--color-white);
             border-radius: var(--radius-2xl);
-            width: 90%;
-            max-width: 1000px;
+            width: 100%;
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: var(--shadow-2xl);
             transform: scale(0.95);
             transition: transform 0.3s ease;
-            margin: auto;
+            z-index: 1;
         }
-        
+
         .modal.open .modal-content {
             transform: scale(1);
         }

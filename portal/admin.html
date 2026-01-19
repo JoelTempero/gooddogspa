@@ -225,6 +225,42 @@
         .quick-action-btn:hover { border-color: var(--color-blue-primary); background: var(--color-blue-light); }
         .quick-action-btn .icon { font-size: 1.5rem; }
         .quick-action-btn span { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-gray-700); }
+
+        /* Blog Posts Grid */
+        .blog-posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-4); }
+        .blog-post-card { background: var(--color-white); border: 2px solid var(--color-gray-100); border-radius: var(--radius-xl); overflow: hidden; transition: all 0.2s; }
+        .blog-post-card:hover { border-color: var(--color-blue-primary); box-shadow: var(--shadow-md); }
+        .blog-post-image { width: 100%; height: 150px; object-fit: cover; background: var(--color-gray-100); }
+        .blog-post-content { padding: var(--space-4); }
+        .blog-post-category { display: inline-block; font-size: var(--font-size-xs); background: var(--color-blue-light); color: var(--color-blue-primary); padding: 2px 8px; border-radius: var(--radius-full); margin-bottom: var(--space-2); }
+        .blog-post-content h3 { margin: 0 0 var(--space-2) 0; font-size: var(--font-size-base); }
+        .blog-post-content p { color: var(--color-gray-500); font-size: var(--font-size-sm); margin: 0 0 var(--space-3) 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .blog-post-meta { display: flex; justify-content: space-between; align-items: center; font-size: var(--font-size-xs); color: var(--color-gray-400); }
+        .blog-post-actions { display: flex; gap: var(--space-2); margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-gray-100); }
+
+        /* Gallery Grid */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-4); }
+        .gallery-item { position: relative; border-radius: var(--radius-xl); overflow: hidden; aspect-ratio: 1; cursor: pointer; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.2s; display: flex; flex-direction: column; justify-content: flex-end; padding: var(--space-3); }
+        .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+        .gallery-item-overlay p { color: white; font-size: var(--font-size-sm); margin: 0 0 var(--space-2) 0; }
+        .gallery-item-overlay .delete-btn { position: absolute; top: var(--space-2); right: var(--space-2); width: 30px; height: 30px; background: #dc2626; color: white; border: none; border-radius: var(--radius-full); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+
+        /* Dog Details in Modal */
+        .dog-detail-header { display: flex; gap: var(--space-5); align-items: center; margin-bottom: var(--space-5); padding-bottom: var(--space-4); border-bottom: 2px dashed var(--color-gray-200); }
+        .dog-detail-avatar { width: 100px; height: 100px; border-radius: var(--radius-xl); background: var(--color-yellow-light); display: flex; align-items: center; justify-content: center; font-size: 3rem; overflow: hidden; flex-shrink: 0; }
+        .dog-detail-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .dog-detail-info h3 { margin: 0 0 var(--space-1) 0; font-size: var(--font-size-xl); }
+        .dog-detail-info p { margin: 0; color: var(--color-gray-500); }
+        .dog-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+        .dog-detail-item { padding: var(--space-3); background: var(--color-gray-50); border-radius: var(--radius-lg); }
+        .dog-detail-item .label { font-size: var(--font-size-xs); color: var(--color-gray-500); margin-bottom: 2px; }
+        .dog-detail-item .value { font-weight: var(--font-weight-bold); }
+        .dog-notes-section { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--color-gray-200); }
+        .dog-notes-section h4 { font-size: var(--font-size-sm); margin: 0 0 var(--space-2) 0; }
+        .dog-notes-section p { font-size: var(--font-size-sm); color: var(--color-gray-600); margin: 0; background: var(--color-gray-50); padding: var(--space-3); border-radius: var(--radius-lg); }
     </style>
 </head>
 <body>
@@ -247,7 +283,11 @@
                 <a class="sidebar-link" data-tab="bookings"><span class="sidebar-link-icon">📅</span>All Bookings</a>
                 <a class="sidebar-link" data-tab="dogs"><span class="sidebar-link-icon">🐕</span>All Dogs</a>
                 <a class="sidebar-link" data-tab="members"><span class="sidebar-link-icon">👥</span>Members</a>
-                
+
+                <div class="sidebar-nav-label">Content</div>
+                <a class="sidebar-link" data-tab="blog"><span class="sidebar-link-icon">📝</span>Blog Posts</a>
+                <a class="sidebar-link" data-tab="gallery"><span class="sidebar-link-icon">📸</span>Gallery</a>
+
                 <div class="sidebar-nav-label">Quick Links</div>
                 <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span>Main Website</a>
             </nav>
@@ -408,6 +448,36 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Blog Tab -->
+                <div class="tab-panel" id="tab-blog">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h2>📝 Blog Posts</h2>
+                            <button class="btn btn-primary btn-sm" onclick="openBlogModal()">+ New Post</button>
+                        </div>
+                        <div class="admin-card-body">
+                            <div class="blog-posts-grid" id="blogPostsGrid">
+                                <!-- Blog posts loaded via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Tab -->
+                <div class="tab-panel" id="tab-gallery">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h2>📸 Gallery</h2>
+                            <button class="btn btn-primary btn-sm" onclick="openGalleryUpload()">+ Add Photos</button>
+                        </div>
+                        <div class="admin-card-body">
+                            <div class="gallery-grid" id="galleryGrid">
+                                <!-- Gallery images loaded via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -520,6 +590,111 @@
         </div>
     </div>
     
+    <!-- Dog Details Modal -->
+    <div class="modal" id="dogDetailsModal">
+        <div class="modal-backdrop" onclick="closeDogDetailsModal()"></div>
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>🐕 Dog Details</h2>
+                <button class="modal-close" onclick="closeDogDetailsModal()">✕</button>
+            </div>
+            <div class="modal-body" id="dogDetailsContent">
+                <!-- Dog details loaded via JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeDogDetailsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Post Modal -->
+    <div class="modal" id="blogModal">
+        <div class="modal-backdrop" onclick="closeBlogModal()"></div>
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2 id="blogModalTitle">New Blog Post</h2>
+                <button class="modal-close" onclick="closeBlogModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="blogForm">
+                    <input type="hidden" id="blogPostId">
+                    <div class="form-group">
+                        <label>Title *</label>
+                        <input type="text" id="blogTitle" required placeholder="Enter post title...">
+                    </div>
+                    <div class="form-group">
+                        <label>Excerpt *</label>
+                        <input type="text" id="blogExcerpt" required placeholder="Short description for listing...">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="blogCategory">
+                            <option value="Tips & Advice">Tips & Advice</option>
+                            <option value="News">News</option>
+                            <option value="Events">Events</option>
+                            <option value="Health">Health</option>
+                            <option value="Training">Training</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Featured Image URL</label>
+                        <input type="url" id="blogImage" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label>Content *</label>
+                        <textarea id="blogContent" rows="10" required placeholder="Write your blog post content..." style="width:100%;padding:var(--space-3);border:2px solid var(--color-gray-200);border-radius:var(--radius-lg);resize:vertical;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-item" style="display:flex;align-items:center;gap:var(--space-2);">
+                            <input type="checkbox" id="blogPublished" checked>
+                            Published (visible on website)
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeBlogModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveBlogPost()">Save Post</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Upload Modal -->
+    <div class="modal" id="galleryModal">
+        <div class="modal-backdrop" onclick="closeGalleryModal()"></div>
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>📸 Add Photo</h2>
+                <button class="modal-close" onclick="closeGalleryModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="galleryForm">
+                    <div class="form-group">
+                        <label>Image URL *</label>
+                        <input type="url" id="galleryImageUrl" required placeholder="https://example.com/image.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label>Caption</label>
+                        <input type="text" id="galleryCaption" placeholder="Photo caption...">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="galleryCategory">
+                            <option value="daycare">Day Care</option>
+                            <option value="hydrotherapy">Hydrotherapy</option>
+                            <option value="facility">Facility</option>
+                            <option value="events">Events</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeGalleryModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveGalleryImage()">Add Photo</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/services/mockAuth.js"></script>
     <script src="../js/services/mockDatabase.js"></script>
     <script>
@@ -532,7 +707,9 @@
             'overview': 'Admin Overview',
             'bookings': 'All Bookings',
             'dogs': 'All Dogs',
-            'members': 'All Members'
+            'members': 'All Members',
+            'blog': 'Blog Posts',
+            'gallery': 'Gallery'
         };
         
         tabLinks.forEach(link => {
@@ -800,15 +977,13 @@
             }
         }
         
-        // All Dogs - Card Format
+        // All Dogs - Card Format (click opens modal)
         function renderAllDogs(dogs) {
             const grid = document.getElementById('dogsGrid');
             grid.innerHTML = dogs.map(d => {
                 const owner = getUserById(d.ownerId);
-                const credits = getCreditsForUser(d.ownerId);
-                const totalCredits = Object.values(credits).reduce((a, b) => a + b, 0);
                 return `
-                    <div class="dog-card" onclick="toggleDogCard(this)">
+                    <div class="dog-card" onclick="openDogDetailsModal('${d.id}')">
                         <div class="dog-card-main">
                             <div class="dog-card-avatar">
                                 ${d.photo ? `<img src="${d.photo}" alt="${d.name}">` : '🐕'}
@@ -817,52 +992,91 @@
                                 <h3>${d.name}</h3>
                                 <p class="owner">👤 ${owner.displayName}</p>
                                 <div class="dog-card-tags">
+                                    <span>${d.breed}</span>
                                     <span>${d.gender}</span>
                                     <span>${d.age} yrs</span>
-                                    <span>${d.weight || '?'}kg</span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="dog-card-expand"><span>▼</span></div>
-                        <div class="dog-card-details" onclick="event.stopPropagation()">
-                            <div class="detail-row">
-                                <span class="detail-label">Breed</span>
-                                <span class="detail-value">${d.breed}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Assessment</span>
-                                <span class="detail-value"><span class="status-badge ${d.assessmentPassed ? 'confirmed' : 'pending'}">${d.assessmentPassed ? 'Passed ✓' : 'Pending'}</span></span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Owner Credits</span>
-                                <span class="detail-value">${totalCredits} total</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Owner Phone</span>
-                                <span class="detail-value">${owner.phone || '-'}</span>
-                            </div>
-                            ${d.medicalNotes ? `
-                            <div class="detail-row">
-                                <span class="detail-label">Medical Notes</span>
-                                <span class="detail-value" style="max-width:200px;font-weight:normal;">${d.medicalNotes}</span>
-                            </div>` : ''}
-                            ${d.behaviourNotes ? `
-                            <div class="detail-row">
-                                <span class="detail-label">Behaviour</span>
-                                <span class="detail-value" style="max-width:200px;font-weight:normal;">${d.behaviourNotes}</span>
-                            </div>` : ''}
-                            <div class="dog-card-actions">
-                                <button class="action-btn edit" onclick="openCreditsModal('${d.ownerId}')">💳 Credits</button>
-                                <button class="action-btn edit" onclick="alert('Edit dog details')">✏️ Edit</button>
                             </div>
                         </div>
                     </div>
                 `;
             }).join('') || '<div class="empty-state"><div class="empty-state-icon">🐕</div><p>No dogs found</p></div>';
         }
-        
-        function toggleDogCard(card) {
-            card.classList.toggle('expanded');
+
+        // Dog Details Modal
+        function openDogDetailsModal(dogId) {
+            const dog = allDogs.find(d => d.id === dogId);
+            if (!dog) return;
+
+            const owner = getUserById(dog.ownerId);
+            const credits = getCreditsForUser(dog.ownerId);
+            const totalCredits = Object.values(credits).reduce((a, b) => a + b, 0);
+
+            document.getElementById('dogDetailsContent').innerHTML = `
+                <div class="dog-detail-header">
+                    <div class="dog-detail-avatar">
+                        ${dog.photo ? `<img src="${dog.photo}" alt="${dog.name}">` : '🐕'}
+                    </div>
+                    <div class="dog-detail-info">
+                        <h3>${dog.name}</h3>
+                        <p>${dog.breed} • ${dog.gender}</p>
+                        <p style="margin-top:var(--space-2);">
+                            <span class="status-badge ${dog.assessmentPassed ? 'confirmed' : 'pending'}">
+                                ${dog.assessmentPassed ? '✓ Assessment Passed' : 'Assessment Pending'}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="dog-detail-grid">
+                    <div class="dog-detail-item">
+                        <div class="label">Age</div>
+                        <div class="value">${dog.age} years</div>
+                    </div>
+                    <div class="dog-detail-item">
+                        <div class="label">Weight</div>
+                        <div class="value">${dog.weight || 'Not specified'} kg</div>
+                    </div>
+                    <div class="dog-detail-item">
+                        <div class="label">Owner</div>
+                        <div class="value">${owner.displayName}</div>
+                    </div>
+                    <div class="dog-detail-item">
+                        <div class="label">Owner Phone</div>
+                        <div class="value">${owner.phone || '-'}</div>
+                    </div>
+                    <div class="dog-detail-item">
+                        <div class="label">Owner Email</div>
+                        <div class="value">${owner.email}</div>
+                    </div>
+                    <div class="dog-detail-item">
+                        <div class="label">Owner Credits</div>
+                        <div class="value">${totalCredits} total</div>
+                    </div>
+                </div>
+
+                ${dog.medicalNotes ? `
+                <div class="dog-notes-section">
+                    <h4>🏥 Medical Notes</h4>
+                    <p>${dog.medicalNotes}</p>
+                </div>` : ''}
+
+                ${dog.behaviourNotes ? `
+                <div class="dog-notes-section">
+                    <h4>🐾 Behaviour Notes</h4>
+                    <p>${dog.behaviourNotes}</p>
+                </div>` : ''}
+
+                <div style="display:flex;gap:var(--space-2);margin-top:var(--space-5);">
+                    <button class="btn btn-outline" onclick="openCreditsModal('${dog.ownerId}'); closeDogDetailsModal();">💳 Manage Credits</button>
+                </div>
+            `;
+
+            document.getElementById('dogDetailsModal').classList.add('open');
+        }
+
+        function closeDogDetailsModal() {
+            document.getElementById('dogDetailsModal').classList.remove('open');
         }
         
         renderAllDogs(allDogs);
@@ -1044,16 +1258,16 @@
             const date = document.getElementById('bookingDateInput').value;
             const time = document.getElementById('bookingTimeInput').value;
             const notes = document.getElementById('bookingNotesInput').value;
-            
+
             if (!dogId || !date) {
                 alert('Please select a dog and date');
                 return;
             }
-            
+
             const dog = getDogById(dogId);
             const option = document.getElementById('bookingDogSelect').selectedOptions[0];
             const ownerId = option.dataset.owner;
-            
+
             const bookingData = {
                 id: 'booking-' + Date.now(),
                 ownerId: ownerId,
@@ -1067,22 +1281,265 @@
                 paidWithCredits: false,
                 createdAt: new Date().toISOString()
             };
-            
+
             if (type === 'daycare') {
                 bookingData.dropOff = time || '08:00';
                 bookingData.pickUp = session === 'half-am' ? '12:30' : session === 'half-pm' ? '18:00' : '17:00';
             } else {
                 bookingData.time = time || '10:00';
             }
-            
+
             const bookings = getCollection('bookings');
             bookings.push(bookingData);
             saveCollection('bookings', bookings);
-            
+
             closeBookingModal();
             alert('Booking created successfully!');
             location.reload();
         }
+
+        // ========== BLOG MANAGEMENT ==========
+        function getBlogPosts() {
+            const posts = localStorage.getItem('gooddogspa_db_blogPosts');
+            if (!posts) {
+                // Initialize with sample posts
+                const samplePosts = [
+                    {
+                        id: 'post-1',
+                        title: 'Welcome to Good Dog Spa!',
+                        excerpt: 'We are thrilled to announce the opening of our new facility in Wigram.',
+                        content: 'Good Dog Spa Wigram is now open! Our purpose-built facility offers premium day care, hydrotherapy, and rehabilitation services for your furry friends. We cannot wait to meet you and your pup!',
+                        category: 'News',
+                        image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800',
+                        published: true,
+                        createdAt: '2024-01-15T10:00:00Z'
+                    },
+                    {
+                        id: 'post-2',
+                        title: '5 Signs Your Dog Needs More Exercise',
+                        excerpt: 'Is your dog getting enough physical activity? Here are the tell-tale signs.',
+                        content: 'Dogs need regular exercise to stay healthy and happy. Watch out for these signs: destructive behavior, weight gain, restlessness, excessive barking, and hyperactivity. Our day care program ensures your pup gets plenty of exercise and socialization!',
+                        category: 'Tips & Advice',
+                        image: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800',
+                        published: true,
+                        createdAt: '2024-01-20T14:30:00Z'
+                    }
+                ];
+                localStorage.setItem('gooddogspa_db_blogPosts', JSON.stringify(samplePosts));
+                return samplePosts;
+            }
+            return JSON.parse(posts);
+        }
+
+        function saveBlogPosts(posts) {
+            localStorage.setItem('gooddogspa_db_blogPosts', JSON.stringify(posts));
+        }
+
+        function renderBlogPosts() {
+            const posts = getBlogPosts();
+            const grid = document.getElementById('blogPostsGrid');
+
+            if (posts.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📝</div><p>No blog posts yet. Create your first post!</p></div>';
+                return;
+            }
+
+            grid.innerHTML = posts.map(post => `
+                <div class="blog-post-card">
+                    ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image">` : '<div class="blog-post-image" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">📝</div>'}
+                    <div class="blog-post-content">
+                        <span class="blog-post-category">${post.category}</span>
+                        <h3>${post.title}</h3>
+                        <p>${post.excerpt}</p>
+                        <div class="blog-post-meta">
+                            <span>${new Date(post.createdAt).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                            <span class="status-badge ${post.published ? 'confirmed' : 'pending'}">${post.published ? 'Published' : 'Draft'}</span>
+                        </div>
+                        <div class="blog-post-actions">
+                            <button class="action-btn edit" onclick="editBlogPost('${post.id}')">✏️ Edit</button>
+                            <button class="action-btn cancel" onclick="deleteBlogPost('${post.id}')">🗑️ Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openBlogModal(postId = null) {
+            document.getElementById('blogPostId').value = '';
+            document.getElementById('blogTitle').value = '';
+            document.getElementById('blogExcerpt').value = '';
+            document.getElementById('blogCategory').value = 'Tips & Advice';
+            document.getElementById('blogImage').value = '';
+            document.getElementById('blogContent').value = '';
+            document.getElementById('blogPublished').checked = true;
+            document.getElementById('blogModalTitle').textContent = 'New Blog Post';
+
+            document.getElementById('blogModal').classList.add('open');
+        }
+
+        function editBlogPost(postId) {
+            const posts = getBlogPosts();
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+
+            document.getElementById('blogPostId').value = post.id;
+            document.getElementById('blogTitle').value = post.title;
+            document.getElementById('blogExcerpt').value = post.excerpt;
+            document.getElementById('blogCategory').value = post.category;
+            document.getElementById('blogImage').value = post.image || '';
+            document.getElementById('blogContent').value = post.content;
+            document.getElementById('blogPublished').checked = post.published;
+            document.getElementById('blogModalTitle').textContent = 'Edit Blog Post';
+
+            document.getElementById('blogModal').classList.add('open');
+        }
+
+        function closeBlogModal() {
+            document.getElementById('blogModal').classList.remove('open');
+        }
+
+        function saveBlogPost() {
+            const postId = document.getElementById('blogPostId').value;
+            const title = document.getElementById('blogTitle').value.trim();
+            const excerpt = document.getElementById('blogExcerpt').value.trim();
+            const category = document.getElementById('blogCategory').value;
+            const image = document.getElementById('blogImage').value.trim();
+            const content = document.getElementById('blogContent').value.trim();
+            const published = document.getElementById('blogPublished').checked;
+
+            if (!title || !excerpt || !content) {
+                alert('Please fill in all required fields (Title, Excerpt, Content)');
+                return;
+            }
+
+            const posts = getBlogPosts();
+
+            if (postId) {
+                // Edit existing
+                const idx = posts.findIndex(p => p.id === postId);
+                if (idx > -1) {
+                    posts[idx] = { ...posts[idx], title, excerpt, category, image, content, published, updatedAt: new Date().toISOString() };
+                }
+            } else {
+                // New post
+                posts.unshift({
+                    id: 'post-' + Date.now(),
+                    title,
+                    excerpt,
+                    category,
+                    image,
+                    content,
+                    published,
+                    createdAt: new Date().toISOString()
+                });
+            }
+
+            saveBlogPosts(posts);
+            closeBlogModal();
+            renderBlogPosts();
+            alert('Blog post saved successfully!');
+        }
+
+        function deleteBlogPost(postId) {
+            if (!confirm('Are you sure you want to delete this blog post?')) return;
+
+            const posts = getBlogPosts();
+            const filtered = posts.filter(p => p.id !== postId);
+            saveBlogPosts(filtered);
+            renderBlogPosts();
+            alert('Blog post deleted.');
+        }
+
+        // ========== GALLERY MANAGEMENT ==========
+        function getGalleryImages() {
+            const images = localStorage.getItem('gooddogspa_db_gallery');
+            if (!images) {
+                // Initialize with sample images
+                const sampleImages = [
+                    { id: 'img-1', url: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600', caption: 'Happy pups at daycare!', category: 'daycare', createdAt: '2024-01-10T10:00:00Z' },
+                    { id: 'img-2', url: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600', caption: 'Hydrotherapy session', category: 'hydrotherapy', createdAt: '2024-01-12T14:00:00Z' },
+                    { id: 'img-3', url: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600', caption: 'Best friends playing', category: 'daycare', createdAt: '2024-01-15T09:00:00Z' },
+                    { id: 'img-4', url: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=600', caption: 'Our facility', category: 'facility', createdAt: '2024-01-18T11:00:00Z' }
+                ];
+                localStorage.setItem('gooddogspa_db_gallery', JSON.stringify(sampleImages));
+                return sampleImages;
+            }
+            return JSON.parse(images);
+        }
+
+        function saveGalleryImages(images) {
+            localStorage.setItem('gooddogspa_db_gallery', JSON.stringify(images));
+        }
+
+        function renderGallery() {
+            const images = getGalleryImages();
+            const grid = document.getElementById('galleryGrid');
+
+            if (images.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📸</div><p>No photos yet. Add your first photo!</p></div>';
+                return;
+            }
+
+            grid.innerHTML = images.map(img => `
+                <div class="gallery-item">
+                    <img src="${img.url}" alt="${img.caption || 'Gallery image'}">
+                    <div class="gallery-item-overlay">
+                        <button class="delete-btn" onclick="deleteGalleryImage('${img.id}')" title="Delete photo">✕</button>
+                        <p>${img.caption || ''}</p>
+                        <span style="font-size:10px;color:rgba(255,255,255,0.7);text-transform:capitalize;">${img.category}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openGalleryUpload() {
+            document.getElementById('galleryImageUrl').value = '';
+            document.getElementById('galleryCaption').value = '';
+            document.getElementById('galleryCategory').value = 'daycare';
+            document.getElementById('galleryModal').classList.add('open');
+        }
+
+        function closeGalleryModal() {
+            document.getElementById('galleryModal').classList.remove('open');
+        }
+
+        function saveGalleryImage() {
+            const url = document.getElementById('galleryImageUrl').value.trim();
+            const caption = document.getElementById('galleryCaption').value.trim();
+            const category = document.getElementById('galleryCategory').value;
+
+            if (!url) {
+                alert('Please enter an image URL');
+                return;
+            }
+
+            const images = getGalleryImages();
+            images.unshift({
+                id: 'img-' + Date.now(),
+                url,
+                caption,
+                category,
+                createdAt: new Date().toISOString()
+            });
+
+            saveGalleryImages(images);
+            closeGalleryModal();
+            renderGallery();
+            alert('Photo added successfully!');
+        }
+
+        function deleteGalleryImage(imageId) {
+            if (!confirm('Are you sure you want to delete this photo?')) return;
+
+            const images = getGalleryImages();
+            const filtered = images.filter(img => img.id !== imageId);
+            saveGalleryImages(filtered);
+            renderGallery();
+        }
+
+        // Initialize blog and gallery on page load
+        renderBlogPosts();
+        renderGallery();
     </script>
 </body>
 </html>

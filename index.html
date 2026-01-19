@@ -352,7 +352,7 @@
             overflow: hidden;
             min-height: 100vh;
         }
-        
+
         .hero::before {
             content: '';
             position: absolute;
@@ -364,7 +364,7 @@
             opacity: 0.2;
             pointer-events: none;
         }
-        
+
         .hero-wrapper {
             position: relative;
             min-height: 85vh;
@@ -372,27 +372,34 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .hero-content {
             position: relative;
             z-index: 10;
             text-align: center;
-            padding: var(--space-6);
-            max-width: 700px;
+            padding: var(--space-8);
+            max-width: 650px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: var(--radius-2xl);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
-        
+
         .hero-title {
-            font-size: clamp(4rem, 14vw, 8rem);
+            font-size: clamp(3rem, 10vw, 5.5rem);
             line-height: 1.0;
-            margin-bottom: var(--space-6);
+            margin-bottom: var(--space-4);
             color: var(--color-dark);
         }
-        
+
         .hero-title span {
             color: var(--color-blue-primary);
             display: block;
         }
-        
+
         .hero-subtitle {
             font-size: var(--font-size-lg);
             color: var(--color-gray-600);
@@ -400,7 +407,7 @@
             margin: 0 auto var(--space-6);
             line-height: 1.7;
         }
-        
+
         .hero-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -408,143 +415,155 @@
             justify-content: center;
         }
         
-        /* Polaroid Photos - Much bigger, closer together, playful rotations */
+        /* Polaroid Photos - Surrounding center content */
         .polaroid {
             position: absolute;
             background: var(--color-white);
-            padding: 16px 16px 55px 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 12px 12px 45px 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             cursor: grab;
-            transition: box-shadow 0.3s, transform 0.3s;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
             user-select: none;
             z-index: 5;
             opacity: 0;
-            animation: flyIn 0.8s ease-out forwards;
+            animation: flyIn 0.6s ease-out forwards;
+            will-change: transform;
         }
-        
+
         .polaroid:hover {
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
             z-index: 20;
-            transform: scale(1.05) rotate(0deg) !important;
+            transform: scale(1.03) rotate(0deg) !important;
         }
-        
+
         .polaroid.dragging {
             cursor: grabbing;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
             z-index: 9999 !important;
-            transition: box-shadow 0.1s;
+            transition: none;
         }
-        
+
         .polaroid img {
-            width: 280px;
-            height: 280px;
+            width: 200px;
+            height: 200px;
             object-fit: cover;
             display: block;
         }
-        
+
         .polaroid-caption {
             position: absolute;
-            bottom: 12px;
+            bottom: 10px;
             left: 0;
             right: 0;
             text-align: center;
             font-family: 'Fredoka One', cursive;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--color-gray-600);
         }
-        
-        /* Polaroid positions - closer to center, playful rotations */
-        .polaroid:nth-child(1) { 
-            --start-x: -300px; --start-y: -150px;
-            top: 10%; left: 10%;
-            transform: rotate(-7deg);
+
+        /* Polaroid positions - tighter around center content */
+        .polaroid:nth-child(1) {
+            --start-x: -200px; --start-y: -100px;
+            top: 12%; left: 8%;
+            transform: rotate(-6deg);
             animation-delay: 0.1s;
         }
-        .polaroid:nth-child(2) { 
-            --start-x: 300px; --start-y: -150px;
-            top: 6%; right: 10%; left: auto;
-            transform: rotate(6deg);
+        .polaroid:nth-child(2) {
+            --start-x: 200px; --start-y: -100px;
+            top: 8%; right: 8%; left: auto;
+            transform: rotate(5deg);
+            animation-delay: 0.15s;
+        }
+        .polaroid:nth-child(3) {
+            --start-x: -200px; --start-y: 50px;
+            top: 50%; left: 4%;
+            transform: rotate(3deg);
             animation-delay: 0.2s;
         }
-        .polaroid:nth-child(3) { 
-            --start-x: -300px; --start-y: 80px;
-            top: 42%; left: 5%;
-            transform: rotate(4deg);
+        .polaroid:nth-child(4) {
+            --start-x: 200px; --start-y: 50px;
+            top: 46%; right: 4%; left: auto;
+            transform: rotate(-4deg);
+            animation-delay: 0.25s;
+        }
+        .polaroid:nth-child(5) {
+            --start-x: 0px; --start-y: 150px;
+            bottom: 8%; right: 15%; left: auto;
+            transform: rotate(2deg);
             animation-delay: 0.3s;
         }
-        .polaroid:nth-child(4) { 
-            --start-x: 300px; --start-y: 80px;
-            top: 38%; right: 5%; left: auto;
-            transform: rotate(-5deg);
-            animation-delay: 0.4s;
-        }
-        .polaroid:nth-child(5) { 
-            --start-x: 0px; --start-y: 200px;
-            bottom: 5%; left: 50%;
-            margin-left: -156px;
-            transform: rotate(2deg);
-            animation-delay: 0.5s;
-        }
-        
+
         @keyframes flyIn {
             0% {
                 opacity: 0;
-                transform: translate(var(--start-x), var(--start-y)) rotate(0deg) scale(0.5);
+                transform: translate(var(--start-x), var(--start-y)) rotate(0deg) scale(0.6);
             }
             100% {
                 opacity: 1;
                 transform: translate(0, 0) rotate(var(--end-rotation, 0deg)) scale(1);
             }
         }
-        
+
         @media (max-width: 1400px) {
-            .polaroid img { width: 220px; height: 220px; }
-            .polaroid { padding: 14px 14px 48px 14px; }
-            .polaroid:nth-child(1) { left: 5%; }
-            .polaroid:nth-child(2) { right: 5%; }
-            .polaroid:nth-child(3) { left: 2%; }
-            .polaroid:nth-child(4) { right: 2%; }
+            .polaroid img { width: 170px; height: 170px; }
+            .polaroid { padding: 10px 10px 40px 10px; }
+            .polaroid:nth-child(1) { left: 3%; top: 15%; }
+            .polaroid:nth-child(2) { right: 3%; top: 12%; }
+            .polaroid:nth-child(3) { left: 1%; }
+            .polaroid:nth-child(4) { right: 1%; }
+            .polaroid:nth-child(5) { right: 10%; }
         }
-        
+
         @media (max-width: 1200px) {
-            .polaroid img { width: 180px; height: 180px; }
-            .polaroid { padding: 12px 12px 45px 12px; }
-            .polaroid-caption { font-size: 0.85rem; bottom: 12px; }
-            .polaroid:nth-child(1) { left: 2%; }
-            .polaroid:nth-child(2) { right: 2%; }
+            .polaroid img { width: 140px; height: 140px; }
+            .polaroid { padding: 8px 8px 36px 8px; }
+            .polaroid-caption { font-size: 0.75rem; bottom: 10px; }
+            .polaroid:nth-child(1) { left: 1%; top: 18%; }
+            .polaroid:nth-child(2) { right: 1%; top: 15%; }
             .polaroid:nth-child(3) { left: 0%; }
             .polaroid:nth-child(4) { right: 0%; }
+            .polaroid:nth-child(5) { right: 5%; bottom: 12%; }
         }
-        
+
         @media (max-width: 1024px) {
-            .polaroid img { width: 150px; height: 150px; }
-            .polaroid { padding: 10px 10px 40px 10px; }
-            .polaroid-caption { font-size: 0.8rem; bottom: 10px; }
+            .polaroid img { width: 120px; height: 120px; }
+            .polaroid { padding: 8px 8px 32px 8px; }
+            .polaroid-caption { font-size: 0.7rem; bottom: 8px; }
+            .hero-content {
+                max-width: 500px;
+                padding: var(--space-6);
+            }
         }
-        
+
         @media (max-width: 768px) {
             .hero { min-height: auto; padding-bottom: var(--space-16); }
-            .hero-title { font-size: clamp(2.8rem, 12vw, 4.5rem); }
+            .hero-title { font-size: clamp(2.5rem, 10vw, 3.5rem); }
+            .hero-content {
+                background: rgba(255, 255, 255, 0.95);
+                max-width: 90%;
+                margin: 0 auto;
+            }
             .polaroid { position: relative; display: inline-block; margin: var(--space-2); }
-            .polaroid img { width: 130px; height: 130px; }
-            .polaroid { padding: 8px 8px 35px 8px; }
-            .polaroid-caption { font-size: 0.75rem; bottom: 8px; }
-            .polaroid:nth-child(1), .polaroid:nth-child(2), .polaroid:nth-child(3), 
+            .polaroid img { width: 110px; height: 110px; }
+            .polaroid { padding: 6px 6px 28px 6px; }
+            .polaroid-caption { font-size: 0.65rem; bottom: 6px; }
+            .polaroid:nth-child(1), .polaroid:nth-child(2), .polaroid:nth-child(3),
             .polaroid:nth-child(4), .polaroid:nth-child(5) {
                 position: relative;
                 top: auto; left: auto; right: auto; bottom: auto;
+                margin-left: 0;
                 transform: rotate(var(--mobile-rotate, 0deg));
             }
-            .polaroid:nth-child(1) { --mobile-rotate: -5deg; }
+            .polaroid:nth-child(1) { --mobile-rotate: -4deg; }
             .polaroid:nth-child(2) { --mobile-rotate: 3deg; }
             .polaroid:nth-child(3) { --mobile-rotate: -2deg; }
-            .polaroid:nth-child(4) { --mobile-rotate: 4deg; }
-            .polaroid:nth-child(5) { --mobile-rotate: -3deg; }
+            .polaroid:nth-child(4) { --mobile-rotate: 3deg; }
+            .polaroid:nth-child(5) { --mobile-rotate: -2deg; }
             .polaroids-mobile {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: var(--space-3);
+                gap: var(--space-2);
                 margin-top: var(--space-6);
             }
         }
