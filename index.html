@@ -382,10 +382,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: var(--radius-2xl);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         .hero-title {
@@ -415,120 +411,111 @@
             justify-content: center;
         }
         
-        /* Polaroid Photos - Surrounding center content */
+        /* Polaroid Photos */
         .polaroid {
             position: absolute;
             background: var(--color-white);
-            padding: 12px 12px 45px 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 14px 14px 50px 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             cursor: grab;
-            transition: box-shadow 0.2s ease, transform 0.2s ease;
             user-select: none;
             z-index: 5;
             opacity: 0;
-            animation: flyIn 0.6s ease-out forwards;
-            will-change: transform;
+            animation: flyIn 0.7s ease-out forwards;
         }
 
         .polaroid:hover {
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.3);
             z-index: 20;
-            transform: scale(1.03) rotate(0deg) !important;
         }
 
         .polaroid.dragging {
             cursor: grabbing;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
             z-index: 9999 !important;
-            transition: none;
         }
 
         .polaroid img {
-            width: 200px;
-            height: 200px;
+            width: 240px;
+            height: 240px;
             object-fit: cover;
             display: block;
         }
 
         .polaroid-caption {
             position: absolute;
-            bottom: 10px;
+            bottom: 12px;
             left: 0;
             right: 0;
             text-align: center;
             font-family: 'Fredoka One', cursive;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--color-gray-600);
         }
 
-        /* Polaroid positions - tighter around center content */
+        /* Polaroid positions with rotations */
         .polaroid:nth-child(1) {
-            --start-x: -200px; --start-y: -100px;
-            top: 12%; left: 8%;
-            transform: rotate(-6deg);
-            animation-delay: 0.1s;
+            --start-x: -150px; --start-y: -80px; --rotation: -8deg;
+            top: 10%; left: 6%;
+            animation-delay: 0.05s;
         }
         .polaroid:nth-child(2) {
-            --start-x: 200px; --start-y: -100px;
-            top: 8%; right: 8%; left: auto;
-            transform: rotate(5deg);
-            animation-delay: 0.15s;
+            --start-x: 150px; --start-y: -80px; --rotation: 6deg;
+            top: 5%; right: 6%; left: auto;
+            animation-delay: 0.1s;
         }
         .polaroid:nth-child(3) {
-            --start-x: -200px; --start-y: 50px;
-            top: 50%; left: 4%;
-            transform: rotate(3deg);
-            animation-delay: 0.2s;
+            --start-x: -150px; --start-y: 50px; --rotation: 4deg;
+            top: 45%; left: 3%;
+            animation-delay: 0.15s;
         }
         .polaroid:nth-child(4) {
-            --start-x: 200px; --start-y: 50px;
-            top: 46%; right: 4%; left: auto;
-            transform: rotate(-4deg);
-            animation-delay: 0.25s;
+            --start-x: 150px; --start-y: 50px; --rotation: -5deg;
+            top: 40%; right: 3%; left: auto;
+            animation-delay: 0.2s;
         }
         .polaroid:nth-child(5) {
-            --start-x: 0px; --start-y: 150px;
-            bottom: 8%; right: 15%; left: auto;
-            transform: rotate(2deg);
-            animation-delay: 0.3s;
+            --start-x: 80px; --start-y: 100px; --rotation: 3deg;
+            bottom: 8%; right: 12%; left: auto;
+            animation-delay: 0.25s;
         }
 
         @keyframes flyIn {
             0% {
                 opacity: 0;
-                transform: translate(var(--start-x), var(--start-y)) rotate(0deg) scale(0.6);
+                transform: translate(var(--start-x), var(--start-y)) rotate(0deg) scale(0.7);
             }
             100% {
                 opacity: 1;
-                transform: translate(0, 0) rotate(var(--end-rotation, 0deg)) scale(1);
+                transform: translate(0, 0) rotate(var(--rotation)) scale(1);
             }
         }
 
         @media (max-width: 1400px) {
-            .polaroid img { width: 170px; height: 170px; }
-            .polaroid { padding: 10px 10px 40px 10px; }
-            .polaroid:nth-child(1) { left: 3%; top: 15%; }
-            .polaroid:nth-child(2) { right: 3%; top: 12%; }
+            .polaroid img { width: 200px; height: 200px; }
+            .polaroid { padding: 12px 12px 45px 12px; }
+            .polaroid:nth-child(1) { left: 3%; top: 12%; }
+            .polaroid:nth-child(2) { right: 3%; top: 8%; }
             .polaroid:nth-child(3) { left: 1%; }
             .polaroid:nth-child(4) { right: 1%; }
-            .polaroid:nth-child(5) { right: 10%; }
+            .polaroid:nth-child(5) { right: 8%; }
         }
 
         @media (max-width: 1200px) {
-            .polaroid img { width: 140px; height: 140px; }
-            .polaroid { padding: 8px 8px 36px 8px; }
-            .polaroid-caption { font-size: 0.75rem; bottom: 10px; }
-            .polaroid:nth-child(1) { left: 1%; top: 18%; }
-            .polaroid:nth-child(2) { right: 1%; top: 15%; }
+            .polaroid img { width: 170px; height: 170px; }
+            .polaroid { padding: 10px 10px 40px 10px; }
+            .polaroid-caption { font-size: 0.8rem; bottom: 10px; }
+            .polaroid:nth-child(1) { left: 1%; top: 15%; }
+            .polaroid:nth-child(2) { right: 1%; top: 10%; }
             .polaroid:nth-child(3) { left: 0%; }
             .polaroid:nth-child(4) { right: 0%; }
-            .polaroid:nth-child(5) { right: 5%; bottom: 12%; }
+            .polaroid:nth-child(5) { right: 5%; bottom: 10%; }
         }
 
         @media (max-width: 1024px) {
-            .polaroid img { width: 120px; height: 120px; }
-            .polaroid { padding: 8px 8px 32px 8px; }
-            .polaroid-caption { font-size: 0.7rem; bottom: 8px; }
+            .polaroid img { width: 140px; height: 140px; }
+            .polaroid { padding: 8px 8px 36px 8px; }
+            .polaroid-caption { font-size: 0.75rem; bottom: 9px; }
             .hero-content {
                 max-width: 500px;
                 padding: var(--space-6);
@@ -539,31 +526,29 @@
             .hero { min-height: auto; padding-bottom: var(--space-16); }
             .hero-title { font-size: clamp(2.5rem, 10vw, 3.5rem); }
             .hero-content {
-                background: rgba(255, 255, 255, 0.95);
                 max-width: 90%;
                 margin: 0 auto;
             }
             .polaroid { position: relative; display: inline-block; margin: var(--space-2); }
-            .polaroid img { width: 110px; height: 110px; }
-            .polaroid { padding: 6px 6px 28px 6px; }
-            .polaroid-caption { font-size: 0.65rem; bottom: 6px; }
+            .polaroid img { width: 120px; height: 120px; }
+            .polaroid { padding: 6px 6px 30px 6px; }
+            .polaroid-caption { font-size: 0.7rem; bottom: 7px; }
             .polaroid:nth-child(1), .polaroid:nth-child(2), .polaroid:nth-child(3),
             .polaroid:nth-child(4), .polaroid:nth-child(5) {
                 position: relative;
                 top: auto; left: auto; right: auto; bottom: auto;
                 margin-left: 0;
-                transform: rotate(var(--mobile-rotate, 0deg));
             }
-            .polaroid:nth-child(1) { --mobile-rotate: -4deg; }
-            .polaroid:nth-child(2) { --mobile-rotate: 3deg; }
-            .polaroid:nth-child(3) { --mobile-rotate: -2deg; }
-            .polaroid:nth-child(4) { --mobile-rotate: 3deg; }
-            .polaroid:nth-child(5) { --mobile-rotate: -2deg; }
+            .polaroid:nth-child(1) { --rotation: -5deg; }
+            .polaroid:nth-child(2) { --rotation: 4deg; }
+            .polaroid:nth-child(3) { --rotation: -3deg; }
+            .polaroid:nth-child(4) { --rotation: 5deg; }
+            .polaroid:nth-child(5) { --rotation: -2deg; }
             .polaroids-mobile {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: var(--space-2);
+                gap: var(--space-3);
                 margin-top: var(--space-6);
             }
         }
@@ -1114,72 +1099,98 @@
             this.reset();
         });
         
-        // Polaroid Dragging - Within hero section
+        // Polaroid Dragging - Smooth within hero section
         (function() {
             const hero = document.querySelector('.hero');
             const polaroids = document.querySelectorAll('.hero .polaroid');
             if (polaroids.length === 0 || !hero) return;
-            
+
             let highestZ = 50;
             let draggedEl = null;
             let offsetX, offsetY;
-            
+            let currentRotation = '0deg';
+            let rafId = null;
+            let targetX = 0, targetY = 0;
+
             polaroids.forEach(p => {
                 p.addEventListener('mousedown', startDrag);
                 p.addEventListener('touchstart', startDrag, { passive: false });
             });
-            
+
+            function getRotation(el) {
+                const style = window.getComputedStyle(el);
+                const transform = style.transform;
+                if (transform === 'none') {
+                    return el.style.getPropertyValue('--rotation') || '0deg';
+                }
+                const values = transform.split('(')[1].split(')')[0].split(',');
+                const a = values[0];
+                const b = values[1];
+                const angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
+                return angle + 'deg';
+            }
+
             function startDrag(e) {
-                if (window.innerWidth <= 768) return; // Disable on mobile
+                if (window.innerWidth <= 768) return;
                 e.preventDefault();
                 draggedEl = this;
                 draggedEl.classList.add('dragging');
                 highestZ++;
                 draggedEl.style.zIndex = highestZ;
-                
+
+                // Get current rotation before converting to pixel positioning
+                currentRotation = getRotation(draggedEl);
+
                 const heroRect = hero.getBoundingClientRect();
                 const rect = draggedEl.getBoundingClientRect();
                 const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
                 const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-                
+
                 offsetX = clientX - rect.left;
                 offsetY = clientY - rect.top;
-                
-                // Convert to absolute pixel positioning within hero
-                draggedEl.style.left = (rect.left - heroRect.left) + 'px';
-                draggedEl.style.top = (rect.top - heroRect.top) + 'px';
+
+                // Convert to absolute pixel positioning
+                const startX = rect.left - heroRect.left;
+                const startY = rect.top - heroRect.top;
+                draggedEl.style.left = startX + 'px';
+                draggedEl.style.top = startY + 'px';
                 draggedEl.style.right = 'auto';
                 draggedEl.style.bottom = 'auto';
                 draggedEl.style.marginLeft = '0';
-                draggedEl.style.transform = 'none';
-                
+                draggedEl.style.transform = 'rotate(' + currentRotation + ')';
+                draggedEl.style.animation = 'none';
+
+                targetX = startX;
+                targetY = startY;
+
                 document.addEventListener('mousemove', drag);
                 document.addEventListener('mouseup', stopDrag);
                 document.addEventListener('touchmove', drag, { passive: false });
                 document.addEventListener('touchend', stopDrag);
             }
-            
+
             function drag(e) {
                 if (!draggedEl) return;
                 e.preventDefault();
-                
+
                 const heroRect = hero.getBoundingClientRect();
                 const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
                 const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-                
+
                 let newX = clientX - heroRect.left - offsetX;
                 let newY = clientY - heroRect.top - offsetY;
-                
+
                 // Keep within hero bounds
                 const maxX = heroRect.width - draggedEl.offsetWidth;
                 const maxY = heroRect.height - draggedEl.offsetHeight;
-                newX = Math.max(-20, Math.min(newX, maxX + 20));
-                newY = Math.max(-20, Math.min(newY, maxY + 20));
-                
+                newX = Math.max(-30, Math.min(newX, maxX + 30));
+                newY = Math.max(-30, Math.min(newY, maxY + 30));
+
+                // Direct update for responsiveness
                 draggedEl.style.left = newX + 'px';
                 draggedEl.style.top = newY + 'px';
             }
-            
+
             function stopDrag() {
                 if (draggedEl) {
                     draggedEl.classList.remove('dragging');
