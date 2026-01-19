@@ -415,75 +415,81 @@
         .polaroid {
             position: absolute;
             background: var(--color-white);
-            padding: 14px 14px 50px 14px;
+            padding: 18px 18px 60px 18px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             cursor: grab;
             user-select: none;
             z-index: 5;
             opacity: 0;
-            animation: flyIn 0.7s ease-out forwards;
+            animation: flyIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
         }
 
         .polaroid:hover {
-            box-shadow: 0 18px 45px rgba(0,0,0,0.3);
+            box-shadow: 0 22px 50px rgba(0,0,0,0.35);
             z-index: 20;
         }
 
         .polaroid.dragging {
             cursor: grabbing;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.45);
             z-index: 9999 !important;
+            transition: box-shadow 0.15s ease;
         }
 
         .polaroid img {
-            width: 240px;
-            height: 240px;
+            width: 400px;
+            height: 400px;
             object-fit: cover;
             display: block;
         }
 
         .polaroid-caption {
             position: absolute;
-            bottom: 12px;
+            bottom: 16px;
             left: 0;
             right: 0;
             text-align: center;
             font-family: 'Fredoka One', cursive;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             color: var(--color-gray-600);
         }
 
         /* Polaroid positions with rotations - positioned to circle the center content */
         .polaroid:nth-child(1) {
-            --start-x: -100px; --start-y: -60px; --rotation: -8deg;
-            top: 8%; left: 18%;
-            animation-delay: 0.05s;
+            --start-x: -200px; --start-y: -120px; --rotation: -8deg;
+            top: 5%; left: 8%;
+            animation-delay: 0s;
         }
         .polaroid:nth-child(2) {
-            --start-x: 100px; --start-y: -60px; --rotation: 6deg;
-            top: 5%; right: 18%; left: auto;
+            --start-x: 200px; --start-y: -120px; --rotation: 6deg;
+            top: 2%; right: 8%; left: auto;
             animation-delay: 0.1s;
         }
         .polaroid:nth-child(3) {
-            --start-x: -100px; --start-y: 40px; --rotation: 4deg;
-            top: 50%; left: 12%;
-            animation-delay: 0.15s;
-        }
-        .polaroid:nth-child(4) {
-            --start-x: 100px; --start-y: 40px; --rotation: -5deg;
-            top: 48%; right: 12%; left: auto;
+            --start-x: -200px; --start-y: 80px; --rotation: 4deg;
+            top: 45%; left: 3%;
             animation-delay: 0.2s;
         }
+        .polaroid:nth-child(4) {
+            --start-x: 200px; --start-y: 80px; --rotation: -5deg;
+            top: 42%; right: 3%; left: auto;
+            animation-delay: 0.3s;
+        }
         .polaroid:nth-child(5) {
-            --start-x: 60px; --start-y: 80px; --rotation: 3deg;
-            bottom: 10%; right: 22%; left: auto;
-            animation-delay: 0.25s;
+            --start-x: 100px; --start-y: 150px; --rotation: 3deg;
+            bottom: 5%; right: 12%; left: auto;
+            animation-delay: 0.4s;
         }
 
         @keyframes flyIn {
             0% {
                 opacity: 0;
-                transform: translate(var(--start-x), var(--start-y)) rotate(0deg) scale(0.7);
+                transform: translate(var(--start-x), var(--start-y)) rotate(0deg) scale(0.6);
+            }
+            70% {
+                opacity: 1;
+                transform: translate(10px, 5px) rotate(calc(var(--rotation) * 1.1)) scale(1.02);
             }
             100% {
                 opacity: 1;
@@ -491,25 +497,37 @@
             }
         }
 
+        @media (max-width: 1600px) {
+            .polaroid img { width: 340px; height: 340px; }
+            .polaroid { padding: 16px 16px 55px 16px; }
+            .polaroid-caption { font-size: 1rem; bottom: 15px; }
+            .polaroid:nth-child(1) { left: 5%; top: 6%; }
+            .polaroid:nth-child(2) { right: 5%; top: 3%; }
+            .polaroid:nth-child(3) { left: 2%; }
+            .polaroid:nth-child(4) { right: 2%; }
+            .polaroid:nth-child(5) { right: 8%; }
+        }
+
         @media (max-width: 1400px) {
-            .polaroid img { width: 200px; height: 200px; }
-            .polaroid { padding: 12px 12px 45px 12px; }
-            .polaroid:nth-child(1) { left: 12%; top: 10%; }
-            .polaroid:nth-child(2) { right: 12%; top: 6%; }
-            .polaroid:nth-child(3) { left: 8%; }
-            .polaroid:nth-child(4) { right: 8%; }
-            .polaroid:nth-child(5) { right: 15%; }
+            .polaroid img { width: 280px; height: 280px; }
+            .polaroid { padding: 14px 14px 50px 14px; }
+            .polaroid-caption { font-size: 0.95rem; bottom: 14px; }
+            .polaroid:nth-child(1) { left: 3%; top: 8%; }
+            .polaroid:nth-child(2) { right: 3%; top: 5%; }
+            .polaroid:nth-child(3) { left: 1%; }
+            .polaroid:nth-child(4) { right: 1%; }
+            .polaroid:nth-child(5) { right: 6%; }
         }
 
         @media (max-width: 1200px) {
-            .polaroid img { width: 170px; height: 170px; }
-            .polaroid { padding: 10px 10px 40px 10px; }
-            .polaroid-caption { font-size: 0.8rem; bottom: 10px; }
-            .polaroid:nth-child(1) { left: 8%; top: 12%; }
-            .polaroid:nth-child(2) { right: 8%; top: 8%; }
-            .polaroid:nth-child(3) { left: 5%; }
-            .polaroid:nth-child(4) { right: 5%; }
-            .polaroid:nth-child(5) { right: 10%; bottom: 10%; }
+            .polaroid img { width: 220px; height: 220px; }
+            .polaroid { padding: 12px 12px 45px 12px; }
+            .polaroid-caption { font-size: 0.85rem; bottom: 12px; }
+            .polaroid:nth-child(1) { left: 2%; top: 10%; }
+            .polaroid:nth-child(2) { right: 2%; top: 6%; }
+            .polaroid:nth-child(3) { left: 0%; }
+            .polaroid:nth-child(4) { right: 0%; }
+            .polaroid:nth-child(5) { right: 4%; bottom: 8%; }
         }
 
         @media (max-width: 1024px) {
