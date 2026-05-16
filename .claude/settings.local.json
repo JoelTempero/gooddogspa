@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(wc:*)",
+      "WebFetch(domain:developers.ezyvet.com)",
+      "WebFetch(domain:www.ezyvet.com)",
+      "WebFetch(domain:www.vetz.de)",
+      "WebFetch(domain:docs.ezyvet.com)",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\":*)"
+    ]
+  }
+}

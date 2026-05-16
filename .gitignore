@@ -47,3 +47,11 @@ ui-debug.log
 # Compiled files
 *.min.js
 *.min.css
+# --- sidequest backup .gitignore (managed) ---
+.next/
+.turbo/
+*.sst
+SITE/site.zip
+*.mp4
+*.mov
+# .env is intentionally NOT ignored (disaster recovery)

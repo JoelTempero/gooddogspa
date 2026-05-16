@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good Dog Spa - ezyVet Integration Proposal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1a1a2e;
+            line-height: 1.6;
+            background: #fff;
+            font-size: 11pt;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm 22mm;
+            margin: 0 auto;
+            page-break-after: always;
+            position: relative;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Cover Page */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #01ADCD 0%, #0891a8 50%, #066d80 100%);
+            color: white;
+            padding: 30mm;
+        }
+
+        .cover-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 8px 24px;
+            font-size: 10pt;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .cover h1 {
+            font-size: 32pt;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .cover h2 {
+            font-size: 16pt;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 50px;
+        }
+
+        .cover-divider {
+            width: 60px;
+            height: 3px;
+            background: #FFCB08;
+            border-radius: 2px;
+            margin-bottom: 50px;
+        }
+
+        .cover-meta {
+            font-size: 10pt;
+            opacity: 0.8;
+            line-height: 2;
+        }
+
+        .cover-meta strong {
+            font-weight: 600;
+            opacity: 1;
+        }
+
+        /* Content Pages */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #01ADCD;
+            margin-bottom: 24px;
+        }
+
+        .page-header-brand {
+            font-size: 9pt;
+            font-weight: 600;
+            color: #01ADCD;
+            letter-spacing: 0.5px;
+        }
+
+        .page-header-title {
+            font-size: 9pt;
+            color: #666;
+        }
+
+        h2 {
+            font-size: 18pt;
+            font-weight: 700;
+            color: #01ADCD;
+            margin-bottom: 6px;
+        }
+
+        h2 .section-number {
+            color: #FFCB08;
+            margin-right: 6px;
+        }
+
+        .section-subtitle {
+            font-size: 10pt;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: #f0fafb;
+            border-left: 4px solid #01ADCD;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 10pt;
+        }
+
+        .info-box strong {
+            color: #01ADCD;
+        }
+
+        .highlight-box {
+            background: #fffbeb;
+            border-left: 4px solid #FFCB08;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 10pt;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+
+        .warning-box p {
+            margin-bottom: 0;
+            font-size: 10pt;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 10pt;
+        }
+
+        thead th {
+            background: #01ADCD;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        thead th:first-child {
+            border-radius: 6px 0 0 0;
+        }
+
+        thead th:last-child {
+            border-radius: 0 6px 0 0;
+        }
+
+        tbody td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f8fafb;
+        }
+
+        tbody tr:last-child td:first-child {
+            border-radius: 0 0 0 6px;
+        }
+
+        tbody tr:last-child td:last-child {
+            border-radius: 0 0 6px 0;
+        }
+
+        /* Flow Diagram */
+        .flow-diagram {
+            background: #f8fafb;
+            border-radius: 10px;
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            flex-wrap: nowrap;
+        }
+
+        .flow-step {
+            background: white;
+            border: 2px solid #01ADCD;
+            border-radius: 10px;
+            padding: 14px 16px;
+            min-width: 130px;
+            text-align: center;
+        }
+
+        .flow-step-icon {
+            font-size: 20pt;
+            margin-bottom: 6px;
+        }
+
+        .flow-step-label {
+            font-size: 8.5pt;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .flow-step-desc {
+            font-size: 7.5pt;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .flow-arrow {
+            font-size: 16pt;
+            color: #01ADCD;
+            font-weight: 700;
+            padding: 0 6px;
+            flex-shrink: 0;
+        }
+
+        /* Phase Cards */
+        .phase-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 12px 0;
+            position: relative;
+        }
+
+        .phase-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .phase-number {
+            display: inline-block;
+            background: #01ADCD;
+            color: white;
+            font-size: 8pt;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .phase-timeline {
+            font-size: 9pt;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .phase-card h4 {
+            font-size: 11pt;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .phase-card p {
+            font-size: 9.5pt;
+            margin-bottom: 4px;
+        }
+
+        .phase-card ul {
+            font-size: 9.5pt;
+            padding-left: 18px;
+            color: #333;
+        }
+
+        .phase-card ul li {
+            margin-bottom: 3px;
+        }
+
+        /* Cost Table */
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 10pt;
+        }
+
+        .cost-table thead th {
+            background: #1a1a2e;
+        }
+
+        .cost-table .cost-category {
+            font-weight: 600;
+            background: #f0fafb;
+        }
+
+        .cost-table .cost-total {
+            background: #01ADCD;
+            color: white;
+            font-weight: 700;
+        }
+
+        .cost-table .cost-total td {
+            border-bottom: none;
+            padding: 12px 14px;
+        }
+
+        /* Bullet lists */
+        ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        /* Check list */
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #01ADCD;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .page-footer {
+            position: absolute;
+            bottom: 20mm;
+            left: 22mm;
+            right: 22mm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8pt;
+            color: #999;
+            border-top: 1px solid #e8e8e8;
+            padding-top: 10px;
+        }
+
+        /* Utility */
+        .text-small {
+            font-size: 9pt;
+        }
+
+        .text-muted {
+            color: #666;
+        }
+
+        .mt-2 { margin-top: 16px; }
+        .mb-1 { margin-bottom: 8px; }
+        .mb-2 { margin-bottom: 16px; }
+
+        @media print {
+            body { background: white; }
+            .page {
+                margin: 0;
+                padding: 20mm 22mm;
+                box-shadow: none;
+            }
+        }
+
+        @media screen {
+            body { background: #e5e5e5; }
+            .page {
+                box-shadow: 0 2px 20px rgba(0,0,0,0.12);
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: Cover -->
+    <div class="page cover">
+        <div class="cover-badge">Integration Proposal</div>
+        <h1>ezyVet Credits<br>Integration</h1>
+        <h2>Connecting Good Dog Spa with your<br>existing ezyVet practice management system</h2>
+        <div class="cover-divider"></div>
+        <div class="cover-meta">
+            <strong>Prepared for:</strong> Good Dog Spa / Wigram Vet<br>
+            <strong>Prepared by:</strong> SideQuest Development<br>
+            <strong>Date:</strong> 17 February 2026<br>
+            <strong>Version:</strong> 1.0
+        </div>
+    </div>
+
+    <!-- PAGE 2: Executive Summary + What We're Proposing -->
+    <div class="page">
+        <div class="page-header">
+            <span class="page-header-brand">Good Dog Spa &mdash; ezyVet Integration</span>
+            <span class="page-header-title">Executive Summary</span>
+        </div>
+
+        <h2><span class="section-number">01</span> Executive Summary</h2>
+        <p class="section-subtitle">A quick overview of what this integration means for your business</p>
+
+        <p>The Good Dog Spa website currently has a fully functional <strong>credit-based booking system</strong> that allows your customers to purchase credit packages, view their balance, and book daycare and hydrotherapy sessions. Right now, this system runs independently using demo data.</p>
+
+        <p>This proposal outlines how we can <strong>connect that system directly to your existing ezyVet software</strong>, so that credits, client details, pet information, and bookings all stay in sync &mdash; eliminating double handling and giving your customers a seamless self-service experience.</p>
+
+        <div class="info-box">
+            <p><strong>The goal:</strong> When a customer logs into the Good Dog Spa portal, they see their real credit balance from ezyVet, their real pets, and their real bookings &mdash; and can purchase credits and make bookings that automatically appear in ezyVet for your team.</p>
+        </div>
+
+        <h2 class="mt-2"><span class="section-number">02</span> What We're Connecting</h2>
+        <p class="section-subtitle">How the Good Dog Spa portal maps to your ezyVet data</p>
+
+        <p>Your ezyVet system already manages clients, animals, appointments, and wellness plan credits. The Good Dog Spa portal has matching features that can be linked directly:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Good Dog Spa Feature</th>
+                    <th>ezyVet Data Source</th>
+                    <th>Direction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Customer accounts &amp; profiles</td>
+                    <td>Contacts (clients)</td>
+                    <td>Read from ezyVet</td>
+                </tr>
+                <tr>
+                    <td>Dog profiles (breed, weight, health)</td>
+                    <td>Animals (patients)</td>
+                    <td>Read from ezyVet</td>
+                </tr>
+                <tr>
+                    <td>Credit balances (daycare &amp; hydro)</td>
+                    <td>Wellness Plan Billing Credits</td>
+                    <td>Read &amp; Write</td>
+                </tr>
+                <tr>
+                    <td>Package purchases</td>
+                    <td>Wellness Plan Memberships</td>
+                    <td>Write to ezyVet</td>
+                </tr>
+                <tr>
+                    <td>Booking creation</td>
+                    <td>Appointments</td>
+                    <td>Read &amp; Write</td>
+                </tr>
+                <tr>
+                    <td>Transaction history</td>
+                    <td>Invoices &amp; Invoice Lines</td>
+                    <td>Read from ezyVet</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box">
+            <p><strong>Key benefit:</strong> Your team continues working in ezyVet as normal. The Good Dog Spa portal becomes a customer-facing window into the same data &mdash; no duplicate entry, no data mismatches.</p>
+        </div>
+
+        <div class="page-footer">
+            <span>Confidential &mdash; Prepared for Good Dog Spa / Wigram Vet</span>
+            <span>Page 2</span>
+        </div>
+    </div>
+
+    <!-- PAGE 3: How It Works -->
+    <div class="page">
+        <div class="page-header">
+            <span class="page-header-brand">Good Dog Spa &mdash; ezyVet Integration</span>
+            <span class="page-header-title">Technical Overview</span>
+        </div>
+
+        <h2><span class="section-number">03</span> How It Works</h2>
+        <p class="section-subtitle">A simplified view of how the systems connect</p>
+
+        <p>ezyVet provides a secure API (a way for software systems to talk to each other) that allows authorised applications to read and write data. We build a secure middle layer that sits between the Good Dog Spa website and ezyVet, handling all the communication.</p>
+
+        <div class="flow-diagram">
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="flow-step-icon">🐕</div>
+                    <div class="flow-step-label">Customer</div>
+                    <div class="flow-step-desc">Logs into portal</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-step-icon">🌐</div>
+                    <div class="flow-step-label">Good Dog Spa</div>
+                    <div class="flow-step-desc">Website portal</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-step-icon">🔒</div>
+                    <div class="flow-step-label">Secure Server</div>
+                    <div class="flow-step-desc">Handles auth &amp; data</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-step-icon">🏥</div>
+                    <div class="flow-step-label">ezyVet</div>
+                    <div class="flow-step-desc">Practice system</div>
+                </div>
+            </div>
+        </div>
+
+        <h3>What happens when a customer uses the portal:</h3>
+
+        <p><strong>Viewing credits &amp; bookings:</strong> The portal requests the customer's data from our secure server, which fetches it from ezyVet's API in real time. The customer sees their actual wellness plan credit balance and upcoming appointments.</p>
+
+        <p><strong>Purchasing a credit package:</strong> The customer selects a package and pays via secure payment processing. Our server then creates the corresponding wellness plan membership or adds credits in ezyVet, so your team sees the purchase immediately.</p>
+
+        <p><strong>Making a booking:</strong> The customer picks a date and session type. If they have available credits, the booking is created as an appointment in ezyVet and the credit is consumed &mdash; all automatically.</p>
+
+        <h2 class="mt-2"><span class="section-number">04</span> Credit System Mapping</h2>
+        <p class="section-subtitle">How your current credit types connect to ezyVet Wellness Plans</p>
+
+        <p>Your existing wellness plans in ezyVet will be configured to match the credit types used on the Good Dog Spa portal:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Credit Type</th>
+                    <th>Service</th>
+                    <th>ezyVet Mapping</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Full Day</td>
+                    <td>Daycare 7am &ndash; 6pm</td>
+                    <td>Wellness Plan Benefit &rarr; Full Day product</td>
+                </tr>
+                <tr>
+                    <td>Half Day</td>
+                    <td>Daycare morning or afternoon</td>
+                    <td>Wellness Plan Benefit &rarr; Half Day product</td>
+                </tr>
+                <tr>
+                    <td>3-Hour</td>
+                    <td>3-hour daycare session</td>
+                    <td>Wellness Plan Benefit &rarr; 3-Hour product</td>
+                </tr>
+                <tr>
+                    <td>Rehab 30min</td>
+                    <td>Hydrotherapy 30 minutes</td>
+                    <td>Wellness Plan Benefit &rarr; Rehab 30 product</td>
+                </tr>
+                <tr>
+                    <td>Rehab 60min</td>
+                    <td>Hydrotherapy 60 minutes</td>
+                    <td>Wellness Plan Benefit &rarr; Rehab 60 product</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <p><strong>How this works in practice:</strong> When a customer purchases a "10x Full Day" package on the portal, a corresponding wellness plan membership is created in ezyVet with 10 Full Day benefits. As bookings consume credits, ezyVet's billing credit system tracks the remaining balance. Both systems stay perfectly in sync.</p>
+        </div>
+
+        <div class="page-footer">
+            <span>Confidential &mdash; Prepared for Good Dog Spa / Wigram Vet</span>
+            <span>Page 3</span>
+        </div>
+    </div>
+
+    <!-- PAGE 4: Implementation Plan -->
+    <div class="page">
+        <div class="page-header">
+            <span class="page-header-brand">Good Dog Spa &mdash; ezyVet Integration</span>
+            <span class="page-header-title">Implementation Plan</span>
+        </div>
+
+        <h2><span class="section-number">05</span> Implementation Plan</h2>
+        <p class="section-subtitle">The work broken into clear phases</p>
+
+        <div class="phase-card">
+            <div class="phase-card-header">
+                <span class="phase-number">PHASE 1</span>
+                <span class="phase-timeline">~1 week</span>
+            </div>
+            <h4>API Access &amp; Configuration</h4>
+            <ul>
+                <li>Register a Private Integration with ezyVet (requires your approval as the clinic)</li>
+                <li>Obtain API credentials (partner ID, client ID, secret) for Wigram Vet's ezyVet instance</li>
+                <li>Map your existing ezyVet wellness plan products to the 5 Good Dog Spa credit types</li>
+                <li>Set up a secure development environment for testing</li>
+            </ul>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-card-header">
+                <span class="phase-number">PHASE 2</span>
+                <span class="phase-timeline">~2&ndash;3 weeks</span>
+            </div>
+            <h4>Secure Backend Server</h4>
+            <ul>
+                <li>Build a secure server that sits between the website and ezyVet</li>
+                <li>Implement OAuth 2.0 authentication and automatic token management</li>
+                <li>Add rate limiting and caching to stay within ezyVet's API limits (60 requests/min)</li>
+                <li>Build customer authentication (matching portal logins to ezyVet contacts)</li>
+            </ul>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-card-header">
+                <span class="phase-number">PHASE 3</span>
+                <span class="phase-timeline">~2&ndash;3 weeks</span>
+            </div>
+            <h4>Read Integration (Viewing Data)</h4>
+            <ul>
+                <li>Connect dog profiles &mdash; pull real pet data from ezyVet (breed, weight, health info)</li>
+                <li>Connect credit balances &mdash; show real wellness plan credit balances</li>
+                <li>Connect bookings &mdash; display actual upcoming and past appointments</li>
+                <li>Connect transaction history &mdash; show real purchase and usage records</li>
+            </ul>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-card-header">
+                <span class="phase-number">PHASE 4</span>
+                <span class="phase-timeline">~2&ndash;3 weeks</span>
+            </div>
+            <h4>Write Integration (Creating Data)</h4>
+            <ul>
+                <li>Package purchases &mdash; create wellness plan memberships in ezyVet on purchase</li>
+                <li>Booking creation &mdash; create appointments in ezyVet from the portal</li>
+                <li>Credit consumption &mdash; automatically deduct billing credits when bookings are confirmed</li>
+                <li>Integrate real payment processing (Stripe or Windcave) linked to ezyVet invoicing</li>
+            </ul>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-card-header">
+                <span class="phase-number">PHASE 5</span>
+                <span class="phase-timeline">~1&ndash;2 weeks</span>
+            </div>
+            <h4>Testing, Polish &amp; Launch</h4>
+            <ul>
+                <li>End-to-end testing with real ezyVet data in a safe test environment</li>
+                <li>Staff training &mdash; how bookings and credits appear in ezyVet</li>
+                <li>Soft launch with a small group of customers</li>
+                <li>Full rollout with monitoring and support</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <p><strong>Estimated total timeline: 8&ndash;12 weeks</strong> from API access approval to full launch, depending on ezyVet's onboarding speed and any configuration needed on the ezyVet side.</p>
+        </div>
+
+        <div class="page-footer">
+            <span>Confidential &mdash; Prepared for Good Dog Spa / Wigram Vet</span>
+            <span>Page 4</span>
+        </div>
+    </div>
+
+    <!-- PAGE 5: Costs + What We Need From You -->
+    <div class="page">
+        <div class="page-header">
+            <span class="page-header-brand">Good Dog Spa &mdash; ezyVet Integration</span>
+            <span class="page-header-title">Estimated Costs &amp; Requirements</span>
+        </div>
+
+        <h2><span class="section-number">06</span> Estimated Costs</h2>
+        <p class="section-subtitle">Approximate costs for the full read &amp; write integration</p>
+
+        <h3>ezyVet Fees (paid to ezyVet/IDEXX)</h3>
+        <p class="text-small text-muted mb-1">These are charged by ezyVet directly for API access. Exact pricing depends on your existing ezyVet contract and should be confirmed with your ezyVet account manager.</p>
+
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Type</th>
+                    <th>Estimated Cost (NZD)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Private Integration setup</td>
+                    <td>One-off</td>
+                    <td>$500 &ndash; $2,000</td>
+                </tr>
+                <tr>
+                    <td>Write-back access fee</td>
+                    <td>Monthly</td>
+                    <td>$50 &ndash; $200 /month</td>
+                </tr>
+                <tr>
+                    <td>API consultation (if required)</td>
+                    <td>Per hour</td>
+                    <td>$150 &ndash; $250 /hr</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <p><strong>Recommendation:</strong> Contact your ezyVet account manager to get exact API pricing for your clinic. Mention you want to set up a "Private Integration with read and write access" for a customer self-service portal. They can provide a firm quote. Their API support email is <strong>apisupport@ezyvet.com</strong>.</p>
+        </div>
+
+        <h3>Development Costs (our work)</h3>
+
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Phase</th>
+                    <th>Scope</th>
+                    <th>Estimated Cost (NZD)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="cost-category">
+                    <td colspan="3">Build &amp; Integration</td>
+                </tr>
+                <tr>
+                    <td>Phase 1: API setup &amp; config</td>
+                    <td>Credentials, mapping, environment</td>
+                    <td>$800 &ndash; $1,500</td>
+                </tr>
+                <tr>
+                    <td>Phase 2: Backend server</td>
+                    <td>Auth, security, rate limiting</td>
+                    <td>$2,500 &ndash; $4,000</td>
+                </tr>
+                <tr>
+                    <td>Phase 3: Read integration</td>
+                    <td>Dogs, credits, bookings, history</td>
+                    <td>$2,000 &ndash; $3,500</td>
+                </tr>
+                <tr>
+                    <td>Phase 4: Write integration</td>
+                    <td>Purchases, bookings, credit usage</td>
+                    <td>$3,000 &ndash; $5,000</td>
+                </tr>
+                <tr>
+                    <td>Phase 5: Testing &amp; launch</td>
+                    <td>QA, training, deployment</td>
+                    <td>$1,500 &ndash; $2,500</td>
+                </tr>
+                <tr class="cost-category">
+                    <td colspan="3">Ongoing</td>
+                </tr>
+                <tr>
+                    <td>Server hosting</td>
+                    <td>Secure backend server</td>
+                    <td>$20 &ndash; $50 /month</td>
+                </tr>
+                <tr>
+                    <td>Maintenance &amp; support</td>
+                    <td>Updates, monitoring, bug fixes</td>
+                    <td>$200 &ndash; $500 /month</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="cost-table">
+            <tbody>
+                <tr class="cost-total">
+                    <td>Estimated total build cost</td>
+                    <td></td>
+                    <td>$9,800 &ndash; $16,500</td>
+                </tr>
+                <tr class="cost-total" style="background: #066d80;">
+                    <td>Estimated ongoing monthly</td>
+                    <td></td>
+                    <td>$270 &ndash; $750 /month</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box">
+            <p><strong>Note:</strong> These are approximate ranges. A firm quote will be provided once ezyVet API access terms are confirmed and we've reviewed your specific wellness plan configuration in ezyVet. Payment processing fees (Stripe/Windcave) are additional and typically 2.9% + $0.30 per transaction.</p>
+        </div>
+
+        <div class="page-footer">
+            <span>Confidential &mdash; Prepared for Good Dog Spa / Wigram Vet</span>
+            <span>Page 5</span>
+        </div>
+    </div>
+
+    <!-- PAGE 6: What We Need + Benefits + Next Steps -->
+    <div class="page">
+        <div class="page-header">
+            <span class="page-header-brand">Good Dog Spa &mdash; ezyVet Integration</span>
+            <span class="page-header-title">Requirements &amp; Next Steps</span>
+        </div>
+
+        <h2><span class="section-number">07</span> What We Need From You</h2>
+        <p class="section-subtitle">Items required to get started</p>
+
+        <ul class="checklist">
+            <li><strong>ezyVet API approval</strong> &mdash; Contact your ezyVet account manager (or we can do this on your behalf) to request Private Integration access with read/write permissions</li>
+            <li><strong>Wellness plan review</strong> &mdash; Share or grant access to your current ezyVet wellness plan configuration so we can map credit types accurately</li>
+            <li><strong>Product ID mapping</strong> &mdash; Confirm which ezyVet products correspond to each of the 5 credit types (Full Day, Half Day, 3-Hour, Rehab 30, Rehab 60)</li>
+            <li><strong>Test environment access</strong> &mdash; Ideally a trial/sandbox ezyVet instance for development and testing (ezyVet can provision this)</li>
+            <li><strong>Payment processing preference</strong> &mdash; Confirm whether you'd like to use Stripe, Windcave (already an ezyVet partner), or another payment provider</li>
+            <li><strong>Staff contact</strong> &mdash; A point of contact on your team who understands your ezyVet setup and can answer configuration questions</li>
+        </ul>
+
+        <h2 class="mt-2"><span class="section-number">08</span> Benefits For Your Business</h2>
+        <p class="section-subtitle">What this integration delivers</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Benefit</th>
+                    <th>Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>No double data entry</strong></td>
+                    <td>Bookings and purchases made on the portal appear in ezyVet automatically</td>
+                </tr>
+                <tr>
+                    <td><strong>24/7 self-service for customers</strong></td>
+                    <td>Clients can check credits, buy packages, and book anytime &mdash; not just during business hours</td>
+                </tr>
+                <tr>
+                    <td><strong>Reduced admin workload</strong></td>
+                    <td>Less time on the phone taking bookings and processing credit purchases</td>
+                </tr>
+                <tr>
+                    <td><strong>Accurate credit tracking</strong></td>
+                    <td>One source of truth &mdash; credits in the portal always match ezyVet</td>
+                </tr>
+                <tr>
+                    <td><strong>Better customer experience</strong></td>
+                    <td>Professional, modern portal that builds trust and encourages repeat business</td>
+                </tr>
+                <tr>
+                    <td><strong>Increased package sales</strong></td>
+                    <td>Easy online purchasing removes friction &mdash; customers can buy packages on impulse</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="mt-2"><span class="section-number">09</span> Next Steps</h2>
+        <p class="section-subtitle">How to move forward</p>
+
+        <div class="phase-card">
+            <h4>1. Contact ezyVet for API pricing</h4>
+            <p>Reach out to your ezyVet account manager or email <strong>apisupport@ezyvet.com</strong> to request Private Integration access and get a firm quote for read/write API access for your clinic.</p>
+        </div>
+
+        <div class="phase-card">
+            <h4>2. Review &amp; approve this proposal</h4>
+            <p>Let us know if you'd like to proceed, have any questions, or want to adjust the scope (e.g., start with read-only and add write access later to reduce initial cost).</p>
+        </div>
+
+        <div class="phase-card">
+            <h4>3. Kick-off meeting</h4>
+            <p>Once API access is confirmed, we'll schedule a kick-off meeting to review your ezyVet wellness plan setup, map products, and finalise the development plan.</p>
+        </div>
+
+        <div class="warning-box">
+            <p><strong>Alternative approach:</strong> If ezyVet API costs are a concern, we can start with a <strong>read-only integration</strong> first (lower ezyVet fees, ~40% less development cost). Customers would see real data but bookings would still need staff confirmation in ezyVet. Write access can be added later.</p>
+        </div>
+
+        <div class="page-footer">
+            <span>Confidential &mdash; Prepared for Good Dog Spa / Wigram Vet</span>
+            <span>Page 6</span>
+        </div>
+    </div>
+
+</body>
+</html>
